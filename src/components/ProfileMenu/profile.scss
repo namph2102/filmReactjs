@@ -1,0 +1,13 @@
+.MuiList-padding {
+  min-width: 200px;
+
+  background-color: #17242e !important;
+  color: rgb(194, 186, 186) !important;
+  li {
+    font-size: 15px !important;
+    &:hover {
+      color: #ff971b;
+      background-color: #212c37;
+    }
+  }
+}

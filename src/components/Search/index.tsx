@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, memo } from "react";
 import { BiSearch, BiAnalyse } from "react-icons/bi";
 import { Tooltip } from "@mui/material";
 import "./search.scss";
@@ -8,6 +8,8 @@ const SearchContainer: React.FC<{ sizeIcon: string }> = ({ sizeIcon }) => {
   const handleForcus = () => {
     searchInput.current.focus();
   };
+  console.log("ren-render-search");
+
   useEffect(() => {
     document.onclick = () => {
       setSearch("");
@@ -71,4 +73,4 @@ const SearchContainer: React.FC<{ sizeIcon: string }> = ({ sizeIcon }) => {
   );
 };
 
-export default SearchContainer;
+export default memo(SearchContainer);

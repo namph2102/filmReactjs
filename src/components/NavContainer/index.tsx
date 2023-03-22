@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 import { NavLink } from "react-router-dom";
 import listMenuNav, { INav } from "./listMenu";
@@ -8,6 +8,8 @@ type TMenu = {
   isOpenMenu: boolean;
 };
 const Menu: React.FC<TMenu> = ({ isOpenMenu }) => {
+  console.log("re-render menu");
+
   return (
     <ul className={`main-menu lg:flex ${!isOpenMenu && "hidden"}`}>
       {listMenuNav.map((menu: INav) => {
@@ -26,4 +28,4 @@ const Menu: React.FC<TMenu> = ({ isOpenMenu }) => {
   );
 };
 
-export default Menu;
+export default memo(Menu);
