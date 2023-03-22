@@ -1,0 +1,74 @@
+@import "/src/styles/style.scss";
+
+header {
+  width: 100%;
+
+  .popper-container {
+    background-color: $main;
+    display: flex;
+    width: 200px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    line-height: 20px;
+    padding: 6px 15px;
+    border-radius: 20px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.4s all;
+
+    &:hover {
+      background-color: #014070;
+      background-image: none;
+    }
+    .total-bookmark {
+      width: 20px;
+      height: 20px;
+      background-color: rgb(167, 7, 7);
+      border-radius: 99px;
+      text-align: center;
+    }
+  }
+
+  .MuiBadge-badge {
+    background-color: rgb(190, 1, 1);
+    color: white;
+  }
+  // bookmark styles
+  .header-bookmark {
+    position: relative;
+  }
+  .header-bookmark_drop {
+    z-index: 3;
+    position: absolute;
+    top: 100%;
+    width: 300px;
+  }
+  .bookmark_drop-head {
+    border: 1px solid #234;
+    padding: 6px 12px;
+  }
+  .bookmark_drop-container {
+    padding: 8px 12px;
+
+    .bookmark_drop-list_film {
+      border: 1px solid rgb(70, 64, 64);
+
+      li {
+        border-bottom: 1px solid rgb(70, 64, 64);
+      }
+      a {
+        padding: 8px;
+      }
+    }
+  }
+  .bookmark-film {
+    .bookmark-film_avata {
+      width: 50px;
+      height: 65px;
+      object-fit: cover;
+      margin-right: 12px;
+    }
+  }
+  //end  bookmark styles
+}

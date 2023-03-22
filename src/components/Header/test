@@ -1,0 +1,105 @@
+<li>
+    <NavLink to="trang-chu">Trang chủ</NavLink>
+  </li>
+  <li>
+    <NavLink to="the-loai">
+      Thể loại <BiCaretDown fontSize="1rem" className="mr-1" />
+    </NavLink>
+    <div className="drop-menu">
+      <ul>
+        <li>
+          <a href="">Trinh Thám</a>
+        </li>
+        <li>
+          <a href="">Máu me</a>
+        </li>
+        <li>
+          <a href="">Hành Động</a>
+        </li>
+        <li>
+          <a href="">Trinh Thám</a>
+        </li>
+        <li>
+          <a href="">Máu me</a>
+        </li>
+        <li>
+          <a href="">Hành Động</a>
+        </li>
+        <li>
+          <a href="">Trinh Thám</a>
+        </li>
+        <li>
+          <a href="">Máu me</a>
+        </li>
+        <li>
+          <a href="">Hành Động</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li>
+    <NavLink to="country">
+      Quốc gia
+      <BiCaretDown fontSize="1rem" className="mr-1" />
+    </NavLink>
+    <div className="drop-menu">
+      <ul>
+        <li>
+          <a href="">Trinh Thám</a>
+        </li>
+        <li>
+          <a href="">Máu me</a>
+        </li>
+        <li>
+          <a href="">Hành Động</a>
+        </li>
+        <li>
+          <a href="">Trinh Thám</a>
+        </li>
+        <li>
+          <a href="">Máu me</a>
+        </li>
+        <li>
+          <a href="">Hành Động</a>
+        </li>
+        <li>
+          <a href="">Trinh Thám</a>
+        </li>
+        <li>
+          <a href="">Máu me</a>
+        </li>
+        <li>
+          <a href="">Hành Động</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li>
+    <NavLink to="phim-le">
+      <BiFilm fontSize={defaultIconSize} className="mr-1" /> Phim lẻ
+    </NavLink>
+  </li>
+  <li>
+    <NavLink to="dang-chieu">
+      <BiWindowOpen fontSize={defaultIconSize} className="mr-1" />
+      Đang chiếu
+    </NavLink>
+  </li>
+  <li>
+    <NavLink to="lich-chieu">
+      <BiCalendar fontSize={defaultIconSize} className="mr-1" />
+      Lịch chiếu
+    </NavLink>
+  </li>
+  <li>
+    <NavLink to="phim-hoan-thanh">
+      <BiCheckCircle fontSize={defaultIconSize} className="mr-1" />{" "}
+      Phim Hoàn Thành
+    </NavLink>
+  </li>
+  <li>
+    <NavLink to="phim-sap-chieu">
+      <BiTime fontSize={defaultIconSize} className="mr-1" /> Phim Sắp
+      chiếu
+    </NavLink>
+  </li>

@@ -1,0 +1,28 @@
+.search-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .search-box {
+    width: 100%;
+    padding: 0 12px;
+    input {
+      width: 100%;
+      padding: 12px 4px;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+  }
+}
+.search_content {
+  .search_result {
+    background-color: #111;
+    z-index: 4;
+    position: absolute;
+    top: 80%;
+    left: 0;
+    width: 100%;
+  }
+}

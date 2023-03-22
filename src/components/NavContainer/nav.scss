@@ -1,0 +1,98 @@
+@import "/src/styles/style.scss";
+.main-menu {
+  transition: 0.3s linear;
+  li {
+    position: relative;
+    &:hover {
+      .drop-menu {
+        display: flex;
+      }
+    }
+    .drop-menu {
+      display: none;
+      position: absolute;
+      left: 0;
+      z-index: 2;
+      background: #1f3d58 !important;
+      box-shadow: 1px 1px 0px #1f252b;
+      max-width: 600px;
+      min-width: 600px;
+      font-size: 1rem;
+      &::after {
+        content: "";
+        position: absolute;
+        z-index: 20;
+        top: -20px;
+        left: 30px;
+        border-width: 10px;
+        border-style: solid;
+        border-color: transparent transparent #1f3d58 transparent;
+      }
+      li {
+        display: inline-flex;
+        width: 120px;
+      }
+      a {
+        text-decoration: none;
+
+        background-color: #1f3d58;
+        transition: 0.5s all;
+        padding: 12px 10px;
+        display: inline-flex;
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+    a {
+      display: flex;
+      align-items: center;
+      padding: 4px 12px;
+      height: 100%;
+      padding: 16px 10px;
+      font-size: 16px;
+      transition: 0.2s linear;
+      color: white;
+      &:hover {
+        background-color: $bg-hover;
+        color: $text-hover;
+      }
+    }
+    a.active {
+      background-color: $bg-hover;
+      color: $text-hover;
+    }
+  }
+}
+@media screen and (max-width: 1024px) {
+  .drop-menu {
+    max-height: 280px;
+    overflow-y: auto;
+    ul {
+      width: 100%;
+    }
+
+    li {
+      display: block !important;
+      width: 100% !important;
+    }
+    a {
+      display: block !important;
+      width: 100%;
+      &:hover {
+        background-color: #000 !important;
+      }
+    }
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #c5d6e2;
+      border-radius: 5px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: gray;
+      border-radius: 5px;
+    }
+  }
+}

@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    color: #a5a5a5;
+    font-size: 13px;
+    overflow-x: hidden;
+    font-family: "montserrat", sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    background: #222d38 url("/images/halimBg.png") fixed center;
+    -webkit-transition: background-color 150ms ease-out !important;
+    transition: background-color 150ms ease-out !important;
+  }
+}
+@layer components {
+  .btn_bookmark-close {
+    @apply py-1 px-2.5 hover:bg-red-800 bg-red-700 rounded-full text-sm;
+  }
+  .flex-bettween-center-wrap {
+    @apply flex justify-between items-center flex-wrap;
+  }
+}
