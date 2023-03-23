@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef, memo } from "react";
 import { BiSearch, BiAnalyse } from "react-icons/bi";
 import { Tooltip } from "@mui/material";
 import "./search.scss";
-const SearchContainer: React.FC<{ sizeIcon: string }> = ({ sizeIcon }) => {
+import { defaultIconSize } from "../../contants";
+const SearchContainer = (): JSX.Element => {
   const [search, setSearch] = useState<string>("");
   const searchInput = useRef<any>(null);
   const handleForcus = () => {
@@ -24,7 +25,7 @@ const SearchContainer: React.FC<{ sizeIcon: string }> = ({ sizeIcon }) => {
       >
         <BiSearch
           cursor="pointer"
-          fontSize={sizeIcon}
+          fontSize={defaultIconSize}
           onClick={handleForcus}
           className="mx-2"
         />
@@ -41,7 +42,7 @@ const SearchContainer: React.FC<{ sizeIcon: string }> = ({ sizeIcon }) => {
         <BiAnalyse
           cursor="progress"
           className="animate-spin"
-          fontSize={sizeIcon}
+          fontSize={defaultIconSize}
         />
       </div>
       <div className={`search_result ${!search && "hidden"}`}>

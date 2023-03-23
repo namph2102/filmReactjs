@@ -5,8 +5,16 @@
 .header-bookmark_drop {
   z-index: 3;
   position: absolute;
-  top: 100%;
+  top: 80%;
   width: 300px;
+  &::before {
+    content: "";
+    position: absolute;
+    border-width: 10px;
+    top: -10px;
+    left: 50%;
+    border-color: transparent transparent #12171b transparent;
+  }
 }
 .bookmark_drop-head {
   border: 1px solid #234;
@@ -38,7 +46,7 @@
 
 @media screen and (max-width: 1024px) {
   .header-bookmark_drop {
-    top: 80%;
+    top: 88%;
     width: 100%;
     right: 0;
   }

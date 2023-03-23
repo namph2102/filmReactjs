@@ -7,8 +7,7 @@ import { Link } from "react-router-dom";
 import Menu from "../NavContainer";
 import SearchContainer from "../Search";
 import BookMark from "../BookMark";
-import Profile from "../ProfileMenu";
-export const defaultIconSize: string = "1.225rem";
+import { RenderDesktopProfile, RenderProfile } from "./BookMarkDestop";
 
 const Header = () => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
@@ -36,23 +35,17 @@ const Header = () => {
           </Tooltip>
         </div>
 
-        <div className="search-container m-4 sm:m-0 basis-full sm:basis-2/3 lg:basis-1/2">
-          <SearchContainer sizeIcon={defaultIconSize} />
+        <div className="search-container m-4 sm:m-0 basis-full sm:basis-2/3 lg:basis-5/12 xl:basis-1/2">
+          <SearchContainer />
         </div>
 
-        <div className="header-bookmark p-0 m-0 hidden   items-center basis-3/12 lg:flex  flex-row-reverse">
-          <Tooltip
-            onClick={handleBookMark}
-            title="Phim yêu thích của bạn"
-            arrow
-          >
-            <div className="popper-container bg-bookmark">
-              <BiBookmark fontSize={defaultIconSize} />
-              <p className="mx-2">Phim yêu thích</p>
-              <span className="total-bookmark">1</span>
-            </div>
-          </Tooltip>
-          {screenLG >= 1024 && isOppenBookmark && <BookMark />}
+        <div className="header-bookmark p-0 m-0 hidden  items-center basis-3/12 lg:flex justify-end">
+          {screenLG >= 1024 && (
+            <RenderDesktopProfile
+              onhandleBookMark={handleBookMark}
+              isOppenBookmark={isOppenBookmark}
+            />
+          )}
         </div>
       </div>
       {/* Navigation */}
@@ -65,23 +58,12 @@ const Header = () => {
                 <Badge onClick={handleBookMark} badgeContent={4}>
                   <BiBookmark cursor="pointer" size="2rem" />
                 </Badge>
+
                 {screenLG < 1024 && isOppenBookmark && <BookMark />}
               </div>
 
               <div className="info-avata ml-5">
-                <Profile>
-                  <Tooltip title="Hồ sơ của bạn" arrow>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="/images/avata.jpg"
-                      style={{
-                        width: "40px",
-                        height: "40px",
-                        cursor: "pointer",
-                      }}
-                    />
-                  </Tooltip>
-                </Profile>
+                <RenderProfile />
               </div>
             </div>
           </div>

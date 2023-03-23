@@ -26,3 +26,22 @@
     background: linear-gradient(to right, #ff8a00, #ff2070);
   }
 }
+@mixin button_effect {
+  color: #fff;
+  border-radius: 3px;
+  padding: 8px;
+  background-size: 300% 100%;
+  background-image: linear-gradient(
+    to right,
+    #f5ce62,
+    #e43603,
+    #fa7199,
+    #e85a19
+  );
+  box-shadow: 0 4px 15px 0 rgb(229 66 10 / 75%);
+  transition: 0.7s;
+  border: none;
+  &:hover {
+    background-position: right center;
+  }
+}

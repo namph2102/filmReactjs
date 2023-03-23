@@ -83,6 +83,22 @@ const listMenuNav: INav[] = [
         slug: "han-quoc",
         name: "Hàn Quốc",
       },
+      {
+        slug: "viet-nam",
+        name: "Việt Nam",
+      },
+      {
+        slug: "thai-lan",
+        name: "Thái Lan",
+      },
+      {
+        slug: "ba-lan",
+        name: "Ba lan",
+      },
+      {
+        slug: "au-my",
+        name: "Âu Mỹ",
+      },
     ],
   },
   {
