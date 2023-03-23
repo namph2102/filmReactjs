@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import "./banner.scss";
+import React, { useState, useEffect, useRef } from "react";
+import "./home.scss";
 import {
   BiChevronRight,
   BiChevronLeft,
@@ -11,6 +11,7 @@ import BannerItem from "./BannerItem";
 
 const Banner = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const bannerBox = useRef<HTMLElement>(null);
   const InCreaseIndex = () => {
     if (currentIndex >= bannerSliders.length - 1) {
       return setCurrentIndex(0);
@@ -29,9 +30,24 @@ const Banner = () => {
       clearTimeout(idTimout);
     };
   }, [currentIndex]);
+  useEffect(() => {
+    let cursorX: number;
+    let isDragg = false;
+    bannerBox.current?.addEventListener("mousemove", (e) => {
+      if (isDragg) {
+        if (e.pageX > cursorX) InCreaseIndex();
+        else DecreaseIndex();
+        isDragg = false;
+      }
+    });
+    bannerBox.current?.addEventListener("dragstart", (e) => {
+      cursorX = e.pageX;
+      isDragg = true;
+    });
+  }, []);
   return (
     <>
-      <section className="banner_list-item">
+      <section ref={bannerBox} className="banner_list-item">
         {bannerSliders.map((slider, index) => {
           // slider % translateX (-100%) 0 100%
           const translateX = (currentIndex - index) * -100 + "%";
@@ -49,6 +65,7 @@ const Banner = () => {
           <ul className="slider_dots gap-2">
             {bannerSliders.map((_, index) => (
               <BiRadioCircleMarked
+                key={index}
                 onClick={() => setCurrentIndex(index)}
                 fill={index == currentIndex ? "#ffc107" : "#009688"}
                 cursor="pointer"

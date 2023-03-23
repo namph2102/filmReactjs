@@ -1,0 +1,92 @@
+@import "/src/styles/mixins";
+
+//MainContent
+.main-contents {
+  .episode {
+    position: absolute;
+    right: 0;
+    bottom: 20%;
+    @include button_effect;
+    padding: 2px 8px;
+    text-align: center;
+    text-transform: capitalize;
+  }
+  .status {
+    position: absolute;
+    top: 0;
+    left: -6px;
+    text-transform: capitalize;
+    @include kindstatus;
+  }
+  .films-des {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 4px 7px;
+    z-index: 3;
+    .film-name,
+    .film-origin {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+  .icon_overlay {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateZ(0) scale(1, 1);
+    background-image: linear-gradient(
+      to bottom,
+      rgba(235, 20, 54, 0.9) 0%,
+      rgba(123, 67, 151, 0.9) 100%
+    );
+  }
+  .film-avata {
+    object-fit: cover;
+    transition: all 0.5s ease-in-out;
+  }
+  .films-item {
+    &:hover {
+      .icon_overlay {
+        opacity: 0.5;
+      }
+      .film-avata {
+        scale: 1.2;
+      }
+    }
+  }
+  .see-more {
+    background: #1f2933;
+    width: 30%;
+    display: inline-block;
+    text-align: right;
+    margin: 5px 0;
+    padding: 4px 12px;
+    border-radius: 20px;
+    transition: 0.5s all;
+    color: #fff;
+    float: right;
+    margin-right: 4px;
+    background: linear-gradient(to right, #151d25, #194161);
+    text-transform: capitalize;
+    cursor: pointer;
+    &:hover {
+      background: none;
+      background-image: rgb(12, 3, 3);
+      outline: 0.1px solid rgb(56, 42, 42);
+    }
+  }
+}
+@media screen and (max-width: 500px) {
+  .main-contents {
+    article {
+      flex-basis: 50%;
+    }
+  }
+}

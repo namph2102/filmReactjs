@@ -1,6 +1,7 @@
 @mixin title_special {
   position: relative;
-  font-size: 15px;
+  font-size: 1rem;
+  text-transform: uppercase;
   padding: 10px 0;
   color: #a5cbef;
   background: -webkit-gradient(
@@ -33,15 +34,43 @@
   background-size: 300% 100%;
   background-image: linear-gradient(
     to right,
-    #f5ce62,
-    #e43603,
-    #fa7199,
-    #e85a19
+    #c02425 0%,
+    #f0cb35 51%,
+    #c02425 100%
   );
   box-shadow: 0 4px 15px 0 rgb(229 66 10 / 75%);
   transition: 0.7s;
   border: none;
   &:hover {
     background-position: right center;
+  }
+}
+@mixin kindstatus {
+  background: #a94442;
+  z-index: 1;
+  background-size: 200% 100%;
+  background-image: linear-gradient(
+    to right,
+    #ff00cc 0%,
+    #333399 51%,
+    #ff00cc 100%
+  );
+  padding: 2px 12px;
+  color: white;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  transition: 0.7s;
+  &:hover {
+    background-position: right center;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 100%;
+    margin: auto;
+    border-top: 5px solid #7a0216;
+    border-left: 5px solid transparent;
   }
 }
