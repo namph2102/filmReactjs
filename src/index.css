@@ -8,15 +8,18 @@
     box-sizing: border-box;
   }
   body {
-    color: #a5a5a5;
-    font-size: 13px;
     overflow-x: hidden;
-    font-family: "montserrat", sans-serif;
-    text-rendering: optimizeLegibility;
+
     -webkit-font-smoothing: antialiased;
     background: #222d38 url("/images/halimBg.png") fixed center;
     -webkit-transition: background-color 150ms ease-out !important;
     transition: background-color 150ms ease-out !important;
+  }
+  .App {
+    font-family: "montserrat", sans-serif;
+    text-rendering: optimizeLegibility;
+    color: #a5a5a5;
+    font-size: 13px;
   }
 }
 @layer components {

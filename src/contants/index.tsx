@@ -27,3 +27,10 @@ export const bannerSliders: ISlider[] = [
     description: "dsa sdasad",
   },
 ];
+
+class PathLink {
+  seeFilmDetail = "xem-thong-tin";
+  seeFilm = "xem-phim";
+  seeProfile = "tai-khoan";
+}
+export default new PathLink();

@@ -1,14 +1,17 @@
-import { Main } from "./components/Layouts/Main";
+import Main from "./components/Layouts/Main";
 import "./styles/style.scss";
-import store from "./Redux/Store";
-import { Provider } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "./Redux/Store";
+import { fetchDataFilm } from "./Redux/FilmSlice";
 function App() {
+  const dispatch: AppDispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchDataFilm());
+  }, []);
   return (
     <div className="App">
-      {/* redux provider */}
-      <Provider store={store}>
-        <Main />
-      </Provider>
+      <Main />
     </div>
   );
 }

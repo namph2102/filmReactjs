@@ -4,6 +4,9 @@
   text-transform: uppercase;
   padding: 10px 0;
   color: #a5cbef;
+  width: fit-content;
+  border-bottom: 2px solid black;
+  z-index: 1;
   background: -webkit-gradient(
     linear,
     left top,
@@ -21,8 +24,10 @@
     content: "";
     position: absolute;
     top: 100%;
+    width: max-content;
     left: 0;
-    width: 100%;
+    right: 0;
+    width: 100% !important;
     height: 2px;
     background: linear-gradient(to right, #ff8a00, #ff2070);
   }

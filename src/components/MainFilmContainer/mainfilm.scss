@@ -3,10 +3,10 @@
 //MainContent
 .main-contents {
   .episode {
+    @include button_effect;
     position: absolute;
     right: 0;
     bottom: 20%;
-    @include button_effect;
     padding: 2px 8px;
     text-align: center;
     text-transform: capitalize;
@@ -31,6 +31,7 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+      text-transform: capitalize;
     }
   }
   .icon_overlay {
