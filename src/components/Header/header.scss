@@ -2,7 +2,8 @@
 
 header {
   width: 100%;
-
+  top: -90px;
+  z-index: 100;
   .popper-container {
     background-color: $main;
     display: flex;

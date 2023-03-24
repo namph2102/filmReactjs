@@ -6,8 +6,7 @@ import imgaeLoading from "../../assets/loading.png";
 import Banner from "./Banner";
 const Home = () => {
   const filmSlice = useSelector((state: RootState) => state.film);
-  const films: Ifilm[] = filmSlice.fimls || [];
-
+  const films: Ifilm[] = filmSlice.filmsHome || [];
   return (
     <>
       <Banner />

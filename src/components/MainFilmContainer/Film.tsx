@@ -21,8 +21,13 @@ const Film: React.FC<props> = ({ film }) => {
               loading="lazy"
             />
           </figure>
-          <span className="episode">Tập {film.episode_current}</span>
-          <span className="status">{film.quality}</span>
+          <span className="episode">
+            {" "}
+            {film.episode_current > 1
+              ? `Tập ${film.episode_current}`
+              : "Phim lẻ "}
+          </span>
+          <span className="status">{film.lang}</span>
 
           <div className="icon_overlay"></div>
           <div className="films-des">

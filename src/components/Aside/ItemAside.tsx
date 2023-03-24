@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Ifilm } from "../../Redux/FilmSlice";
+import { IApiFilm } from "../../Redux/ApiSlice";
 import { Handle } from "../../untils";
 import "./Aside.scss";
 import PathLink from "../../contants";
-const AsideItem = ({ items }: { items: Ifilm }) => {
+const AsideItem = ({ items }: { items: IApiFilm }) => {
   return (
     <div className="aside-popular mb-1">
       <Link
@@ -24,7 +24,7 @@ const AsideItem = ({ items }: { items: Ifilm }) => {
             {items.origin_name}
           </p>
           <p className="items_film-des_view text-primary flex items-center gap-1">
-            {Handle.HandleView(Number(items.view))}
+            {Handle.HandleView(items.view)}
           </p>
         </figcaption>
       </Link>

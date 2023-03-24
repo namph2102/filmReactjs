@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "./Redux/Store";
 import { fetchDataFilm } from "./Redux/FilmSlice";
+import { fetchAPIDataFilm } from "./Redux/ApiSlice";
 function App() {
   const dispatch: AppDispatch = useDispatch();
   useEffect(() => {

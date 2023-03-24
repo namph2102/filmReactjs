@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import FilmSlice from "./FilmSlice";
+import ApiSlice from "./ApiSlice";
 const store = configureStore({
   reducer: {
     film: FilmSlice,
+    api: ApiSlice,
   },
 });
 export default store;

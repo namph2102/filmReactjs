@@ -18,6 +18,9 @@ module.exports = {
       height: {
         header: "90px",
       },
+      fontSize: {
+        small: "11.2px",
+      },
       fontFamily: { mono: ["Monospace", "sans-serif"] },
       colors: {
         primary: "#ff971b",

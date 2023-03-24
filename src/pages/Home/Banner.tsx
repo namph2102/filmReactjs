@@ -6,10 +6,12 @@ import {
   BiRadioCircleMarked,
 } from "react-icons/bi";
 import { defaultIconSize } from "../../contants";
-import { bannerSliders } from "../../contants";
+import PathLink from "../../contants";
 import BannerItem from "./BannerItem";
-
+import axios from "axios";
+import { Ifilm } from "../../Redux/FilmSlice";
 const Banner = () => {
+  const [bannerSliders, setBannerSliders] = useState<Ifilm[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const bannerBox = useRef<HTMLElement>(null);
   const InCreaseIndex = () => {
@@ -33,17 +35,29 @@ const Banner = () => {
   useEffect(() => {
     let cursorX: number;
     let isDragg = false;
-    bannerBox.current?.addEventListener("mousemove", (e) => {
+    const handleMousemove = (e: any) => {
       if (isDragg) {
         if (e.pageX > cursorX) InCreaseIndex();
         else DecreaseIndex();
         isDragg = false;
       }
-    });
-    bannerBox.current?.addEventListener("dragstart", (e) => {
+    };
+    const hanldeDragStart = (e: any) => {
       cursorX = e.pageX;
       isDragg = true;
-    });
+    };
+    bannerBox.current?.addEventListener("mousemove", handleMousemove);
+    bannerBox.current?.addEventListener("dragstart", hanldeDragStart);
+    setCurrentIndex(1);
+    (async function () {
+      const res = await axios(PathLink.domain + "api/v2/banner");
+      setBannerSliders(res.data.data);
+      setCurrentIndex(0);
+    })();
+    return () => {
+      bannerBox.current?.removeEventListener("mousemove", handleMousemove);
+      bannerBox.current?.removeEventListener("dragstart", hanldeDragStart);
+    };
   }, []);
   return (
     <>
@@ -51,7 +65,16 @@ const Banner = () => {
         {bannerSliders.map((slider, index) => {
           // slider % translateX (-100%) 0 100%
           const translateX = (currentIndex - index) * -100 + "%";
-          return <BannerItem key={index} {...slider} translateX={translateX} />;
+          return (
+            <BannerItem
+              slug={slider.slug}
+              link={slider.poster_url}
+              key={index}
+              title={slider.name}
+              subname={slider.origin_name}
+              translateX={translateX}
+            />
+          );
         })}
 
         <div className="banner_direction">

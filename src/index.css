@@ -21,6 +21,32 @@
     color: #a5a5a5;
     font-size: 13px;
   }
+  .btn_grag {
+    font-size: 12px;
+    background-image: linear-gradient(
+      to right,
+      #ff512f 0%,
+      #dd2476 51%,
+      #ff512f 100%
+    );
+    text-align: center;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 8px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .btn_grag:hover {
+    background-image: linear-gradient(
+      to right,
+      #f2112f 0%,
+      #f01476 51%,
+      #f2112f 100%
+    );
+  }
 }
 @layer components {
   .btn_bookmark-close {

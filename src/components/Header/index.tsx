@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useRef } from "react";
 import logo from "../../assets/logo.png";
 import "./header.scss";
 import { BiBookmark, BiMenu } from "react-icons/bi";
-import { Tooltip, Badge, Avatar } from "@mui/material";
+import { Tooltip, Badge } from "@mui/material";
 import { Link } from "react-router-dom";
 import Menu from "../NavContainer";
 import SearchContainer from "../Search";
@@ -12,6 +12,7 @@ import { RenderDesktopProfile, RenderProfile } from "./BookMarkDestop";
 const Header = () => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const [isOppenBookmark, setOppenBookmark] = useState<boolean>(false);
+  const navRef = useRef<any>(null);
   const screenLG = useMemo<number>(
     () => window.innerWidth,
     [window.innerWidth]
@@ -24,9 +25,10 @@ const Header = () => {
     isOpenMenu && setIsOpenMenu(false);
     setOppenBookmark(!isOppenBookmark);
   };
+
   return (
-    <header className="header  bg-main flex items-center flex-wrap">
-      <div className="container sm:h-header mx-auto flex justify-between flex-wrap">
+    <header className="header bg-main flex items-center flex-wrap sticky">
+      <div className="container sm:h-header mx-auto flex justify-between flex-wrap items-center">
         <div className="logo basis-full sm:basis-1/4 lg:basis-3/12">
           <Tooltip title="Trở về trang chủ" followCursor>
             <Link to="/" className="sm:justify-start justify-center  flex">
@@ -49,7 +51,7 @@ const Header = () => {
         </div>
       </div>
       {/* Navigation */}
-      <div className="basis-full flex items-center bg-menu">
+      <div ref={navRef} className="basis-full flex items-center bg-menu">
         <nav className="container relative sm:mx-auto w-full mx-3">
           <div className="flex justify-between items-center my-2 lg:hidden">
             <BiMenu size="3rem" cursor="pointer" onClick={HandleClick} />

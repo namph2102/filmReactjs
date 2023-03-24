@@ -50,13 +50,13 @@ const SearchContainer = (): JSX.Element => {
   }, [search]);
 
   useEffect(() => {
-    document.onclick = () => {
+    const handleClick = () => {
       setSearch("");
     };
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Backspace") {
-      }
-    });
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
   }, []);
 
   return (

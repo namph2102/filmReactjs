@@ -1,13 +1,12 @@
 import React from "react";
-import { Ifilm } from "../../Redux/FilmSlice";
+import { IApiFilm } from "../../Redux/ApiSlice";
 import ItemAside from "./ItemAside";
 
 type Tprops = {
   title?: string;
-  kind?: string;
-  listFilm: Ifilm[];
+  listFilm: IApiFilm[];
 };
-const FimlsBoxAside: React.FC<Tprops> = ({ title, listFilm, kind }) => {
+const FimlsBoxAside: React.FC<Tprops> = ({ title, listFilm }) => {
   return (
     <section className="px-5">
       {title && (
@@ -16,11 +15,9 @@ const FimlsBoxAside: React.FC<Tprops> = ({ title, listFilm, kind }) => {
         </div>
       )}
       {listFilm.length > 0 &&
-        listFilm
-          .filter((fiml: Ifilm) => fiml.kind == kind)
-          .map((film: Ifilm, index) => (
-            <ItemAside key={film.id} items={film} />
-          ))}
+        listFilm.map((film: IApiFilm) => (
+          <ItemAside key={film.id} items={film} />
+        ))}
     </section>
   );
 };
