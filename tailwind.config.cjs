@@ -26,13 +26,20 @@ module.exports = {
         primary: "#ff971b",
         second: " #8a9eaf",
         text: "#d8d8d8",
+        vip: "#ff971b",
+        admin: "#5e89c9",
+        user: "#ccc",
       },
+
       backgroundColor: {
         menu: "#12171B",
         main: "#212C37",
         content: "#151D25",
         hover: "#12171b",
         input: "#17242E",
+        admin: "#383f44",
+        vip: "#0e0e0e",
+        user: "#333",
       },
       backgroundImage: {
         status: "linear-gradient(to right,#ff00cc 0%,#333399 51%,#ff00cc 100%)",

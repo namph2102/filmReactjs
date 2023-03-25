@@ -15,12 +15,15 @@ const HeaderComment = () => {
       <div className="flex items-center">
         <div className={styles.border_items}>
           <Tooltip title="Hot nhất">
-            <RiFireFill color="red" fontSize="1.5rem" cursor="pointer" />
+            <span>
+              {" "}
+              <RiFireFill color="red" fontSize="1.5rem" cursor="pointer" />
+            </span>
           </Tooltip>
         </div>
         <div
           onClick={() => setIsOpenSubMenu(!isOpenSubmenu)}
-          className={`flex items-center text-base ml-2 ${styles.border_items_bl}`}
+          className={`flex items-center text-base  ${styles.border_items_bl}`}
         >
           Được bỏ phiếu nhiều nhất <RiArrowDownSFill />
           <ul className={`${!isOpenSubmenu && "hidden"} ${styles.subfilter}`}>

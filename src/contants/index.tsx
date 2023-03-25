@@ -13,4 +13,5 @@ class PathLink {
   seeProfile = "tai-khoan";
   domain = "http://localhost:3000/";
 }
+
 export default new PathLink();

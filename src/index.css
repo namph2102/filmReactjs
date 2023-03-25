@@ -56,3 +56,23 @@
     @apply flex justify-between items-center flex-wrap;
   }
 }
+.bg-vip {
+  background-color: #0e0e0e;
+}
+
+.bg-user {
+  background-color: #333;
+}
+
+.bg-admin {
+  background-color: #344048;
+}
+.text-admin {
+  color: #81aff4;
+}
+.text-vip {
+  color: #ff971b;
+}
+.text-user {
+  color: #ccc;
+}

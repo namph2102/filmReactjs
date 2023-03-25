@@ -26,4 +26,26 @@ const ApiSlice = createSlice({
   } as IApiStateInit,
   reducers: {},
 });
+
+export interface IUserComment {
+  id_user: number;
+  fullname: string;
+  icons: {
+    title: string;
+    link: string;
+  }[];
+  avata: string;
+  permission: string;
+  vip: number;
+}
+export interface TpropComment {
+  id_comment: number;
+  id_matched: number;
+  id_film: number;
+  comment: string;
+  updated_at: number;
+  created_at: number;
+  subcomment: any[] | "";
+  user_comment: IUserComment;
+}
 export default ApiSlice.reducer;

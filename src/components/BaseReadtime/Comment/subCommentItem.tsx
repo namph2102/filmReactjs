@@ -1,41 +1,21 @@
-import React, { useState, memo } from "react";
+import React, { useState } from "react";
 import { Tooltip, Avatar } from "@mui/material";
-import { BiTime, BiDislike, BiLike } from "react-icons/bi";
+import { BiTime, BiDislike, BiLike, BiChat } from "react-icons/bi";
 import { RiReplyLine } from "react-icons/ri";
 import styles from "./Comment.module.scss";
 import UserComment from "./UserComment";
-import SubcommentItem from "./subCommentItem";
 import HandleTimeDiff from "../../../untils/HandleTime";
-interface IUserComment {
-  id_user: number;
-  fullname: string;
-  icons: {
-    title: string;
-    link: string;
-  }[];
-  avata: string;
-  permission: string;
-  vip: number;
-}
-export interface TpropComment {
-  id_comment: number;
-  id_matched: number;
-  id_film: number;
-  comment: string;
-  updated_at: number;
-  created_at: number;
-  subcomment: any[] | any | "";
-  user_comment: IUserComment;
-}
-const CommenItem: React.FC<{ comment: TpropComment }> = ({ comment }) => {
+import { TpropComment } from "./CommenItem";
+
+const SubcommentItem: React.FC<{ comment: TpropComment; reply: string }> = ({
+  comment,
+  reply,
+}) => {
   const [isOpenReply, setIsOpenReply] = useState<boolean>(false);
-  const listsunComent: TpropComment[] = comment.subcomment
-    ? JSON.parse(comment.subcomment)
-    : [];
 
   return (
     <>
-      <li className="flex gap-2 mb-2">
+      <li className="flex gap-2 mb-2 ml-10 mt-6">
         <div className="relative">
           <Avatar src={comment.user_comment.avata} />
           <span className={styles.subavata}>
@@ -56,12 +36,13 @@ const CommenItem: React.FC<{ comment: TpropComment }> = ({ comment }) => {
             )}
           </span>
         </div>
+
         <div className="left-comment relative">
           <div className="text-base font-semibold flex items-center flex-wrap">
             {/*vip  text-yellow-600 / admin */}
             <span
-              className={`${styles.usechat_name} ${
-                "capitalize text-" + comment.user_comment.permission
+              className={`capitalize ${styles.usechat_name} ${
+                "text-" + comment.user_comment.permission
               }`}
             >
               {comment.user_comment.fullname}
@@ -77,6 +58,12 @@ const CommenItem: React.FC<{ comment: TpropComment }> = ({ comment }) => {
                 </Tooltip>
               ))}
             </div>
+          </div>
+          <div className="flex items-center italic ">
+            <BiChat /> <span className="mx-2">Trả lời</span>
+            <span className="text-blue-500 capitalize cursor-pointer">
+              {reply}
+            </span>
           </div>
           <p
             className={` text-${comment.user_comment.permission} bg-${comment.user_comment.permission}  ${styles.comment}`}
@@ -103,20 +90,12 @@ const CommenItem: React.FC<{ comment: TpropComment }> = ({ comment }) => {
       </li>
 
       {isOpenReply && (
-        <li className="lg:w-1/2 md:8/12 w-11/12">
+        <li className="lg:w-1/2 md:8/12 w-11/12 ml-10 mt-6">
           <UserComment />
         </li>
       )}
-      {listsunComent.length > 0 &&
-        listsunComent.map((subcomment: TpropComment, index) => (
-          <SubcommentItem
-            key={index}
-            reply={comment.user_comment.fullname}
-            comment={subcomment}
-          />
-        ))}
     </>
   );
 };
 
-export default memo(CommenItem);
+export default SubcommentItem;

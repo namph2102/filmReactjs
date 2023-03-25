@@ -3,8 +3,10 @@ import styles from "./Loadding.module.scss";
 const lenLoading: number = 10;
 const listsss = new Array<number>(lenLoading);
 listsss.fill(0);
-
-const LoaddingFiml = () => {
+type Tloading = {
+  height?: string;
+};
+const LoaddingFiml: React.FC<Tloading> = ({ height }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(1);
   useEffect(() => {
     const idTimeout = setTimeout(() => {
@@ -16,7 +18,9 @@ const LoaddingFiml = () => {
     };
   }, [currentIndex]);
   return (
-    <ul className={styles.wrapper}>
+    <ul
+      className={`${!height ? "min-h-screen" : `${height}`} ${styles.wrapper}`}
+    >
       {listsss.map((_, index) => (
         <li
           key={index}
