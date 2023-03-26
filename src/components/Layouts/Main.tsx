@@ -1,9 +1,12 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Routers from "../../routers/Routers";
 import Aside from "../Aside";
 import Footer from "../Footer";
 import Header from "../Header";
-import BaseReadtime from "../BaseReadtime";
+
+import RotateLoadding from "../Loadding/RotateLoadding";
+const BaseReadtime = React.lazy(() => import("../BaseReadtime"));
+// import BaseReadtime from "../BaseReadtime";
 const Main = () => {
   return (
     <>
@@ -18,8 +21,10 @@ const Main = () => {
           </aside>
         </main>
       </section>
-      <div className="container mx-auto">
-        <BaseReadtime />
+      <div className="container mx-auto relative">
+        <Suspense fallback={<RotateLoadding />}>
+          <BaseReadtime />
+        </Suspense>
       </div>
       <Footer />
     </>

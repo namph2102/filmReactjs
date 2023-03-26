@@ -1,35 +1,50 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useEffect } from "react";
 
 import { Tooltip } from "@mui/material";
-import { RiFireFill, RiArrowDownSFill } from "react-icons/ri";
+import { RiFireFill } from "react-icons/ri";
 import styles from "./Comment.module.scss";
+import PathLink from "../../../contants";
+import axios from "axios";
 const HeaderComment = () => {
-  const [isOpenSubmenu, setIsOpenSubMenu] = useState<boolean>(false);
+  const [totalCommemt, setTotalCommemt] = useState<number>(0);
+  useEffect(() => {
+    let idTimeout: any;
+    (async function () {
+      idTimeout = setInterval(async () => {
+        const res = await axios.post(
+          PathLink.domain + "api/comments/getlength",
+          {
+            method: "post",
+            id_film: 0,
+          }
+        );
+        setTotalCommemt(res.data.data);
+      }, 2000);
+    })();
+    return () => {
+      clearInterval(idTimeout);
+    };
+  }, [totalCommemt]);
 
   return (
     <div
       className={`thread-wapper flex justify-between px-3 border-b-2 border-gray-600 relative mb-2`}
     >
-      <div className="total_comment text-lg font-semibold">41 Bình Luận</div>
-      <div className={`${styles.process} w-3/4`}></div>
+      <div className="total_comment text-lg font-semibold">
+        {totalCommemt} Bình Luận
+      </div>
+      <div
+        style={{ width: `${((totalCommemt * 100) / 200).toFixed(2)}%` }}
+        className={`${styles.process}`}
+      ></div>
       <div className="flex items-center">
         <div className={styles.border_items}>
-          <Tooltip title="Hot nhất">
+          <Tooltip title="Max 200">
             <span>
               {" "}
               <RiFireFill color="red" fontSize="1.5rem" cursor="pointer" />
             </span>
           </Tooltip>
-        </div>
-        <div
-          onClick={() => setIsOpenSubMenu(!isOpenSubmenu)}
-          className={`flex items-center text-base  ${styles.border_items_bl}`}
-        >
-          Được bỏ phiếu nhiều nhất <RiArrowDownSFill />
-          <ul className={`${!isOpenSubmenu && "hidden"} ${styles.subfilter}`}>
-            <li>Cũ nhất</li>
-            <li>Mới nhất</li>
-          </ul>
         </div>
       </div>
     </div>

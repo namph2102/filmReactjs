@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState, useEffect, useRef } from "react";
 import {
   BiTime,
   BiDislike,
@@ -13,9 +13,13 @@ import { RiReplyLine } from "react-icons/ri";
 import styles from "../Comment.module.scss";
 import { TpropComment } from "../../../../contants";
 import AvataActtached from "../ImageAttach";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GetSubcommentComment } from "../../../../Redux/CommentSlice";
-import { RootState } from "../../../../Redux/Store";
+import PathLink from "../../../../contants";
+import axios from "axios";
+import { TdataLiscomments } from "../../../../LocalStorage";
+import ToastMessage from "../../../../untils/ToastMessage";
+
 type Tprops = {
   comment: TpropComment;
   reply?: string;
@@ -37,6 +41,7 @@ const LeftHeaderComment: React.FC<Tprops> = ({
   const [lengthSub, setLengthSub] = useState<number>(
     comment.subcomment.length || lengthParent
   );
+
   const firstloading: boolean = true;
   const handleSeeMoreComment = () => {
     if (isOpenSubComment) {
@@ -75,17 +80,33 @@ const LeftHeaderComment: React.FC<Tprops> = ({
   }, []);
   useEffect(() => {
     setLengthSub(lengthParent);
-
     if (!firstloading) {
       setIsopenSubcomment(true);
-      console.log(comment.subcomment);
     }
   }, [lengthParent]);
+  const [isLiked, setIsliked] = useState<any>(0);
+  const handleUpdate = (value: number) => {
+    (async () => {
+      const data: TdataLiscomments = {
+        id_comment: comment.id_comment,
+        crease: value,
+      };
+      try {
+        const res = await axios.post(PathLink.domain + "api/users/", {
+          method: "POST",
+          data: { id_comment: comment.id_comment, crease: value },
+        });
+      } catch (err) {
+        ToastMessage("Lỗi đường truyền !", "😭").error();
+      }
+      setIsliked(value);
+    })();
+  };
   return (
     <>
       <li className="flex gap-2 mb-2">
         <AvataActtached comment={comment} />
-        <div className="left-comment relative">
+        <div className="left-comment relative flex-1">
           <div className="text-base font-semibold flex items-center flex-wrap">
             {/*vip  text-yellow-600 / admin */}
             <span
@@ -122,9 +143,30 @@ const LeftHeaderComment: React.FC<Tprops> = ({
           </p>
 
           <p className="flex gap-2 items-center my-2">
-            <BiLike size="1.25rem" cursor="pointer" />
-            <span>{comment.total_like}</span>
-            <BiDislike size="1.25rem" cursor="pointer" />
+            <BiLike
+              size="1.25rem"
+              cursor="pointer"
+              className={`${isLiked == 1 && "text-primary"}`}
+              onClick={() => {
+                isLiked == 1 || handleUpdate(1);
+              }}
+            />
+            <span
+              className={`${
+                (comment.total_like > 0 && "text-blue-500") ||
+                (comment.total_like < 0 && "text-red-700")
+              }`}
+            >
+              {Math.abs(comment.total_like)}
+            </span>
+            <BiDislike
+              size="1.25rem"
+              cursor="pointer"
+              className={`${isLiked === -1 && "text-notlike"}`}
+              onClick={() => {
+                isLiked == -1 || handleUpdate(-1);
+              }}
+            />
             <RiReplyLine
               className="rotate-180"
               size="1.25rem"

@@ -1,10 +1,12 @@
-import { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { IApiFilm } from "../../Redux/ApiSlice";
 import { useEffect } from "react";
-import FimlsBoxAside from "./FimlsBoxAside";
+const FimlsBoxAside = React.lazy(() => import("./FimlsBoxAside"));
+
 import PathLink from "../../contants";
 import LoaddingFiml from "../Loadding";
 import axios from "axios";
+
 type TProps = {
   feature: IApiFilm[];
   series: IApiFilm[];
@@ -15,8 +17,10 @@ const RenderFimlsBoxAside: React.FC<TProps> = ({
 }): JSX.Element => {
   return (
     <>
-      <FimlsBoxAside title="Phim lẻ xem nhiều" listFilm={feature} />
-      <FimlsBoxAside title="Phim bộ xem nhiều" listFilm={series} />
+      <Suspense fallback={<LoaddingFiml />}>
+        <FimlsBoxAside title="Phim lẻ xem nhiều" listFilm={feature} />
+        <FimlsBoxAside title="Phim bộ xem nhiều" listFilm={series} />
+      </Suspense>
     </>
   );
 };

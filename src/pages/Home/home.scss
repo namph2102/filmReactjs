@@ -51,3 +51,15 @@
     font-size: 32px;
   }
 }
+
+@media screen and (max-width: 500px) {
+  .banner_list-item {
+    .slider_dots {
+      display: none;
+    }
+    .btn_left,
+    .btn_right {
+      padding: 8px 12px;
+    }
+  }
+}

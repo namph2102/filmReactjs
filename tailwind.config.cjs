@@ -29,6 +29,7 @@ module.exports = {
         vip: "#ff971b",
         admin: "#5e89c9",
         user: "#ccc",
+        notlike: "#bd0e0e",
       },
 
       backgroundColor: {

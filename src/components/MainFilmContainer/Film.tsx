@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Ifilm } from "../../Redux/FilmSlice";
+
 type props = {
   film: Ifilm;
 };

@@ -1,5 +1,5 @@
 import React, { memo, useMemo } from "react";
-import { Avatar } from "@mui/material";
+import { Avatar, Tooltip } from "@mui/material";
 import { RiSendPlaneLine } from "react-icons/ri";
 import { useFormik } from "formik";
 
@@ -56,9 +56,7 @@ const UserComment: React.FC<{
       .then((res: any) => {
         getNewCommemt(res.payload.data);
       })
-      .catch(() => {
-        ToastMessage("Lỗi đường truyền :( !", "😚").warning();
-      });
+      .catch(() => {});
   }
 
   return (
@@ -73,7 +71,14 @@ const UserComment: React.FC<{
           styles.animae_reply
         }`}
       >
-        <Avatar src="https://hhninja.xyz/assets/upload/srywnadtFlJgDEq1674505557.jpeg" />
+        <Tooltip
+          className="cursor-pointer"
+          title={myAccount.fullname}
+          arrow
+          placement="bottom"
+        >
+          <Avatar src={myAccount.avata} />
+        </Tooltip>
         <textarea
           placeholder="Tham gia bình luận ..."
           name="comment"

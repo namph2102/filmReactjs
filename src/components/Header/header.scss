@@ -36,3 +36,8 @@ header {
     color: white;
   }
 }
+@media screen and (max-width: 641px) {
+  header {
+    top: -145px;
+  }
+}

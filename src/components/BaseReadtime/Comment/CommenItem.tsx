@@ -3,7 +3,7 @@ import clsx from "clsx";
 import styles from "./Comment.module.scss";
 import UserComment from "./UserComment";
 
-import PathLink, { TpropComment } from "../../../contants";
+import { TpropComment } from "../../../contants";
 
 import LeftHeaderComment from "./layoutComment.tsx/LeftHeaderComment";
 
@@ -30,7 +30,7 @@ const CommenItem: React.FC<{ comment: TpropComment; reply?: string }> = ({
         handleSetListsunComent={setListsunComent}
       />
 
-      <ul className="box_container ml-10 my-4">
+      <ul className="box_container ml-4 sm:ml-10 my-4">
         <li
           className={`commemt_effect-form  ${clsx({
             [styles.btn_reply]: isOpenReply,
