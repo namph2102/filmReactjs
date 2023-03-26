@@ -1,25 +1,34 @@
 import axios from "axios";
 import React, { memo, useState, useEffect } from "react";
 import CommenItem from "./CommenItem";
-import PathLink from "../../../contants";
-import { TpropComment } from "./CommenItem";
-import styles from "./Comment.module.scss";
+import PathLink, { TpropComment } from "../../../contants";
+
 import ToastMessage from "../../../untils/ToastMessage";
 import LoaddingFiml from "../../Loadding";
 const CommentContainer = () => {
   const [commemts, setcoments] = useState<TpropComment[]>([]);
+  const [time, setTime] = useState<number>(0);
+  console.log("re-render container");
+
   useEffect(() => {
+    let idtiemout: any;
     (async () => {
       try {
-        const res = await axios.get(PathLink.domain + "api/comments");
-        console.log(res.data.data);
+        idtiemout = setTimeout(async () => {
+          const res = await axios.get(PathLink.domain + "api/comments");
+          setcoments(res.data.data);
 
-        setcoments(res.data.data);
+          setTime(time + 1);
+        }, 2000);
       } catch (err) {
         ToastMessage("😭 Chúng tôi rất tiếc vì lỗi này :(");
       }
     })();
-  }, []);
+    return () => {
+      clearTimeout(idtiemout);
+    };
+  }, [time]);
+
   return (
     <ul className={`text-text w-full 0 py-5 px-2 relative`}>
       {commemts.length > 0 ? (

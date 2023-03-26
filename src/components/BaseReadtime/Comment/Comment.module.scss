@@ -1,4 +1,8 @@
 .wapper {
+  li {
+    max-width: 95%;
+    margin-top: 12px;
+  }
   .process {
     content: "";
     position: absolute;
@@ -8,9 +12,8 @@
     background-color: #00b38f;
   }
   .comment {
-    display: inline-block;
-    max-width: 90%;
-    padding: 10px;
+    display: block;
+    padding: 14px 10px;
     word-break: break-word;
     margin-left: 0;
     margin-top: 4px;
@@ -51,11 +54,7 @@
       }
     }
   }
-  .animae_reply {
-    z-index: 2;
-    transform: 0.1s linear;
-    animation: effectReply 1s linear;
-  }
+
   .subavata {
     position: absolute;
     top: -20px;
@@ -64,15 +63,6 @@
     width: 30px;
     height: 30px;
     cursor: pointer;
-  }
-}
-
-@keyframes effectReply {
-  0% {
-    transform: translateY(30px);
-  }
-  100% {
-    transform: translateY(0px);
   }
 }
 
@@ -97,4 +87,9 @@
   .usechat_name {
     max-width: 70%;
   }
+}
+.btn_reply {
+  transition: 0.5s linear !important;
+  height: 100px !important;
+  opacity: 1 !important;
 }

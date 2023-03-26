@@ -29,7 +29,7 @@ export interface IStateFilm {
   isLoading: boolean;
   status: string;
 }
-const FimlSlice = createSlice({
+const FimlSliceImportant = createSlice({
   name: "film",
   initialState: {
     fimls: [],
@@ -64,12 +64,13 @@ const FimlSlice = createSlice({
   },
 });
 
-export const { uploadFimls } = FimlSlice.actions;
-export default FimlSlice.reducer;
+export const { uploadFimls } = FimlSliceImportant.actions;
+export default FimlSliceImportant.reducer;
 // thunk
 
 export const fetchDataFilm = createAsyncThunk("film/featchfilm", async () => {
   const res = await axios.get(PathLink.domain + "api/v2");
   const resHome = await axios.get(PathLink.domain + "api/v3/home");
+
   return { films: res.data.data, filmsHome: resHome.data.data };
 });
