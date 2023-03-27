@@ -5,6 +5,17 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "./Redux/Store";
 import { fetchDataFilm } from "./Redux/FilmSlice";
 import { ToastContainer } from "react-toastify";
+
+export const commemtReadTime = (id_film: number) => {
+  setInterval(() => {
+    window.dispatchEvent(
+      new CustomEvent(`commemts-id:${id_film}`, {
+        detail: `----Nội dung comment${id_film}----`,
+      })
+    );
+  }, 2000);
+};
+
 function App() {
   const dispatch: AppDispatch = useDispatch();
   useEffect(() => {

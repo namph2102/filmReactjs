@@ -38,6 +38,19 @@ type payload = {
   id_parent: number;
   subcomment: number[] | any;
 };
+export const GetListComments = (idFilm: number = 0) => {
+  return async () => {
+    try {
+      const res = await axios.post(PathLink.domain + "api/comments/list", {
+        method: "POST",
+        idFilm,
+      });
+      return { comments: res.data.data, status: 200 };
+    } catch {
+      return { state: 404, comments: [] };
+    }
+  };
+};
 export const GetSubcommentComment = (payload: payload) => {
   return async () => {
     if (!payload.subcomment.length) return;
@@ -52,7 +65,33 @@ export const GetSubcommentComment = (payload: payload) => {
 
       return res.data.data;
     } catch {
-      return { message: "Không tìm th thấy" };
+      return { message: "Không tìm  thấy" };
+    }
+  };
+};
+
+export const GetHandleLikeCopmment = (commemt: {
+  id_comment: number;
+  crease: number;
+}) => {
+  return async () => {
+    return await axios.post(PathLink.domain + "api/users/", {
+      method: "POST",
+      data: { id_comment: commemt.id_comment, crease: commemt.crease },
+    });
+  };
+};
+
+export const getlengthComment = (idFilm: number) => {
+  return async () => {
+    try {
+      const res = await axios.post(PathLink.domain + "api/comments/getlength", {
+        method: "POST",
+        id_film: idFilm,
+      });
+      return { message: res.data.message, length: res.data.data, status: 200 };
+    } catch (message) {
+      return { status: 404 };
     }
   };
 };

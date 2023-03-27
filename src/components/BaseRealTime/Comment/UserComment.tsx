@@ -9,7 +9,6 @@ import ToastMessage from "../../../untils/ToastMessage";
 // user co1 login hay ko
 const isLoggin = true;
 
-import axios from "axios";
 import { myAccount } from "../../../contants";
 import { useDispatch } from "react-redux";
 import { PostAddComemt } from "../../../Redux/CommentSlice";
@@ -19,19 +18,29 @@ const UserComment: React.FC<{
   id_film?: number;
   getNewCommemt?: any;
 }> = ({ subcomment = "", id_film = 0, getNewCommemt }) => {
+  let maxlength = 40;
+  if (myAccount.permission.toLowerCase() === "admin") {
+    maxlength = 1000;
+  } else if (myAccount.permission.toLowerCase() === "vip") {
+    maxlength = 10 * myAccount.vip;
+  }
+
   const formik: any = useFormik({
     initialValues: {
       comment: "",
     },
     validationSchema: Yup.object({
-      comment: Yup.string().required().min(5, "Ít nhất 5 ký tự"),
+      comment: Yup.string()
+        .required()
+        .min(2, "Ít nhất 2 ký tự bạn nhé 😚😚 !")
+        .max(maxlength, `Bạn chỉ được bình luận với ${maxlength} ký tự!`),
     }),
 
     onSubmit: (values) => {
       const comment: string = values.comment
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;");
-      ToastMessage("Chờ xíu nhé !", "🚀").normal();
+      ToastMessage("Đang xử lý  !", "🚀").normal({ autoClose: 2000 });
       addComment(comment);
 
       formik.handleReset();
@@ -41,7 +50,9 @@ const UserComment: React.FC<{
 
   const handleBlur = () => {
     if (formik.errors.comment) {
-      ToastMessage("Ít nhất 5 ký tự bạn nhé 😚😚 !", "😚").warning();
+      ToastMessage(formik.errors.comment, "😚").warning({
+        autoClose: 2000,
+      });
     }
   };
   function addComment(comment: string) {
@@ -92,7 +103,7 @@ const UserComment: React.FC<{
       <div className={`flex justify-end m-3 ${!isLoggin && "hidden"} `}>
         <button
           type="submit"
-          className="bg-teal-600 hover:bg-teal-700 text-sm text-text py-2 rounded-md px-4 flex items-center"
+          className="bg-teal-600 hover:bg-teal-700 text-sm text-text py-2 rounded-md px-6  lg:w-20 w-1/4 justify-center flex items-center"
         >
           <RiSendPlaneLine className="inline-block mr-1" /> Gửi
         </button>

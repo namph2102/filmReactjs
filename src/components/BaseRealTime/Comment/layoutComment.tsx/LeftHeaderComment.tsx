@@ -1,8 +1,7 @@
 import React, { memo, useState, useEffect, useRef } from "react";
 import {
   BiTime,
-  BiDislike,
-  BiLike,
+
   BiCaretDown,
   BiCaretUp,
   BiChat,
@@ -15,10 +14,9 @@ import { TpropComment } from "../../../../contants";
 import AvataActtached from "../ImageAttach";
 import { useDispatch } from "react-redux";
 import { GetSubcommentComment } from "../../../../Redux/CommentSlice";
-import PathLink from "../../../../contants";
-import axios from "axios";
-import { TdataLiscomments } from "../../../../LocalStorage";
-import ToastMessage from "../../../../untils/ToastMessage";
+
+
+import CommentUpdate from "./HandleUpdateTotalComment";
 
 type Tprops = {
   comment: TpropComment;
@@ -84,24 +82,7 @@ const LeftHeaderComment: React.FC<Tprops> = ({
       setIsopenSubcomment(true);
     }
   }, [lengthParent]);
-  const [isLiked, setIsliked] = useState<any>(0);
-  const handleUpdate = (value: number) => {
-    (async () => {
-      const data: TdataLiscomments = {
-        id_comment: comment.id_comment,
-        crease: value,
-      };
-      try {
-        const res = await axios.post(PathLink.domain + "api/users/", {
-          method: "POST",
-          data: { id_comment: comment.id_comment, crease: value },
-        });
-      } catch (err) {
-        ToastMessage("Lỗi đường truyền !", "😭").error();
-      }
-      setIsliked(value);
-    })();
-  };
+
   return (
     <>
       <li className="flex gap-2 mb-2">
@@ -143,29 +124,9 @@ const LeftHeaderComment: React.FC<Tprops> = ({
           </p>
 
           <p className="flex gap-2 items-center my-2">
-            <BiLike
-              size="1.25rem"
-              cursor="pointer"
-              className={`${isLiked == 1 && "text-primary"}`}
-              onClick={() => {
-                isLiked == 1 || handleUpdate(1);
-              }}
-            />
-            <span
-              className={`${
-                (comment.total_like > 0 && "text-blue-500") ||
-                (comment.total_like < 0 && "text-red-700")
-              }`}
-            >
-              {Math.abs(comment.total_like)}
-            </span>
-            <BiDislike
-              size="1.25rem"
-              cursor="pointer"
-              className={`${isLiked === -1 && "text-notlike"}`}
-              onClick={() => {
-                isLiked == -1 || handleUpdate(-1);
-              }}
+            <CommentUpdate
+              id_comment={comment.id_comment}
+              total_like={comment.total_like}
             />
             <RiReplyLine
               className="rotate-180"

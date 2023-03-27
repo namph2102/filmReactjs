@@ -6,6 +6,11 @@ export interface ISlider {
   title: string;
   subname: string;
 }
+export interface TdataLiscomments {
+  id_comment: number;
+  crease: number;
+}
+
 export interface IUserComment {
   id_user: number;
   fullname: string;

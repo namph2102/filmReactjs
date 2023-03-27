@@ -5,8 +5,8 @@ import Footer from "../Footer";
 import Header from "../Header";
 
 import RotateLoadding from "../Loadding/RotateLoadding";
-const BaseReadtime = React.lazy(() => import("../BaseReadtime"));
-// import BaseReadtime from "../BaseReadtime";
+const CommemtContainers = React.lazy(() => import("../BaseRealTime"));
+
 const Main = () => {
   return (
     <>
@@ -23,7 +23,7 @@ const Main = () => {
       </section>
       <div className="container mx-auto relative">
         <Suspense fallback={<RotateLoadding />}>
-          <BaseReadtime />
+          <CommemtContainers idFilm={0} />
         </Suspense>
       </div>
       <Footer />

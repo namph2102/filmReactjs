@@ -4,31 +4,33 @@ import { Tooltip } from "@mui/material";
 import { RiFireFill } from "react-icons/ri";
 import styles from "./Comment.module.scss";
 import PathLink from "../../../contants";
-import axios from "axios";
-const HeaderComment = () => {
+import { useDispatch } from "react-redux";
+import { getlengthComment } from "../../../Redux/CommentSlice";
+const HeaderComment: React.FC<{ idFilm: number }> = ({ idFilm = 0 }) => {
+  const dispatch: any = useDispatch();
   const [totalCommemt, setTotalCommemt] = useState<number>(0);
   useEffect(() => {
     let idTimeout: any;
     (async function () {
       idTimeout = setInterval(async () => {
-        const res = await axios.post(
-          PathLink.domain + "api/comments/getlength",
-          {
-            method: "post",
-            id_film: 0,
+        dispatch(getlengthComment(idFilm)).then(
+          (comments: { status: number; message: string; length: number }) => {
+            if (comments.status == 200) {
+              if (totalCommemt !== comments.length)
+                setTotalCommemt(comments.length);
+            }
           }
         );
-        setTotalCommemt(res.data.data);
       }, 2000);
     })();
     return () => {
       clearInterval(idTimeout);
     };
-  }, [totalCommemt]);
+  }, []);
 
   return (
     <div
-      className={`thread-wapper flex justify-between px-3 border-b-2 border-gray-600 relative mb-2`}
+      className={`thread-wapper flex justify-between px-3 border-b-2 border-gray-600 relative mb-10`}
     >
       <div className="total_comment text-lg font-semibold">
         {totalCommemt} Bình Luận

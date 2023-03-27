@@ -15,20 +15,20 @@ const ToastMessage = (message = "", icon?: string) => {
   };
   if (icon) options.icon = icon;
   return {
-    normal() {
-      toast(message, options);
+    normal(suboptions?: object) {
+      return toast(message, { ...options, ...suboptions });
     },
-    success() {
-      toast.success(message, options);
+    success(suboptions?: object) {
+      return toast.success(message, { ...options, ...suboptions });
     },
-    error() {
-      toast.error(message, options);
+    error(suboptions?: object) {
+      return toast.error(message, { ...options, ...suboptions });
     },
-    warning() {
-      toast.warning(message, options);
+    warning(suboptions?: object) {
+      return toast.warning(message, { ...options, ...suboptions });
     },
-    info() {
-      toast.info(message, options);
+    info(suboptions?: object) {
+      return toast.info(message, { ...options, ...suboptions });
     },
   };
 };

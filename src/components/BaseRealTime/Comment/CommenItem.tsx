@@ -1,7 +1,7 @@
-import React, { useState, memo, useEffect } from "react";
+import React, { useState, memo, Suspense } from "react";
 import clsx from "clsx";
 import styles from "./Comment.module.scss";
-import UserComment from "./UserComment";
+const UserComment = React.lazy(() => import("./UserComment"));
 
 import { TpropComment } from "../../../contants";
 
@@ -36,11 +36,15 @@ const CommenItem: React.FC<{ comment: TpropComment; reply?: string }> = ({
             [styles.btn_reply]: isOpenReply,
           })}`}
         >
-          <UserComment
-            subcomment={comment.id_comment}
-            id_film={comment.id_film}
-            getNewCommemt={HandlegetNewCommemt}
-          />
+          <Suspense>
+            {isOpenReply && (
+              <UserComment
+                subcomment={comment.id_comment}
+                id_film={comment.id_film}
+                getNewCommemt={HandlegetNewCommemt}
+              />
+            )}
+          </Suspense>
         </li>
 
         {listsunComent.length > 0 &&

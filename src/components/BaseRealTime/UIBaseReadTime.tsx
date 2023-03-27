@@ -1,9 +1,8 @@
-import { Tooltip } from "@mui/material";
 import React from "react";
 import { BiRevision } from "react-icons/bi";
 import { defaultIconSize } from "../../contants";
-import Comment from "./Comment";
-const InterRact = () => {
+import { Tooltip } from "@mui/material";
+const UIBaseReadTime = () => {
   return (
     <>
       <section className="bg-content border-2 border-gray-800 py-2 px-5">
@@ -35,12 +34,9 @@ const InterRact = () => {
             </a>
           </Tooltip>
         </h1>
-        <div>
-          <Comment />
-        </div>
       </section>
     </>
   );
 };
 
-export default InterRact;
+export default UIBaseReadTime;
