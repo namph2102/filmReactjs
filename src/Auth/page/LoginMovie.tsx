@@ -1,15 +1,55 @@
-import React from "react";
+import { useFormik } from "formik";
+import { useState } from "react";
 import { BiXCircle } from "react-icons/bi";
-import { RiEyeFill, RiUserHeartLine } from "react-icons/ri";
+import { RiEyeCloseFill, RiEyeFill, RiUserHeartLine } from "react-icons/ri";
+import { useDispatch } from "react-redux";
+import * as Yup from "yup";
+import { AppDispatch } from "../../Redux/Store";
 import { defaultIconSize } from "../../contants";
 import FireBaseMovie from "./FireBaseMovie";
 import "./form.scss";
+import { LoginForm } from "../../Redux/UserSlice";
+import ToastMessage from "../../untils/ToastMessage";
 const LoginMovie = ({
   onHandleClose,
+  onShowFormRegister,
 }: {
   onHandleClose: (isOpen: boolean) => void;
+  onShowFormRegister: (isOpen: boolean) => void;
 }) => {
   const username = localStorage.getItem("username") ?? "";
+  const [seePassword, setSeePassWord] = useState<boolean>(false);
+  const dispatch: AppDispatch = useDispatch();
+  const formik: any = useFormik({
+    initialValues: {
+      username: username,
+      password: "",
+    },
+    validationSchema: Yup.object().shape({
+      username: Yup.string().required("Trường tài khoản không được bỏ trống !"),
+      password: Yup.string().required("Trường tài khoản không được bỏ trống !"),
+    }),
+    onSubmit(values) {
+      dispatch(
+        LoginForm({ username: values.username, password: values.password })
+      )
+        .then((response: any) => {
+          if (response.status == 200) {
+            ToastMessage(response.message).success();
+            onHandleClose(false);
+            formik.handleReset();
+          } else {
+            ToastMessage(response.message).warning();
+            formik.values.password = "";
+          }
+        })
+        .catch((err: any) => {
+          ToastMessage(err.message).error();
+          formik.handleReset();
+        });
+    },
+  });
+
   return (
     <section className="form_login">
       <div className="flex sm:w-11/12 text-text w-full lg:w-1/2  flex-col items-center justify-center px-6 py-8 mx-auto  lg:py-0">
@@ -17,7 +57,10 @@ const LoginMovie = ({
           <div className="lg:p-6 p-3 relative space-y-4 md:space-y-6 sm:p-8">
             <button
               type="button"
-              onClick={() => onHandleClose(false)}
+              onClick={() => {
+                onHandleClose(false);
+                formik.handleReset();
+              }}
               className="absolute top-4 right-2"
             >
               <BiXCircle
@@ -29,21 +72,22 @@ const LoginMovie = ({
             <h1 className="text-2xl text-center font-bold leading-tight tracking-tight text-text md:text-2xl dark:text-white">
               Đăng Nhập
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form
+              onSubmit={formik.handleSubmit}
+              className="space-y-4 md:space-y-6"
+              action="#"
+            >
               <div>
-                <label
-                  htmlFor="usernamelogin"
-                  className="block mb-2 text-sm font-medium dark:text-white"
-                >
+                <label className="block mb-2 text-sm font-medium dark:text-white">
                   Tên tài khoản
                 </label>
                 <div className="form_input flex items-center text-black justify-between bg-gray-50 border border-gray-300 rounded-lg">
                   <input
                     type="text"
-                    name="usernamelogin"
-                    id="usernamelogin"
+                    name="username"
                     className="flex-1 py-3 px-2 border-0 outline-none text-sm"
-                    value={username}
+                    value={formik.values.username}
+                    onChange={formik.handleChange}
                     required
                   />
                   <button type="button" className="p-2">
@@ -52,22 +96,28 @@ const LoginMovie = ({
                 </div>
               </div>
               <div>
-                <label
-                  htmlFor="passwordlogin"
-                  className="block mb-2 text-sm font-medium dark:text-white"
-                >
+                <label className="block mb-2 text-sm font-medium dark:text-white">
                   Mật Khẩu
                 </label>
                 <div className="form_input flex items-center  text-black justify-between bg-gray-50 border border-gray-300 rounded-lg">
                   <input
-                    type="password"
-                    name="passwordlogin"
-                    id="passwordlogin"
+                    type={seePassword ? "text" : "password"}
+                    name="password"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
                     className="flex-1 py-3 px-2 border-0 outline-none text-sm"
                     required
                   />
-                  <button type="button" className="p-2">
-                    <RiEyeFill size={defaultIconSize} />
+                  <button
+                    type="button"
+                    onClick={() => setSeePassWord(!seePassword)}
+                    className="p-2"
+                  >
+                    {seePassword ? (
+                      <RiEyeFill size={defaultIconSize} />
+                    ) : (
+                      <RiEyeCloseFill size={defaultIconSize} />
+                    )}
                   </button>
                 </div>
               </div>
@@ -76,27 +126,24 @@ const LoginMovie = ({
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
                     <input
-                      id="remember"
-                      aria-describedby="remember"
+                      aria-describedby="loginremember"
                       type="checkbox"
                       className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
                     />
                   </div>
                   <div className="ml-3 text-sm">
-                    <label
-                      htmlFor="remember"
-                      className="text-gray-500 dark:text-gray-300"
-                    >
+                    <label className="text-gray-500 dark:text-gray-300">
                       Remember me
                     </label>
                   </div>
                 </div>
-                <a
-                  href="#"
+                <button
+                  type="button"
                   className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+                  onClick={() => onShowFormRegister(false)}
                 >
-                  Forgot password?
-                </a>
+                  Đăng ký ngay?
+                </button>
               </div>
               <button
                 type="submit"
@@ -105,7 +152,7 @@ const LoginMovie = ({
                 Đăng Nhập
               </button>
             </form>
-            <FireBaseMovie />
+            <FireBaseMovie onHandleClose={onHandleClose} />
           </div>
         </div>
       </div>

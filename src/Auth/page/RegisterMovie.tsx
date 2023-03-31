@@ -14,8 +14,10 @@ import { AppDispatch } from "../../Redux/Store";
 import PathLink from "../../contants";
 const RegisterMovie = ({
   onHandleClose,
+  onShowFormRegister,
 }: {
   onHandleClose: (isOpen: boolean) => void;
+  onShowFormRegister: (isOpen: boolean) => void;
 }) => {
   const [seeEyesP, setEyesP] = useState<boolean>(false);
   const [seeEyesRP, setEyesRP] = useState<boolean>(false);
@@ -204,12 +206,13 @@ const RegisterMovie = ({
                     </label>
                   </div>
                 </div>
-                <a
-                  href="#"
+                <button
+                  type="button"
+                  onClick={() => onShowFormRegister(true)}
                   className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Đã có tài khoản ?
-                </a>
+                </button>
               </div>
               <button
                 type="submit"
@@ -219,7 +222,7 @@ const RegisterMovie = ({
                 Đăng ký ngay
               </button>
             </form>
-            <FireBaseMovie />
+            <FireBaseMovie onHandleClose={onHandleClose} />
           </div>
         </div>
       </div>

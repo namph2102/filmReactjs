@@ -3,8 +3,9 @@ import axios from "axios";
 import { AppDispatch } from "./Store";
 import PathLink from "../contants";
 import ToastMessage from "../untils/ToastMessage";
-interface IUser {
+export interface IUser {
   _id: string;
+  _uid: string;
   username: string;
   password: string;
   fullname: string;
@@ -16,11 +17,16 @@ interface IUser {
   created_at: Number;
   updated_at: number;
 }
+interface TUserForm {
+  username: string;
+  password: string;
+}
 const UserSlice = createSlice({
   name: "user",
   initialState: {
     user: {
       _id: "",
+      _uid: "",
       username: "",
       password: "",
       fullname: "",
@@ -32,13 +38,31 @@ const UserSlice = createSlice({
       created_at: 0,
       updated_at: 0,
     },
+    isLogout: false,
   },
   reducers: {
     updateUser(state, action) {
-      if (action.payload.status === 200) state.user = action.payload.data;
+      if (action.payload.status === 200) {
+        axios.create({
+          baseURL: PathLink.domain,
+          headers: {
+            Authorization: "Bearer " + action.payload.data.accessToken,
+          },
+        });
+        state.user = action.payload.data;
+        localStorage.setItem("username", action.payload.data.username);
+        localStorage.setItem(
+          PathLink.nameToken,
+          action.payload.data.accessToken
+        );
+      }
     },
     removeUser(state, action) {
       state.user = action.payload.setNull;
+      state.isLogout = !state.isLogout;
+    },
+    updateFireBase(state, action) {
+      state.isLogout = action.payload.isLogout;
     },
   },
   extraReducers: (builder) => {
@@ -74,23 +98,58 @@ export const acctachkedAccount = createAsyncThunk(
     }
   }
 );
-export const CreateUser = ({
-  username,
-  password,
-}: {
-  username: string;
-  password: string;
-}) => {
+export const CreateUser = (account: TUserForm) => {
   return async (dispatch: AppDispatch) => {
     try {
       const res = await axios.post(PathLink.domain + "user/register", {
-        username,
-        password,
+        username: account.username,
+        password: account.password,
       });
 
       return dispatch(UserSlice.actions.updateUser(res.data));
     } catch (err) {
       ToastMessage("Đăng ký không thành công!").error();
+    }
+  };
+};
+export const LoginForm = (account: TUserForm) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const res = await axios.post(PathLink.domain + "user/login", {
+        method: "POST",
+        notice: "Login new accoount when logout",
+        account: account,
+      });
+      console.log(res.data.account);
+      if (res.data.account) {
+        dispatch(
+          UserSlice.actions.updateUser({ status: 200, data: res.data.account })
+        );
+        return { message: res.data.message, status: 200 };
+      }
+      return { message: res.data.message, status: 203 };
+    } catch {
+      return { message: "Sorry? Lỗi hệ thống !", status: 404 };
+    }
+  };
+};
+export const loginWithFireBase = (account: any) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const res = await axios.post(PathLink.domain + "user/handlefirebase", {
+        method: "POST",
+        notice: "Firebase handle",
+        account,
+      });
+
+      if (res.data.account) {
+        dispatch(
+          UserSlice.actions.updateUser({ status: 200, data: res.data.account })
+        );
+      }
+      return res.data;
+    } catch (err) {
+      return { message: "Sorry? Lỗi hệ thống !", status: 404 };
     }
   };
 };

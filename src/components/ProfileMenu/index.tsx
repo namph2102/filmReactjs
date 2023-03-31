@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState, useEffect, useLayoutEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -14,7 +14,7 @@ import RegisterMovie from "../../Auth/page/RegisterMovie";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../Redux/Store";
 import { BiCoinStack } from "react-icons/bi";
-import { acctachkedAccount, removeUser } from "../../Redux/UserSlice";
+import { acctachkedAccount, removeUser, IUser } from "../../Redux/UserSlice";
 import PathLink from "../../contants";
 import ToastMessage from "../../untils/ToastMessage";
 import LoginMovie from "../../Auth/page/LoginMovie";
@@ -22,10 +22,12 @@ const Profile: React.FC<{ children: any }> = ({ children }) => {
   const dispatch: AppDispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [isOpenLoginForm, setIsOpenLoginForm] = useState<boolean>(false);
-  const user = useSelector((state: RootState) => state.account.user);
+  const user: IUser = useSelector((state: RootState) => state.account.user);
   const open = Boolean(anchorEl);
   const usernameLocal = localStorage.getItem("username") ?? "";
-  console.log(usernameLocal);
+  const [ShowFormRegister, setShowFormRegister] = useState<boolean>(
+    user.username ? true : false
+  );
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     if (user.username) {
       setAnchorEl(event.currentTarget);
@@ -38,6 +40,7 @@ const Profile: React.FC<{ children: any }> = ({ children }) => {
       setAnchorEl(null);
     } else {
       setIsOpenLoginForm(false);
+      setShowFormRegister(true);
     }
   };
   const handleLogout = () => {
@@ -46,15 +49,26 @@ const Profile: React.FC<{ children: any }> = ({ children }) => {
     dispatch(removeUser({ setNull: {} }));
     ToastMessage("Đăng xuất thành công !").success();
   };
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(acctachkedAccount());
   }, []);
   return (
     <section>
-      <div className={`${!isOpenLoginForm && "hidden"}`}>
-        <LoginMovie onHandleClose={setIsOpenLoginForm} />
-        {/* fomr register <RegisterMovie onHandleClose={setIsOpenLoginForm} /> */}
-      </div>{" "}
+      {isOpenLoginForm && (
+        <div>
+          {ShowFormRegister ? (
+            <LoginMovie
+              onShowFormRegister={setShowFormRegister}
+              onHandleClose={setIsOpenLoginForm}
+            />
+          ) : (
+            <RegisterMovie
+              onShowFormRegister={setShowFormRegister}
+              onHandleClose={setIsOpenLoginForm}
+            />
+          )}
+        </div>
+      )}{" "}
       <button onClick={handleClick}>{children}</button>
       {user.username && (
         <Menu
@@ -95,7 +109,10 @@ const Profile: React.FC<{ children: any }> = ({ children }) => {
           <MenuItem onClick={handleClose}>
             <Avatar src={user.avata} />
             <div className="flex flex-col">
-              <span> {user.username}</span>
+              <span className="displayname">
+                {" "}
+                {user.fullname || user.username}
+              </span>
               <span className="flex">
                 <BiCoinStack size="1.3rem" />{" "}
                 <span className="ml-1"> {user.coin}</span>
