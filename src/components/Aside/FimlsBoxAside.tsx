@@ -16,7 +16,7 @@ const FimlsBoxAside: React.FC<Tprops> = ({ title, listFilm }) => {
       )}
       {listFilm.length > 0 &&
         listFilm.map((film: IApiFilm) => (
-          <ItemAside key={film.id} items={film} />
+          <ItemAside key={film._id} items={film} />
         ))}
     </section>
   );

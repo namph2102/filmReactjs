@@ -1,5 +1,5 @@
 export interface IApiFilm {
-  id: number;
+  _id: string;
   name: string;
   origin_name: string;
   slug: string;

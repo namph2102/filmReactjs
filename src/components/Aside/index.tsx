@@ -6,6 +6,7 @@ const FimlsBoxAside = React.lazy(() => import("./FimlsBoxAside"));
 import PathLink from "../../contants";
 import LoaddingFiml from "../Loadding";
 import axios from "axios";
+import ToastMessage from "../../untils/ToastMessage";
 
 type TProps = {
   feature: IApiFilm[];
@@ -28,9 +29,13 @@ const Aside = () => {
   const [films, setFilms] = useState<TProps>({ feature: [], series: [] });
   useEffect(() => {
     (async function () {
-      const res = await axios.get(PathLink.domain + "api/v3/kinds");
-      if (res.status == 200) {
-        setFilms(res.data.data);
+      try {
+        const res = await axios.get(PathLink.domain + "api/v3/kinds");
+        if (res.status == 200) {
+          setFilms(res.data.data);
+        }
+      } catch (err: any) {
+        console.log(err.message);
       }
     })();
   }, []);

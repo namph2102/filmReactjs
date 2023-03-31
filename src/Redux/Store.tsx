@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import FilmSlice from "./FilmSlice";
 import CommentSlice from "./CommentSlice";
+import UserSlice from "./UserSlice";
 const store = configureStore({
   reducer: {
     film: FilmSlice,
     commemt: CommentSlice,
+    account: UserSlice,
   },
 });
 export default store;

@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import PathLink from "../contants";
 export interface Ifilm {
+  _id: string | any;
   id: number;
   name: string;
   description: string;
@@ -53,7 +54,6 @@ const FimlSliceImportant = createSlice({
     });
     builder.addCase(fetchDataFilm.fulfilled, (state, action) => {
       state.status = "success";
-      state.fimls = action.payload.films;
       state.filmsHome = action.payload.filmsHome;
       state.isLoading = false;
     });
@@ -69,8 +69,11 @@ export default FimlSliceImportant.reducer;
 // thunk
 
 export const fetchDataFilm = createAsyncThunk("film/featchfilm", async () => {
-  const res = await axios.get(PathLink.domain + "api/v2");
-  const resHome = await axios.get(PathLink.domain + "api/v3/home");
-
-  return { films: res.data.data, filmsHome: resHome.data.data };
+  try {
+    const resHome = await axios.get(PathLink.domain + "api/v3/home");
+    return { filmsHome: resHome.data.data };
+  } catch {
+    console.log("Lỗi lấy view home");
+  }
+  return { filmsHome: [] };
 });

@@ -55,6 +55,8 @@
     min-height: 40px;
   }
   .films-item {
+    min-height: 250px;
+
     &:hover {
       .icon_overlay {
         opacity: 0.5;

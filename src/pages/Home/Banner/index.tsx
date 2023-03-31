@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import "./home.scss";
+import "../../Home/home.scss";
 import {
   BiChevronRight,
   BiChevronLeft,
   BiRadioCircleMarked,
 } from "react-icons/bi";
-import { defaultIconSize } from "../../contants";
-import PathLink from "../../contants";
+import { defaultIconSize } from "../../../contants";
+import PathLink from "../../../contants";
 import BannerItem from "./BannerItem";
 import axios from "axios";
-import { Ifilm } from "../../Redux/FilmSlice";
+import { Ifilm } from "../../../Redux/FilmSlice";
 const Banner = () => {
   const [bannerSliders, setBannerSliders] = useState<Ifilm[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);

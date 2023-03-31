@@ -1,5 +1,5 @@
 import React from "react";
-import { ISlider } from "../../contants";
+import { ISlider } from "../../../contants";
 import { Link } from "react-router-dom";
 
 interface IItemBanner extends ISlider {

@@ -1,10 +1,10 @@
-import Main from "./components/Layouts/Main";
-import "./styles/style.scss";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "./Redux/Store";
-import { fetchDataFilm } from "./Redux/FilmSlice";
 import { ToastContainer } from "react-toastify";
+import Main from "./components/Layouts/Main";
+import { fetchDataFilm } from "./Redux/FilmSlice";
+import { AppDispatch } from "./Redux/Store";
+import "./styles/style.scss";
 
 export const commemtReadTime = (id_film: number) => {
   setInterval(() => {
@@ -18,6 +18,7 @@ export const commemtReadTime = (id_film: number) => {
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchDataFilm());
   }, []);
@@ -27,7 +28,7 @@ function App() {
       <Main />
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

@@ -10,7 +10,9 @@ const Comment: React.FC<{ idFilm: number }> = ({ idFilm = 0 }) => {
   return (
     <div className={`bg-content  ${styles["wapper"]}`}>
       <Suspense fallback={<RotateLoadding />}>
-        <UserComment />
+        <div className="px-4 pt-4">
+          <UserComment />
+        </div>
         <HeaderComment idFilm={idFilm} />
         <CommentContainer idFilm={idFilm} />
       </Suspense>

@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 const ToastMessage = (message = "", icon?: string) => {
   const options: any = {
     position: "top-right",
-    autoClose: 5000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: false,

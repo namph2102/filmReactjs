@@ -40,9 +40,7 @@ const UserComment: React.FC<{
       const comment: string = values.comment
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;");
-      ToastMessage("Đang xử lý  !", "🚀").normal({ autoClose: 2000 });
       addComment(comment);
-
       formik.handleReset();
     },
   });

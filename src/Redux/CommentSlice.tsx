@@ -44,6 +44,9 @@ export const GetListComments = (idFilm: number = 0) => {
       const res = await axios.post(PathLink.domain + "api/comments/list", {
         method: "POST",
         idFilm,
+        headers: {
+          Authorization: "Bearer " + "dasdsasasasasasasasasasasa",
+        },
       });
       return { comments: res.data.data, status: 200 };
     } catch {
@@ -60,6 +63,9 @@ export const GetSubcommentComment = (payload: payload) => {
         data: {
           id_parent: payload.id_parent,
           subcomment: payload.subcomment,
+        },
+        headers: {
+          Authorization: "Bearer " + "dasdsasasasasasasasasasasa",
         },
       });
 

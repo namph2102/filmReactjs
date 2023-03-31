@@ -13,17 +13,35 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/Store";
 import { Ifilm } from "../../Redux/FilmSlice";
 import { ResultSearch } from "./ResultSearch";
-
+import axios from "axios";
+import Pathlink from "../../contants";
 const SearchContainer = (): JSX.Element => {
   const [search, setSearch] = useState<string>("");
   const [listFindFilms, setListFindFilms] = useState<Ifilm[]>([]);
   const [isLoading, setLoading] = useState<boolean>(false);
+  const [ListFilms, setListFimls] = useState<Ifilm[]>([]);
   const searchInput = useRef<any>(null);
   const handleForcus = () => {
     searchInput.current.focus();
   };
 
-  const filmSlice = useSelector((state: RootState) => state.film.fimls);
+  useEffect(() => {
+    const featchDataSearch = async () => {
+      try {
+        const res = await axios.get(Pathlink.domain + "api/v2");
+        setListFimls(res.data.data);
+      } catch {
+        console.log("Can not find Api search");
+      }
+    };
+    const idTimeout = setTimeout(() => {
+      featchDataSearch();
+      clearTimeout(idTimeout);
+    }, 4000);
+    return () => {
+      clearTimeout(idTimeout);
+    };
+  }, []);
   // Tạo hiệu ứng loading
   useLayoutEffect(() => {
     if (!search) return setListFindFilms(() => []);
@@ -31,7 +49,7 @@ const SearchContainer = (): JSX.Element => {
     setLoading(true);
     const searcPromsie = new Promise((resolve) => {
       const idTimeout = setTimeout(() => {
-        const findFilm: Ifilm[] = filmSlice.filter(
+        const findFilm: Ifilm[] = ListFilms.filter(
           (film: Ifilm) =>
             film.name.toLowerCase().includes(search.toLowerCase()) ||
             film.origin_name.toLowerCase().includes(search.toLowerCase())
@@ -72,14 +90,25 @@ const SearchContainer = (): JSX.Element => {
           onClick={handleForcus}
           className="mx-2"
         />
-        <Tooltip title="Nhấn Enter để tìm kiếm" arrow>
+        <Tooltip
+          title={
+            ListFilms.length <= 0
+              ? "😥😥 Đang loadding dữ liệu"
+              : "Nhập tên phim ..."
+          }
+          arrow
+        >
           <input
+            style={{
+              cursor: ` ${ListFilms.length <= 0 ? "progress" : "auto"}`,
+            }}
             ref={searchInput}
             height="30px"
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value.trim())}
             placeholder="Tìm kiếm tên phim..."
+            disabled={ListFilms.length <= 0}
           />
         </Tooltip>
         {isLoading && (

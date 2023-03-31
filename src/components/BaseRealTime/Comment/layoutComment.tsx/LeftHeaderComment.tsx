@@ -1,11 +1,5 @@
-import React, { memo, useState, useEffect, useRef } from "react";
-import {
-  BiTime,
-
-  BiCaretDown,
-  BiCaretUp,
-  BiChat,
-} from "react-icons/bi";
+import React, { memo, useState, useEffect } from "react";
+import { BiTime, BiCaretDown, BiCaretUp, BiChat } from "react-icons/bi";
 import { Tooltip } from "@mui/material";
 import HandleTimeDiff from "../../../../untils/HandleTime";
 import { RiReplyLine } from "react-icons/ri";
@@ -14,7 +8,6 @@ import { TpropComment } from "../../../../contants";
 import AvataActtached from "../ImageAttach";
 import { useDispatch } from "react-redux";
 import { GetSubcommentComment } from "../../../../Redux/CommentSlice";
-
 
 import CommentUpdate from "./HandleUpdateTotalComment";
 
@@ -42,13 +35,12 @@ const LeftHeaderComment: React.FC<Tprops> = ({
 
   const firstloading: boolean = true;
   const handleSeeMoreComment = () => {
+    setIsopenSubcomment(!isOpenSubComment);
     if (isOpenSubComment) {
       handleSetListsunComent([]);
       onHandleOpenReply(!isOpenSubComment);
-      setIsopenSubcomment(false);
       return;
     }
-    setIsopenSubcomment(true);
 
     const id_parent = comment.id_comment;
     const subcomment: number[] = comment.subcomment;

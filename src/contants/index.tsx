@@ -62,6 +62,7 @@ class PathLink {
   seeFilm = "xem-phim";
   seeProfile = "tai-khoan";
   domain = "http://localhost:3000/";
+  nameToken = "_myToken";
 }
 
 export default new PathLink();

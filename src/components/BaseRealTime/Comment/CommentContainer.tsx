@@ -9,9 +9,8 @@ const CommenItem = React.lazy(() => import("./CommenItem"));
 const CommentContainer: React.FC<{ idFilm: number }> = ({ idFilm = 0 }) => {
   const [commemts, setComents] = useState<TpropComment[]>([]);
   const dispatch: any = useDispatch();
-
   useEffect(() => {
-    const handleEventComment = (e: any) => {
+    const handleEventComment = () => {
       dispatch(GetListComments(idFilm)).then(
         (response: { comments: TpropComment[]; status: number }) => {
           if (commemts.length !== response.comments.length) {
@@ -24,7 +23,7 @@ const CommentContainer: React.FC<{ idFilm: number }> = ({ idFilm = 0 }) => {
     return () => {
       window.removeEventListener(`commemts-id:${idFilm}`, handleEventComment);
     };
-  }, [idFilm]);
+  }, []);
 
   return (
     <ul className={`text-text w-full 0 mb-2 px-2 relative`}>

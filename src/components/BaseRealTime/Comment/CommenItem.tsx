@@ -17,7 +17,7 @@ const CommenItem: React.FC<{ comment: TpropComment; reply?: string }> = ({
   const HandlegetNewCommemt = (listCommemtsub: TpropComment[]) => {
     setListsunComent([...listCommemtsub]);
     setLengthParent(listsunComent.length + 1);
-    setIsOpenReply(false);
+    setIsOpenReply(true);
   };
   return (
     <>

@@ -21,8 +21,8 @@ const MainFilmContainer: React.FC<IMain> = ({
       {title && <h5 className="title_special">{title}</h5>}
       <div className="films-containe flex flex-wrap  my-4">
         {listFilms.map((film: Ifilm) => (
-          <Suspense key={film.id} fallback={<RotateLoadding />}>
-            <Film key={film.id} film={film} />
+          <Suspense key={film._id} fallback={<RotateLoadding />}>
+            <Film key={film._id} film={film} />
           </Suspense>
         ))}
       </div>

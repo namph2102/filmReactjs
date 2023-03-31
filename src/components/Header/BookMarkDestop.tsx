@@ -1,23 +1,43 @@
-import Profile from "../ProfileMenu";
-import { Tooltip, Avatar } from "@mui/material";
-import { BiBookmark } from "react-icons/bi";
+import { Avatar, Tooltip } from "@mui/material";
+import { BiBookmark, BiUserCircle } from "react-icons/bi";
+import { useSelector } from "react-redux";
 import { defaultIconSize } from "../../contants";
+import { RootState } from "../../Redux/Store";
 import BookMark from "../BookMark";
+import Profile from "../ProfileMenu";
+
 const RenderProfile = (): JSX.Element => {
+  const user = useSelector((state: RootState) => state.account.user);
+
   return (
-    <Profile>
-      <Tooltip title="Hồ sơ của bạn" arrow>
-        <Avatar
-          alt="Remy Sharp"
-          src="/images/avata.jpg"
-          style={{
-            width: "40px",
-            height: "40px",
-            cursor: "pointer",
-          }}
-        />
-      </Tooltip>
-    </Profile>
+    <>
+      <Profile>
+        {user.username ? (
+          <Tooltip title="Hồ sơ của bạn" arrow>
+            <Avatar
+              alt={user.fullname}
+              src={user.avata}
+              style={{
+                width: "40px",
+                height: "40px",
+                cursor: "pointer",
+              }}
+            />
+          </Tooltip>
+        ) : (
+          <Tooltip title="Đăng ký ngay" arrow>
+            <Avatar
+              src="/images/user.png"
+              style={{
+                width: "40px",
+                height: "40px",
+                cursor: "pointer",
+              }}
+            />
+          </Tooltip>
+        )}
+      </Profile>
+    </>
   );
 };
 const RenderDesktopProfile: React.FC<{
