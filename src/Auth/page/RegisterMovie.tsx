@@ -49,6 +49,7 @@ const RegisterMovie = ({
       repassword = password.trim();
       username = username.trim();
       dispatch(CreateUser({ username, password })).then((state) => {
+        console.log(state?.payload);
         if (state?.payload.status === 200) {
           localStorage.setItem(
             PathLink.nameToken,
@@ -57,6 +58,7 @@ const RegisterMovie = ({
           localStorage.setItem("username", state?.payload.data.username);
           ToastMessage(state?.payload.message).success();
           formik.handleReset();
+          console.log(state?.payload);
           onHandleClose(false);
         } else {
           ToastMessage(state?.payload.message).warning();

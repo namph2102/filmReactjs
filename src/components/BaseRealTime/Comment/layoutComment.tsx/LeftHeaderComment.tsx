@@ -42,12 +42,13 @@ const LeftHeaderComment: React.FC<Tprops> = ({
       return;
     }
 
-    const id_parent = comment.id_comment;
+    const id_parent = comment._id;
     const subcomment: number[] = comment.subcomment;
     const data: any = {
       id_parent,
       subcomment,
     };
+
     dispatch(GetSubcommentComment(data)).then((data: any) => {
       handleSetListsunComent(data);
       if (length < data.length) {
@@ -73,8 +74,7 @@ const LeftHeaderComment: React.FC<Tprops> = ({
     if (!firstloading) {
       setIsopenSubcomment(true);
     }
-  }, [lengthParent]);
-
+  }, []); //lengthParent
   return (
     <>
       <li className="flex gap-2 mb-2">
@@ -117,7 +117,7 @@ const LeftHeaderComment: React.FC<Tprops> = ({
 
           <p className="flex gap-2 items-center my-2">
             <CommentUpdate
-              id_comment={comment.id_comment}
+              id_comment={comment._id}
               total_like={comment.total_like}
             />
             <RiReplyLine

@@ -40,7 +40,6 @@ const LoginMovie = ({
             formik.handleReset();
           } else {
             ToastMessage(response.message).warning();
-            formik.values.password = "";
           }
         })
         .catch((err: any) => {

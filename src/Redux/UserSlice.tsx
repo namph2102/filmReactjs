@@ -16,6 +16,7 @@ export interface IUser {
   icons: any[];
   created_at: Number;
   updated_at: number;
+  permission: string;
 }
 interface TUserForm {
   username: string;
@@ -37,6 +38,7 @@ const UserSlice = createSlice({
       icons: [],
       created_at: 0,
       updated_at: 0,
+      permission: "",
     },
     isLogout: false,
   },
@@ -59,7 +61,7 @@ const UserSlice = createSlice({
     },
     removeUser(state, action) {
       state.user = action.payload.setNull;
-      state.isLogout = !state.isLogout;
+      state.isLogout = true;
     },
     updateFireBase(state, action) {
       state.isLogout = action.payload.isLogout;
@@ -105,7 +107,7 @@ export const CreateUser = (account: TUserForm) => {
         username: account.username,
         password: account.password,
       });
-
+      console.log(res);
       return dispatch(UserSlice.actions.updateUser(res.data));
     } catch (err) {
       ToastMessage("Đăng ký không thành công!").error();
@@ -141,8 +143,9 @@ export const loginWithFireBase = (account: any) => {
         notice: "Firebase handle",
         account,
       });
-
+      console.log(res);
       if (res.data.account) {
+        console.log(res.data.account);
         dispatch(
           UserSlice.actions.updateUser({ status: 200, data: res.data.account })
         );

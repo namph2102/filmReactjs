@@ -1,3 +1,4 @@
+import firebase from "firebase/compat/app";
 export const defaultIconSize: string = "1.225rem";
 
 export interface ISlider {
@@ -24,7 +25,7 @@ export interface IUserComment {
   token?: string;
 }
 export interface TpropComment {
-  id_comment: number;
+  _id: string;
   id_film: number;
   total_like: number;
   comment: string;
@@ -64,5 +65,11 @@ class PathLink {
   domain = "http://localhost:3000/";
   nameToken = "_myToken";
 }
+// Configure Firebase.
+export const configFireBase = {
+  apiKey: "AIzaSyDyJGXl7H7Z8X-c1kkQIyrWC9gGi9uw_rk",
+  authDomain: "movies-41f04.firebaseapp.com",
+  // ...
+};
 
 export default new PathLink();

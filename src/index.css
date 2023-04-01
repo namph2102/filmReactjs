@@ -63,7 +63,7 @@
   background-color: #0e0e0e;
 }
 
-.bg-user {
+.bg-member {
   background-color: #333;
 }
 
@@ -76,6 +76,6 @@
 .text-vip {
   color: #ff971b;
 }
-.text-user {
+.text-member {
   color: #ccc;
 }

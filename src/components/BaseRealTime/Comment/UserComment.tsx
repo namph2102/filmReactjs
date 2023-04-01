@@ -6,22 +6,21 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import styles from "./Comment.module.scss";
 import ToastMessage from "../../../untils/ToastMessage";
-// user co1 login hay ko
-const isLoggin = true;
-
-import { myAccount } from "../../../contants";
 import { useDispatch } from "react-redux";
 import { PostAddComemt } from "../../../Redux/CommentSlice";
 import { IApiSendDataComment } from "../../../Redux/CommentSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../Redux/Store";
 const UserComment: React.FC<{
-  subcomment?: number;
+  subcomment?: string;
   id_film?: number;
   getNewCommemt?: any;
 }> = ({ subcomment = "", id_film = 0, getNewCommemt }) => {
+  const myAccount = useSelector((state: RootState) => state.account.user);
   let maxlength = 40;
-  if (myAccount.permission.toLowerCase() === "admin") {
+  if (myAccount.permission === "admin") {
     maxlength = 1000;
-  } else if (myAccount.permission.toLowerCase() === "vip") {
+  } else if (myAccount.permission === "vip") {
     maxlength = 10 * myAccount.vip;
   }
 
@@ -56,7 +55,7 @@ const UserComment: React.FC<{
   function addComment(comment: string) {
     const apiComment: IApiSendDataComment = {
       subcomment: subcomment,
-      id_user: myAccount.id_user,
+      id_user: myAccount._id,
       comment: comment,
       id_film: id_film,
     };
@@ -70,15 +69,15 @@ const UserComment: React.FC<{
 
   return (
     <form onSubmit={formik.handleSubmit} method="post">
-      {!isLoggin && (
+      {!myAccount.username && (
         <p className="text-center text-base pt-5 font-semibold text-yellow-600">
-          Đăng nhập để bình luận nhen!
+          ---&gt; Bạn chưa có đăng nhập nha 😢😢😢
         </p>
       )}
       <div
-        className={`user-comment flex gap-2 ${!isLoggin && "hidden"} ${
-          styles.animae_reply
-        }`}
+        className={`user-comment flex gap-2 ${
+          !myAccount.username && "hidden"
+        } ${styles.animae_reply}`}
       >
         <Tooltip
           className="cursor-pointer"
@@ -98,7 +97,9 @@ const UserComment: React.FC<{
           onBlur={handleBlur}
         ></textarea>
       </div>
-      <div className={`flex justify-end m-3 ${!isLoggin && "hidden"} `}>
+      <div
+        className={`flex justify-end m-3 ${!myAccount.username && "hidden"} `}
+      >
         <button
           type="submit"
           className="bg-teal-600 hover:bg-teal-700 text-sm text-text py-2 rounded-md px-6  lg:w-20 w-1/4 justify-center flex items-center"

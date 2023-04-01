@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect, useLayoutEffect } from "react";
+import React, { memo, useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -15,9 +15,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../Redux/Store";
 import { BiCoinStack } from "react-icons/bi";
 import { acctachkedAccount, removeUser, IUser } from "../../Redux/UserSlice";
-import PathLink from "../../contants";
+import PathLink, { configFireBase } from "../../contants";
 import ToastMessage from "../../untils/ToastMessage";
 import LoginMovie from "../../Auth/page/LoginMovie";
+import firebase from "firebase/compat/app";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+// firebase
+const app = firebase.initializeApp(configFireBase);
+const auth = getAuth(app);
+//end firebase
 const Profile: React.FC<{ children: any }> = ({ children }) => {
   const dispatch: AppDispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -46,12 +52,15 @@ const Profile: React.FC<{ children: any }> = ({ children }) => {
   const handleLogout = () => {
     setAnchorEl(null);
     localStorage.removeItem(PathLink.nameToken);
+    localStorage.setItem("loginwithfirebase", "0");
     dispatch(removeUser({ setNull: {} }));
     ToastMessage("Đăng xuất thành công !").success();
+    firebase.auth().signOut();
   };
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch(acctachkedAccount());
   }, []);
+
   return (
     <section>
       {isOpenLoginForm && (

@@ -4,12 +4,10 @@ import { BiDislike, BiLike } from "react-icons/bi";
 import ToastMessage from "../../../../untils/ToastMessage";
 import { useDispatch } from "react-redux";
 import { GetHandleLikeCopmment } from "../../../../Redux/CommentSlice";
-const LikeCommemt: React.FC<{ total_like: number; id_comment: number }> = ({
+const LikeCommemt: React.FC<{ total_like: number; id_comment: string }> = ({
   total_like,
   id_comment,
 }) => {
-  console.log("re-render comment");
-
   const [isLiked, setIsLiked] = useState<number>(0);
   const dispatch: any = useDispatch();
   const handleUpdate = (value: number) => {

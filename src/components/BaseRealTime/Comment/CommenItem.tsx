@@ -39,7 +39,7 @@ const CommenItem: React.FC<{ comment: TpropComment; reply?: string }> = ({
           <Suspense>
             {isOpenReply && (
               <UserComment
-                subcomment={comment.id_comment}
+                subcomment={comment._id}
                 id_film={comment.id_film}
                 getNewCommemt={HandlegetNewCommemt}
               />

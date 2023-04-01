@@ -14,7 +14,7 @@ const AvataActtached: React.FC<{ comment: TpropComment }> = ({ comment }) => {
           </Tooltip>
         ) : (
           comment.user_comment.permission === "vip" &&
-          comment.user_comment.vip > 0 && (
+          comment.user_comment.vip && (
             <Tooltip title="Admin " placement="top" arrow>
               <img
                 src={`/images/vip/vip${comment.user_comment.vip}.png`}

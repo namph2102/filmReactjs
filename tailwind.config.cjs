@@ -28,7 +28,7 @@ module.exports = {
         text: "#d8d8d8",
         vip: "#ff971b",
         admin: "#5e89c9",
-        user: "#ccc",
+        member: "#ccc",
         notlike: "#bd0e0e",
       },
 
@@ -40,7 +40,7 @@ module.exports = {
         input: "#17242E",
         admin: "#383f44",
         vip: "#0e0e0e",
-        user: "#333",
+        member: "#333",
       },
       backgroundImage: {
         status: "linear-gradient(to right,#ff00cc 0%,#333399 51%,#ff00cc 100%)",

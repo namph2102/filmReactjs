@@ -18,15 +18,15 @@ const CommentSlice = createSlice({
 export default CommentSlice.reducer;
 export interface IApiSendDataComment {
   subcomment: string | number;
-  id_user: number;
+  id_user: string;
   comment: string;
-  id_film: number;
+  id_film: string | number;
 }
 // method post
 export const PostAddComemt = createAsyncThunk(
-  "comment/api/comments/add",
+  "comment/comments/add",
   async (apiComment: IApiSendDataComment) => {
-    const res = await axios.post(PathLink.domain + "api/comments/add", {
+    const res = await axios.post(PathLink.domain + "comments/addcommemt", {
       method: "POST",
       data: apiComment,
     });
@@ -41,12 +41,9 @@ type payload = {
 export const GetListComments = (idFilm: number = 0) => {
   return async () => {
     try {
-      const res = await axios.post(PathLink.domain + "api/comments/list", {
+      const res = await axios.post(PathLink.domain + "comments/list", {
         method: "POST",
         idFilm,
-        headers: {
-          Authorization: "Bearer " + "dasdsasasasasasasasasasasa",
-        },
       });
       return { comments: res.data.data, status: 200 };
     } catch {
@@ -58,7 +55,7 @@ export const GetSubcommentComment = (payload: payload) => {
   return async () => {
     if (!payload.subcomment.length) return;
     try {
-      const res = await axios.post(PathLink.domain + "api/comments", {
+      const res = await axios.post(PathLink.domain + "comments/subcomment", {
         method: "POST",
         data: {
           id_parent: payload.id_parent,
@@ -77,11 +74,11 @@ export const GetSubcommentComment = (payload: payload) => {
 };
 
 export const GetHandleLikeCopmment = (commemt: {
-  id_comment: number;
+  id_comment: string;
   crease: number;
 }) => {
   return async () => {
-    return await axios.post(PathLink.domain + "api/users/", {
+    return await axios.post(PathLink.domain + "comments/addlike", {
       method: "POST",
       data: { id_comment: commemt.id_comment, crease: commemt.crease },
     });
@@ -91,9 +88,9 @@ export const GetHandleLikeCopmment = (commemt: {
 export const getlengthComment = (idFilm: number) => {
   return async () => {
     try {
-      const res = await axios.post(PathLink.domain + "api/comments/getlength", {
+      const res = await axios.post(PathLink.domain + "comments/getlength", {
         method: "POST",
-        id_film: idFilm,
+        idFilm,
       });
       return { message: res.data.message, length: res.data.data, status: 200 };
     } catch (message) {

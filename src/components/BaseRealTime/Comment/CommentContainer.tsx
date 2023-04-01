@@ -29,8 +29,8 @@ const CommentContainer: React.FC<{ idFilm: number }> = ({ idFilm = 0 }) => {
     <ul className={`text-text w-full 0 mb-2 px-2 relative`}>
       {commemts.length > 0 ? (
         commemts.map((comment: TpropComment) => (
-          <Suspense key={comment.id_comment} fallback={<RotateLoadding />}>
-            <CommenItem key={comment.id_comment} comment={comment} />
+          <Suspense key={comment._id} fallback={<RotateLoadding />}>
+            <CommenItem key={comment._id} comment={comment} />
           </Suspense>
         ))
       ) : (

@@ -7,16 +7,10 @@ import { loginWithFireBase } from "../../Redux/UserSlice";
 import { AppDispatch, RootState } from "../../Redux/Store";
 import PathLink from "../../contants";
 import ToastMessage from "../../untils/ToastMessage";
-// Configure Firebase.
-const config = {
-  apiKey: "AIzaSyDyJGXl7H7Z8X-c1kkQIyrWC9gGi9uw_rk",
-  authDomain: "movies-41f04.firebaseapp.com",
-  // ...
-};
-firebase.initializeApp(config);
+import { configFireBase } from "../../contants";
 
-// Configure FirebaseUI.
-const uiConfig = {
+firebase.initializeApp(configFireBase);
+const UIConfigFireBase = {
   // Popup signin flow rather than redirect flow.
   signInFlow: "popup",
   // We will display Google and Facebook as auth providers.
@@ -29,7 +23,6 @@ const uiConfig = {
     signInSuccessWithAuthResult: () => false,
   },
 };
-
 function LoginForm({
   onHandleClose,
 }: {
@@ -48,7 +41,7 @@ function LoginForm({
         if (!user) {
           return;
         }
-        if (user.providerData[0]?.uid && !userSlice.user.username) {
+        if (user.providerData[0]?.uid) {
           onHandleClose(false);
           const { displayName, email, phoneNumber, photoURL, uid } =
             user.providerData[0];
@@ -61,41 +54,22 @@ function LoginForm({
           };
           dispatch(loginWithFireBase(acccount)).then((res: any) => {
             ToastMessage(res.message).success();
+            localStorage.setItem("loginwithfirebase", "1");
           });
         }
       });
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
   }, []);
-  const handleLogout = () => {
-    firebase.auth().signOut();
-    localStorage.removeItem(PathLink.nameToken);
-    localStorage.removeItem("username");
-  };
-  console.log(userSlice.isLogout);
-  if (userSlice.isLogout) {
-    firebase.auth().signOut();
-    localStorage.removeItem(PathLink.nameToken);
-    localStorage.removeItem("username");
-  }
-  if (!isSignedIn) {
-    return (
-      <div>
-        <StyledFirebaseAuth
-          uiConfig={uiConfig}
-          firebaseAuth={firebase.auth()}
-        />
-      </div>
-    );
-  }
 
   return (
-    <div>
-      <h1>My App</h1>
-      <p>Welcome Hello ! You are now signed-in!</p>
-      <button className="bg-orange-700" onClick={handleLogout}>
-        Logout out
-      </button>
-    </div>
+    <>
+      {!isSignedIn && (
+        <StyledFirebaseAuth
+          uiConfig={UIConfigFireBase}
+          firebaseAuth={firebase.auth()}
+        />
+      )}
+    </>
   );
 }
 
