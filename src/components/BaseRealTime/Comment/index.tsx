@@ -1,20 +1,20 @@
 import React, { Suspense, useEffect } from "react";
 import RotateLoadding from "../../Loadding/RotateLoadding";
 
-import styles from "./Comment.module.scss";
+import "./Comment.scss";
 
 const CommentContainer = React.lazy(() => import("./CommentContainer"));
 const HeaderComment = React.lazy(() => import("./HeaderComment"));
 const UserComment = React.lazy(() => import("./UserComment"));
-const Comment: React.FC<{ idFilm: number }> = ({ idFilm = 0 }) => {
+const Comment = () => {
   return (
-    <div className={`bg-content  ${styles["wapper"]}`}>
+    <div className="bg-content wapper">
       <Suspense fallback={<RotateLoadding />}>
         <div className="px-4 pt-4">
           <UserComment />
         </div>
-        <HeaderComment idFilm={idFilm} />
-        <CommentContainer idFilm={idFilm} />
+        <HeaderComment />
+        <CommentContainer />
       </Suspense>
     </div>
   );

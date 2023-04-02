@@ -17,6 +17,8 @@ export interface IUser {
   created_at: Number;
   updated_at: number;
   permission: string;
+  accessToken: string;
+  chatLength: number;
 }
 interface TUserForm {
   username: string;
@@ -38,25 +40,31 @@ const UserSlice = createSlice({
       icons: [],
       created_at: 0,
       updated_at: 0,
+      accessToken: "",
       permission: "",
+      chatLength: 40,
     },
     isLogout: false,
   },
   reducers: {
     updateUser(state, action) {
+      const account = action.payload.data;
       if (action.payload.status === 200) {
         axios.create({
           baseURL: PathLink.domain,
           headers: {
-            Authorization: "Bearer " + action.payload.data.accessToken,
+            Authorization: "Bearer " + account.accessToken,
           },
         });
-        state.user = action.payload.data;
-        localStorage.setItem("username", action.payload.data.username);
-        localStorage.setItem(
-          PathLink.nameToken,
-          action.payload.data.accessToken
-        );
+
+        if (account.permission == "admin") {
+          account.chatLength = 2000;
+        } else if (account.permission === "vip") {
+          account.chatLength = 80 * account.vip;
+        } else account.chatLength = 40;
+        state.user = account;
+        localStorage.setItem("username", account.username);
+        localStorage.setItem(PathLink.nameToken, account.accessToken);
       }
     },
     removeUser(state, action) {
@@ -66,11 +74,23 @@ const UserSlice = createSlice({
     updateFireBase(state, action) {
       state.isLogout = action.payload.isLogout;
     },
+    updateToken(state, action) {
+      state.user.accessToken = action.payload.accessToken;
+      console.log("Upload token thành công");
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(acctachkedAccount.fulfilled, (state, action) => {
       if (action.payload.status === 200) {
         const account = action.payload.data;
+        // độ dài khung chat
+
+        if (account.permission == "admin") {
+          account.chatLength = 2000;
+        } else if (account.permission === "vip") {
+          account.chatLength = 80 * account.vip;
+        } else account.chatLength = 40;
+
         state.user = account;
         localStorage.setItem(PathLink.nameToken, account.accessToken);
       }
@@ -82,7 +102,7 @@ export default UserSlice.reducer;
 export const acctachkedAccount = createAsyncThunk(
   "user/firstLogin",
   async () => {
-    const accessToken = localStorage.getItem(PathLink.nameToken);
+    const accessToken = localStorage.getItem(PathLink.nameToken) || "";
     if (!accessToken) throw new Error("Not have actoken");
     try {
       const res = await axios.get(PathLink.domain + "user/login", {
@@ -107,7 +127,6 @@ export const CreateUser = (account: TUserForm) => {
         username: account.username,
         password: account.password,
       });
-      console.log(res);
       return dispatch(UserSlice.actions.updateUser(res.data));
     } catch (err) {
       ToastMessage("Đăng ký không thành công!").error();
@@ -122,7 +141,6 @@ export const LoginForm = (account: TUserForm) => {
         notice: "Login new accoount when logout",
         account: account,
       });
-      console.log(res.data.account);
       if (res.data.account) {
         dispatch(
           UserSlice.actions.updateUser({ status: 200, data: res.data.account })
@@ -143,9 +161,7 @@ export const loginWithFireBase = (account: any) => {
         notice: "Firebase handle",
         account,
       });
-      console.log(res);
       if (res.data.account) {
-        console.log(res.data.account);
         dispatch(
           UserSlice.actions.updateUser({ status: 200, data: res.data.account })
         );

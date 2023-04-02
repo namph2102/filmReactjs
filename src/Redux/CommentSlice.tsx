@@ -2,19 +2,45 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import PathLink from "../contants";
 import { TpropComment } from "../contants";
+import { AppDispatch, RootState } from "./Store";
+import UserSlice from "./UserSlice";
 type TCommetSlice = {
   isloading: boolean;
-  listSubcomment: TpropComment[];
+  listMainComment: TpropComment[];
+  idFilm: string;
+  limit: number;
+  count: number;
+  totalHeader: number;
 };
 const CommentSlice = createSlice({
   name: "comment",
   initialState: {
-    isloading: true,
+    idFilm: "0",
+    limit: 15,
+    count: 0,
+    listMainComment: [],
+    isloading: false,
+    totalHeader: 0,
   } as TCommetSlice,
-  reducers: {},
-  extraReducers: (build) => {},
+  reducers: {
+    // When click new film handle but now dont have handle
+    updateIdFim(state, action) {
+      state.idFilm = action.payload.idFilm;
+    },
+    updateLimit(state) {
+      if (state.limit > state.count) state.limit = state.count;
+      else state.limit += 15;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(GetListComments.fulfilled, (state, action) => {
+      state.listMainComment = action.payload.comments;
+      state.count = action.payload.count;
+      state.totalHeader = action.payload.allCommemtFilm;
+    });
+  },
 });
-
+export const { updateLimit } = CommentSlice.actions;
 export default CommentSlice.reducer;
 export interface IApiSendDataComment {
   subcomment: string | number;
@@ -25,7 +51,8 @@ export interface IApiSendDataComment {
 // method post
 export const PostAddComemt = createAsyncThunk(
   "comment/comments/add",
-  async (apiComment: IApiSendDataComment) => {
+
+  async (apiComment: IApiSendDataComment, getSate) => {
     const res = await axios.post(PathLink.domain + "comments/addcommemt", {
       method: "POST",
       data: apiComment,
@@ -38,19 +65,28 @@ type payload = {
   id_parent: number;
   subcomment: number[] | any;
 };
-export const GetListComments = (idFilm: number = 0) => {
-  return async () => {
+export const GetListComments = createAsyncThunk(
+  "comments/list",
+  async ({ idFilm, limit }: { idFilm: string; limit: number }) => {
     try {
       const res = await axios.post(PathLink.domain + "comments/list", {
         method: "POST",
         idFilm,
+        limit,
       });
-      return { comments: res.data.data, status: 200 };
+      // console.log(res.data);
+      return {
+        comments: res.data.data,
+        count: res.data.total_commemt,
+        allCommemtFilm: res.data.allCommemtFilm,
+        status: 200,
+      };
     } catch {
-      return { state: 404, comments: [] };
+      return { status: 404, count: 0, comments: [] };
     }
-  };
-};
+  }
+);
+
 export const GetSubcommentComment = (payload: payload) => {
   return async () => {
     if (!payload.subcomment.length) return;
@@ -85,7 +121,7 @@ export const GetHandleLikeCopmment = (commemt: {
   };
 };
 
-export const getlengthComment = (idFilm: number) => {
+export const getlengthComment = (idFilm: string) => {
   return async () => {
     try {
       const res = await axios.post(PathLink.domain + "comments/getlength", {

@@ -1,36 +1,31 @@
-import React, { memo, useMemo } from "react";
+import React, { memo, useState } from "react";
 import { Avatar, Tooltip } from "@mui/material";
 import { RiSendPlaneLine } from "react-icons/ri";
 import { useFormik } from "formik";
-
 import * as Yup from "yup";
-import styles from "./Comment.module.scss";
+import "./Comment.scss";
 import ToastMessage from "../../../untils/ToastMessage";
 import { useDispatch } from "react-redux";
 import { PostAddComemt } from "../../../Redux/CommentSlice";
 import { IApiSendDataComment } from "../../../Redux/CommentSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../Redux/Store";
+import RotateLoadding from "../../Loadding/RotateLoadding";
 const UserComment: React.FC<{
   subcomment?: string;
-  id_film?: number;
+  id_film?: string;
   getNewCommemt?: any;
 }> = ({ subcomment = "", id_film = 0, getNewCommemt }) => {
   const myAccount = useSelector((state: RootState) => state.account.user);
-  let maxlength = 40;
-  if (myAccount.permission === "admin") {
-    maxlength = 1000;
-  } else if (myAccount.permission === "vip") {
-    maxlength = 10 * myAccount.vip;
-  }
 
+  let maxlength = myAccount?.chatLength || 40;
   const formik: any = useFormik({
     initialValues: {
       comment: "",
     },
     validationSchema: Yup.object({
       comment: Yup.string()
-        .required()
+        .required("Trường này không dược bỏ trống !")
         .min(2, "Ít nhất 2 ký tự bạn nhé 😚😚 !")
         .max(maxlength, `Bạn chỉ được bình luận với ${maxlength} ký tự!`),
     }),
@@ -63,6 +58,7 @@ const UserComment: React.FC<{
     disPatch(PostAddComemt(apiComment))
       .then((res: any) => {
         getNewCommemt(res.payload.data);
+        ToastMessage("Bình luận thành công").success();
       })
       .catch(() => {});
   }
@@ -77,7 +73,7 @@ const UserComment: React.FC<{
       <div
         className={`user-comment flex gap-2 ${
           !myAccount.username && "hidden"
-        } ${styles.animae_reply}`}
+        } animae_reply`}
       >
         <Tooltip
           className="cursor-pointer"

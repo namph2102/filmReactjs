@@ -13,7 +13,8 @@ export interface TdataLiscomments {
 }
 
 export interface IUserComment {
-  id_user: number;
+  _id: string;
+  username: string;
   fullname: string;
   icons: {
     title: string;
@@ -34,29 +35,6 @@ export interface TpropComment {
   subcomment: number[];
   user_comment: IUserComment;
 }
-// tset data
-export const myAccount: IUserComment = {
-  id_user: 5,
-  fullname: "moses hills",
-  avata: "https://picsum.photos/200/300?random=4",
-  vip: 7,
-  icons: [
-    {
-      title: "phương hoàn lửa",
-      link: "https://movibes.online/icon/6367a4304c496-18.png",
-    },
-    {
-      title: "Kim giác thú",
-      link: "https://movibes.online/icon/6367a3e0a753e-17.png",
-    },
-    {
-      title: "Võ ngân",
-      link: "https://movibes.online/icon/63804df3a51f2-Jp2v9L5y5FIKBZM1663945733.png",
-    },
-  ],
-  permission: "admin",
-  token: "b0880133-5181-47d6-a543-c7a134ee5a23",
-};
 
 class PathLink {
   seeFilmDetail = "xem-thong-tin";

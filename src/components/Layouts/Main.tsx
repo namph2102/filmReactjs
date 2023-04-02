@@ -23,7 +23,7 @@ const Main = () => {
       </section>
       <div className="container mx-auto relative">
         <Suspense fallback={<RotateLoadding />}>
-          <CommemtContainers idFilm={0} />
+          <CommemtContainers />
         </Suspense>
       </div>
       <Footer />

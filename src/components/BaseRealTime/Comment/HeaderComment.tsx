@@ -2,31 +2,14 @@ import React, { memo, useState, useEffect } from "react";
 
 import { Tooltip } from "@mui/material";
 import { RiFireFill } from "react-icons/ri";
-import styles from "./Comment.module.scss";
-import PathLink from "../../../contants";
-import { useDispatch } from "react-redux";
-import { getlengthComment } from "../../../Redux/CommentSlice";
-const HeaderComment: React.FC<{ idFilm: number }> = ({ idFilm = 0 }) => {
-  const dispatch: any = useDispatch();
-  const [totalCommemt, setTotalCommemt] = useState<number>(0);
-  useEffect(() => {
-    let idTimeout: any;
-    (async function () {
-      idTimeout = setInterval(async () => {
-        dispatch(getlengthComment(idFilm)).then(
-          (comments: { status: number; message: string; length: number }) => {
-            if (comments.status == 200) {
-              if (totalCommemt !== comments.length)
-                setTotalCommemt(comments.length);
-            }
-          }
-        );
-      }, 2000);
-    })();
-    return () => {
-      clearInterval(idTimeout);
-    };
-  }, []);
+
+import { useSelector } from "react-redux";
+import { RootState } from "../../../Redux/Store";
+const HeaderComment = () => {
+  const totalCommemt = useSelector(
+    (state: RootState) => state.commemt.totalHeader
+  );
+  const idFilm = useSelector((state: RootState) => state.commemt.idFilm);
 
   return (
     <div
@@ -37,10 +20,10 @@ const HeaderComment: React.FC<{ idFilm: number }> = ({ idFilm = 0 }) => {
       </div>
       <div
         style={{ width: `${((totalCommemt * 100) / 200).toFixed(2)}%` }}
-        className={`${styles.process}`}
+        className="process"
       ></div>
       <div className="flex items-center">
-        <div className={styles.border_items}>
+        <div className="border_items">
           <Tooltip title="Max 200">
             <span>
               {" "}

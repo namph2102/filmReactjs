@@ -6,7 +6,7 @@ import { fetchDataFilm } from "./Redux/FilmSlice";
 import { AppDispatch } from "./Redux/Store";
 import "./styles/style.scss";
 
-export const commemtReadTime = (id_film: number) => {
+export const commemtReadTime = (id_film: string) => {
   setInterval(() => {
     window.dispatchEvent(
       new CustomEvent(`commemts-id:${id_film}`, {

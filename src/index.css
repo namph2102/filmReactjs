@@ -59,23 +59,3 @@
     @apply lg:w-1/2  md:w-3/4 w-11/12 h-0 transition-all duration-500 opacity-0;
   }
 }
-.bg-vip {
-  background-color: #0e0e0e;
-}
-
-.bg-member {
-  background-color: #333;
-}
-
-.bg-admin {
-  background-color: #344048;
-}
-.text-admin {
-  color: #81aff4;
-}
-.text-vip {
-  color: #ff971b;
-}
-.text-member {
-  color: #ccc;
-}

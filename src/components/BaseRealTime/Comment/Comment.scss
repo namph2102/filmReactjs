@@ -1,0 +1,102 @@
+.wapper {
+  .commemt_parent {
+    .user_edit {
+      visibility: hidden;
+      transition: all 0.1s linear;
+      transform: translateX(50px);
+    }
+    &:hover {
+      .user_edit {
+        cursor: pointer;
+        visibility: visible;
+        transform: translateY(0);
+      }
+    }
+  }
+  .process {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    height: 2px;
+    background-color: #00b38f;
+  }
+
+  .border_items_bl,
+  .border_items {
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 110%;
+      width: 100%;
+      height: 2px;
+      z-index: 2px;
+      background-color: red;
+    }
+  }
+  .border_items_bl {
+    cursor: pointer;
+    &::after {
+      background-color: rgb(247, 240, 240);
+    }
+  }
+  .info_comment {
+    display: block;
+    padding: 14px 10px;
+    word-break: break-word;
+    margin-left: 0;
+    margin-top: 4px;
+    border-radius: 0 15px 15px;
+    font-size: 16px;
+  }
+
+  .subavata {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    object-fit: cover;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+  .reply_animation {
+    display: block;
+    max-height: 0;
+    transition: max-height 0.35s ease-out;
+    overflow: hidden;
+  }
+  .reply_animation.active {
+    max-height: 130px;
+    transition: max-height 0.5s ease-in;
+    padding: 12px 0;
+  }
+  .subcomment_container {
+    max-height: 0;
+    transition: max-height 0.35s ease-out;
+    overflow: hidden;
+  }
+  .subcomment_container.active {
+    max-height: 1000px;
+    transition: max-height 0.5s ease-in;
+  }
+  .permission_vip {
+    background-color: rgb(128, 128, 0);
+    color: #f1f1f1;
+  }
+  .permission_member {
+    background-color: #333;
+    color: #ccc;
+  }
+  .permission_admin {
+    background-color: #013c5a;
+    color: #ffffff;
+  }
+  .subcomment_container li {
+    padding: 12px 0;
+  }
+}
+.hidden {
+  height: 0px !important;
+  opacity: 0;
+}
