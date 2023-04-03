@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useEffect } from "react";
 import { Avatar, Tooltip } from "@mui/material";
 import { RiSendPlaneLine } from "react-icons/ri";
 import { useFormik } from "formik";
@@ -10,7 +10,7 @@ import { PostAddComemt } from "../../../Redux/CommentSlice";
 import { IApiSendDataComment } from "../../../Redux/CommentSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../Redux/Store";
-import RotateLoadding from "../../Loadding/RotateLoadding";
+import moment from "moment";
 const UserComment: React.FC<{
   subcomment?: string;
   id_film?: string;
@@ -34,6 +34,25 @@ const UserComment: React.FC<{
       const comment: string = values.comment
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;");
+      if (myAccount.permission !== "admin") {
+        const timeNextChatting =
+          myAccount.permission == "vip" ? 20 - myAccount.vip * 2 : 30;
+        const timechating: number = Number(
+          sessionStorage.getItem("timeCommemt") || null
+        );
+        if (timechating) {
+          const timeWatings = Math.ceil(moment().diff(timechating, "seconds"));
+          console.log(timeWatings, timeNextChatting);
+          if (timeWatings < timeNextChatting) {
+            ToastMessage(
+              `Chờ sau ${
+                timeNextChatting - timeWatings
+              } s để bình luận tiếp nhen`
+            ).warning({ autoClose: 3000 });
+            return;
+          }
+        }
+      }
       addComment(comment);
       formik.handleReset();
     },
@@ -57,8 +76,9 @@ const UserComment: React.FC<{
 
     disPatch(PostAddComemt(apiComment))
       .then((res: any) => {
+        ToastMessage("Bình luận thành công! ").success();
+        sessionStorage.setItem("timeCommemt", moment() + "");
         getNewCommemt(res.payload.data);
-        ToastMessage("Bình luận thành công").success();
       })
       .catch(() => {});
   }

@@ -89,7 +89,7 @@ const LoginMovie = ({
                     onChange={formik.handleChange}
                     required
                   />
-                  <button type="button" className="p-2">
+                  <button type="button" disabled={true} className="p-2">
                     <RiUserHeartLine size={defaultIconSize} />
                   </button>
                 </div>

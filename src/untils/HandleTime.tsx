@@ -1,51 +1,33 @@
-function HandleTimeDiff(time: number = 0) {
-  const newTime = new Date(Date.now()).getTime();
-  let years: number,
-    months: number,
-    days: number,
-    hours: number,
-    minutes: number,
-    seconds,
-    diff = Math.abs((newTime - time) / 10000);
+import moment from "moment";
+const timeSetTing: any = {
+  months: "tháng",
+  month: "tháng",
+  years: "năm",
+  year: "năm",
+  minute: "phút",
+  minutes: "phút",
+  day: "ngày",
+  days: "ngày",
+  hours: "giờ",
+  hour: "giờ",
+  second: "giây",
+  seconds: "giây",
+};
+function HandleTimeDiff(timestamp: any) {
+  let result: any = moment(timestamp).fromNow();
+  if (result.includes("a few seconds ago")) return "vài giây trước";
+  if (result[1] === "n") {
+    result = result.replace("an", "1");
+  } else if (result[0] === "a") {
+    result = result.replace("a", "1");
+  }
 
-  years = Math.floor(diff / (365 * 60 * 60 * 24));
-  months = Math.floor(
-    (diff - years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24)
-  );
-  days = Math.floor(
-    (diff - years * 365 * 60 * 60 * 24 - months * 30 * 60 * 60 * 24) /
-      (60 * 60 * 24)
-  );
-  hours = Math.floor(
-    (diff -
-      years * 365 * 60 * 60 * 24 -
-      months * 30 * 60 * 60 * 24 -
-      days * 60 * 60 * 24) /
-      (60 * 60)
-  );
-  minutes = Math.floor(
-    (diff -
-      years * 365 * 60 * 60 * 24 -
-      months * 30 * 60 * 60 * 24 -
-      days * 60 * 60 * 24 -
-      hours * 60 * 60) /
-      60
-  );
-  seconds = Math.floor(
-    diff -
-      years * 365 * 60 * 60 * 24 -
-      months * 30 * 60 * 60 * 24 -
-      days * 60 * 60 * 24 -
-      hours * 60 * 60 -
-      minutes * 60
-  );
+  result = result.replace("ago", "trước");
+  result = result.split(" ");
 
-  if (years) return `${years} năm trước`;
-  if (months) return `${months} tháng trước`;
-  if (days) return `${days} ngày trước`;
-  if (hours) return `${hours} giờ trước`;
-  if (minutes) return `${minutes} phút trước`;
-  if (seconds) return `${seconds}  giây trước`;
-  return "Vừa xong";
+  if (timeSetTing[result[1]]) {
+    result[1] = timeSetTing[result[1]];
+  }
+  return result.join(" ");
 }
 export default HandleTimeDiff;

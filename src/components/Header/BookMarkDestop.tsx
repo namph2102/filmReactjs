@@ -1,5 +1,5 @@
 import { Avatar, Tooltip } from "@mui/material";
-import { BiBookmark, BiUserCircle } from "react-icons/bi";
+import { BiBookmark } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { defaultIconSize } from "../../contants";
 import { RootState } from "../../Redux/Store";

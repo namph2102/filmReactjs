@@ -6,6 +6,7 @@ import {
   BiCaretDown,
   BiCaretUp,
   BiChat,
+  BiCheck,
   BiEditAlt,
   BiInfoCircle,
   BiTime,
@@ -60,12 +61,13 @@ const CommenItem: React.FC<{
     });
   }, []);
   const handleUserDelete = async () => {
-    if (!localStorage.getItem(PathLink.nameToken)) return;
+    if (!account.accessToken) return;
 
     const res = await axios.post(PathLink.domain + "comments/user/delete", {
       method: "post",
       data: {
         idcommemt: comment._id,
+        permission: account.permission,
         idUser: comment.user_comment._id,
         username: comment.user_comment.username,
       },
@@ -73,13 +75,40 @@ const CommenItem: React.FC<{
         Authorization: "Bearer " + account.accessToken,
       },
     });
-    BoxchatElement.current && BoxchatElement.current.classList.add("hidden");
+
     if (res.data.status === 200) {
       ToastMessage(res.data.message).success();
+      BoxchatElement.current && BoxchatElement.current.classList.add("hidden");
     } else ToastMessage(res.data.message).warning();
   };
-  const handleEditFisrt = (e: any) => {
-    console.log(e.target.innerHTML);
+  const handleEditFisrt = async (e: any) => {
+    if (!account.accessToken) return;
+    if (e.target.innerHTML !== comment.comment) {
+      let newCommemt: string = e.target.innerHTML
+        .trim()
+        .replaceAll("&nbsp;", " ");
+      newCommemt = newCommemt.replace(/ {2}/g, " ");
+
+      const response = await axios.put(
+        PathLink.domain + "comments/user/update",
+        {
+          method: "put",
+          data: {
+            idcommemt: comment._id,
+            comment: newCommemt,
+            idUser: comment.user_comment._id,
+            username: comment.user_comment.username,
+            permission: account.permission,
+          },
+          headers: {
+            Authorization: "Bearer " + account.accessToken,
+          },
+        }
+      );
+      if (response.data.status === 200) {
+        ToastMessage(response.data.message).success();
+      } else ToastMessage(response.data.message).warning();
+    }
   };
   return (
     <li ref={BoxchatElement} className="pb-2 commemt_parent w-full block">
@@ -90,9 +119,16 @@ const CommenItem: React.FC<{
         <div className="comment_info">
           <div className="info_title flex gap-0.5 items-center">
             <span>{comment.user_comment.fullname}</span>
-            <BiTime className="ml-2 mr-1 font-semibold" />
-            <span className="text-small">
-              {HandleTimeDiff(comment.updated_at)}{" "}
+
+            <BiTime className="ml-2 mr-1 font-semibold animate-spin" />
+            <span className="text-small flex ">
+              {comment.is_edit && (
+                <span className="mx-1 flex items-center">
+                  Đã chỉnh sửa
+                  <BiCheck size={defaultIconSize} />
+                </span>
+              )}{" "}
+              {HandleTimeDiff(comment.updated_at)}
             </span>
             {comment.user_comment.icons.length > 0 && (
               <SublistIcon listIcons={comment.user_comment.icons} />
@@ -128,9 +164,9 @@ const CommenItem: React.FC<{
             <span
               className="cursor-pointer"
               onClick={() => {
-                if (!account._id)
-                  ToastMessage("Bạn chưa đăng nhập kìa !").info();
-                account._id && setOpenReplay(!openReply);
+                account._id
+                  ? setOpenReplay(!openReply)
+                  : ToastMessage("Bạn chưa đăng nhập kìa !").info();
               }}
             >
               Phản hồi
@@ -155,20 +191,24 @@ const CommenItem: React.FC<{
           </p>
         </div>
         <div className="absolute top-0 right-1">
-          {comment.user_comment._id === account._id && (
+          {(comment.user_comment._id === account._id ||
+            account.permission == "admin") && (
             <p className="user_edit  flex flex-col w-4 items-center justify-center mt-2">
-              <Tooltip title="Edit" arrow placement="left">
+              <Tooltip title="Sửa bình luận" arrow placement="left">
                 <button
                   onClick={() => {
                     commentElement.current.contentEditable = true;
                     commentElement.current.focus();
+                    ToastMessage(
+                      "Click ra ngoài để được lưu nhen ❤️❤️ !"
+                    ).info();
                   }}
                 >
                   <BiEditAlt size={defaultIconSize} />
                 </button>
               </Tooltip>
               <Tooltip
-                title="Delete"
+                title="Xóa bình luận"
                 onClick={handleUserDelete}
                 className="my-2"
                 arrow
@@ -178,7 +218,7 @@ const CommenItem: React.FC<{
                   <BiTrash size={defaultIconSize} />
                 </button>
               </Tooltip>
-              <Tooltip title="View Infomation" arrow placement="left">
+              <Tooltip title="Xem thông tin" arrow placement="left">
                 <button>
                   <BiInfoCircle size={defaultIconSize} />
                 </button>

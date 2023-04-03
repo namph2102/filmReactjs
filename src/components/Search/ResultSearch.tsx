@@ -13,7 +13,7 @@ export const ResultSearch: React.FC<IProps> = ({ listFilm }) => {
       <ul className="search_result-list">
         {listFilm.length > 0 &&
           listFilm.map((film) => (
-            <li key={film.id}>
+            <li key={film._id}>
               <Link
                 to={`${PathLink.seeFilmDetail}/${film.slug}`}
                 className="flex items-center p-3 hover:bg-hover"

@@ -1,4 +1,4 @@
-import React, { memo, Suspense, useState, useEffect } from "react";
+import React, { memo, Suspense, useRef, useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { GetListComments, updateLimit } from "../../../Redux/CommentSlice";
@@ -15,7 +15,7 @@ const CommentContainer = () => {
   const idFilm = CommemtSlice.idFilm;
   const limitCommemt: number = CommemtSlice.limit;
   const dispatch: AppDispatch = useDispatch();
-
+  const CommemtContainer = useRef<HTMLElement | any>(null);
   useEffect(() => {
     const handleEventComment = () => {
       dispatch(GetListComments({ idFilm, limit: limitCommemt }));
@@ -28,11 +28,22 @@ const CommentContainer = () => {
   const loadingMoreCommemt = () => {
     dispatch(updateLimit());
     ToastMessage("Tải thêm bình luận thành công!").success();
+    const idTiemout = setTimeout(() => {
+      CommemtContainer.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+      clearTimeout(idTiemout);
+    }, 2000);
   };
 
   return (
     <>
-      <ul className={`text-text w-full 0 mb-2 px-2 relative`}>
+      <ul
+        ref={CommemtContainer}
+        className={`text-text w-full 0 mb-2 px-2 relative`}
+      >
         {commemts.length > 0 ? (
           commemts.map((comment: TpropComment) => (
             <Suspense key={comment._id} fallback={<RotateLoadding />}>

@@ -41,7 +41,7 @@ const Header = () => {
           <SearchContainer />
         </div>
 
-        <div className="header-bookmark p-0 m-0 hidden  items-center basis-3/12 lg:flex justify-end">
+        <div className="header-bookmark p-0 m-0 items-center basis-3/12 lg:flex justify-end">
           {screenLG >= 1024 && (
             <RenderDesktopProfile
               onhandleBookMark={handleBookMark}

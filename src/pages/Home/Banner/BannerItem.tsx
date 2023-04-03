@@ -1,7 +1,7 @@
 import React from "react";
 import { ISlider } from "../../../contants";
 import { Link } from "react-router-dom";
-
+import PathLink from "../../../contants";
 interface IItemBanner extends ISlider {
   translateX: string;
 }
@@ -18,7 +18,7 @@ const BannerItem: React.FC<IItemBanner> = ({
       style={{ transform: `translateX(${translateX})` }}
       className="banner_item"
     >
-      <Link to={slug}>
+      <Link to={PathLink.seeFilmDetail + "/" + slug}>
         <img className="cursor-pointer object-cover" src={link} alt={title} />
       </Link>
       <figcaption className="banner_item-des py-4 px-5 ">

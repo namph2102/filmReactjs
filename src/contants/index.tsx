@@ -34,6 +34,7 @@ export interface TpropComment {
   created_at: number;
   subcomment: number[];
   user_comment: IUserComment;
+  is_edit: Boolean;
 }
 
 class PathLink {

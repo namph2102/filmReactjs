@@ -41,3 +41,8 @@ header {
     top: -145px;
   }
 }
+@media screen and (max-width: 1024px) {
+  .header-bookmark {
+    display: none;
+  }
+}

@@ -116,7 +116,7 @@ const RegisterMovie = ({
                     onBlur={() => handleBlur("username")}
                     required
                   />
-                  <button type="button" className="p-2">
+                  <button type="button" disabled={true} className="p-2">
                     {" "}
                     <RiUserHeartLine size={defaultIconSize} />
                   </button>
