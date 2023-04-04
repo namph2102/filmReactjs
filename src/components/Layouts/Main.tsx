@@ -1,13 +1,24 @@
 import React, { Suspense } from "react";
 import Routers from "../../routers/Routers";
 import Aside from "../Aside";
-import Footer from "../Footer";
+
 import Header from "../Header";
+const Footer = React.lazy(() => {
+  return new Promise((resolve: any) => {
+    const idTimeout = setTimeout(() => {
+      clearTimeout(idTimeout);
+      return resolve(import("../Footer"));
+    }, 4000);
+  });
+});
 
 import RotateLoadding from "../Loadding/RotateLoadding";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Redux/Store";
 const CommemtContainers = React.lazy(() => import("../BaseRealTime"));
 
 const Main = () => {
+  const isCommemt = useSelector((state: RootState) => state.commemt.isComment);
   return (
     <>
       <Header />
@@ -23,10 +34,12 @@ const Main = () => {
       </section>
       <div className="container mx-auto relative">
         <Suspense fallback={<RotateLoadding />}>
-          <CommemtContainers />
+          {isCommemt && <CommemtContainers />}
         </Suspense>
       </div>
-      <Footer />
+      <Suspense>
+        <Footer />
+      </Suspense>
     </>
   );
 };

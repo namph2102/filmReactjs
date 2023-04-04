@@ -4,13 +4,19 @@ import { BiDislike, BiLike } from "react-icons/bi";
 import ToastMessage from "../../../../untils/ToastMessage";
 import { useDispatch } from "react-redux";
 import { GetHandleLikeCopmment } from "../../../../Redux/CommentSlice";
+import { likeLocal } from "../../../../untils/localStorage";
+
 const HandleLiekCommemt: React.FC<{
   total_like: number;
   id_comment: string;
 }> = ({ total_like, id_comment }) => {
-  const [isLiked, setIsLiked] = useState<number>(0);
+  const [isLiked, setIsLiked] = useState<number>(
+    likeLocal.getValues(id_comment)
+  );
   const dispatch: any = useDispatch();
   const handleUpdate = (value: number) => {
+    likeLocal.set(value, id_comment);
+
     dispatch(GetHandleLikeCopmment({ id_comment, crease: value }))
       .then(() => setIsLiked(value))
       .catch(ToastMessage("Lỗi đường truyền !", "😭").error);

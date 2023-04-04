@@ -10,6 +10,7 @@ import BookMark from "../BookMark";
 import { RenderDesktopProfile, RenderProfile } from "./BookMarkDestop";
 
 const Header = () => {
+  console.log("re-render header");
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const [isOppenBookmark, setOppenBookmark] = useState<boolean>(false);
   const navRef = useRef<any>(null);

@@ -3,6 +3,7 @@ import React from "react";
 import "../Comment.scss";
 import { Tooltip } from "@mui/material";
 import { IUserComment } from "../../../../contants";
+import { componentsProps, componentsPropsCommemt } from "../../../../untils";
 const PermissionAttacked: React.FC<{ account: IUserComment }> = ({
   account,
 }) => {
@@ -11,13 +12,23 @@ const PermissionAttacked: React.FC<{ account: IUserComment }> = ({
       <Avatar src={account.avata} />
       <span className="subavata">
         {account.permission === "admin" ? (
-          <Tooltip title="Admin" placement="top" arrow>
+          <Tooltip
+            componentsProps={componentsProps}
+            title="Admin"
+            placement="top"
+            arrow
+          >
             <img src="/images/admin.png" alt="" />
           </Tooltip>
         ) : (
           account.permission === "vip" &&
           account.vip && (
-            <Tooltip title={`Vip ${account.vip}`} placement="top" arrow>
+            <Tooltip
+              componentsProps={componentsPropsCommemt}
+              title={`Vip ${account.vip}`}
+              placement="top"
+              arrow
+            >
               <img src={`/images/vip/vip${account.vip}.png`} alt="" />
             </Tooltip>
           )

@@ -78,7 +78,7 @@ const CommenItem: React.FC<{
 
     if (res.data.status === 200) {
       ToastMessage(res.data.message).success();
-      BoxchatElement.current && BoxchatElement.current.classList.add("hidden");
+      BoxchatElement.current && BoxchatElement.current.classList.add("hide");
     } else ToastMessage(res.data.message).warning();
   };
   const handleEditFisrt = async (e: any) => {
@@ -190,10 +190,10 @@ const CommenItem: React.FC<{
             </span>
           </p>
         </div>
-        <div className="absolute top-0 right-1">
+        <div className="absolute top-0 right-1 bottom-0 flex">
           {(comment.user_comment._id === account._id ||
             account.permission == "admin") && (
-            <p className="user_edit  flex flex-col w-4 items-center justify-center mt-2">
+            <p className="user_edit flex flex-col w-4  items-center justify-center mt-2">
               <Tooltip title="Sửa bình luận" arrow placement="left">
                 <button
                   onClick={() => {
@@ -216,11 +216,6 @@ const CommenItem: React.FC<{
               >
                 <button>
                   <BiTrash size={defaultIconSize} />
-                </button>
-              </Tooltip>
-              <Tooltip title="Xem thông tin" arrow placement="left">
-                <button>
-                  <BiInfoCircle size={defaultIconSize} />
                 </button>
               </Tooltip>
             </p>

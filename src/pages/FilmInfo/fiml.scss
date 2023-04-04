@@ -1,0 +1,54 @@
+.film-detail {
+  .bookmark_effect {
+    animation: effect_shake 1s linear infinite;
+  }
+  .btn_detail {
+    button {
+      font-size: 0.875rem;
+      transition: all 0.4s ease-in-out;
+      background-image: linear-gradient(to right, #e43603, #fa0a52, #ff5000);
+      /* box-shadow: 0 4px 15px 0 rgb(229 66 10 / 75%); */
+      background-size: 300% 100%;
+      &:hover {
+        opacity: 0.9;
+        background-image: linear-gradient(
+          to left,
+
+          #e43603,
+          #fa0a52,
+          #ff5000
+        );
+      }
+    }
+  }
+
+  .view_info-item {
+    display: flex;
+    padding: 16px 0;
+    border-bottom: 1px solid rgb(59, 59, 59);
+    align-items: center;
+    .view_info-title {
+      min-width: 120px;
+      font-size: 0.875rem;
+      font-weight: bold;
+    }
+  }
+}
+
+@keyframes effect_shake {
+  0% {
+    transform: rotate(0);
+  }
+  55% {
+    transform: rotateZ(30deg);
+  }
+  70% {
+    transform: rotateZ(0deg);
+  }
+  85% {
+    transform: rotateZ(-30deg);
+  }
+  100% {
+    ransform: rotateZ(0deg);
+  }
+}

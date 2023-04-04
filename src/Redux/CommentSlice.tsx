@@ -11,10 +11,12 @@ type TCommetSlice = {
   limit: number;
   count: number;
   totalHeader: number;
+  isComment: Boolean;
 };
 const CommentSlice = createSlice({
   name: "comment",
   initialState: {
+    isComment: true,
     idFilm: "0",
     limit: 15,
     count: 0,
