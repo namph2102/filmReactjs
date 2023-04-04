@@ -24,7 +24,7 @@ const EpisodeContainer: React.FC<{ film: Ifilm }> = ({ film }) => {
         <BiDownArrowCircle size={defaultIconSize} />
       </div>
       <Tooltip
-        title="Nhập số tập muốn tìm "
+        title="Enter để tìm kiếm... "
         componentsProps={componentsProps}
         arrow
         placement="top"
