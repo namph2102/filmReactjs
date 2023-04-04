@@ -118,7 +118,9 @@ const CommenItem: React.FC<{
         </div>
         <div className="comment_info">
           <div className="info_title flex gap-0.5 items-center">
-            <span>{comment.user_comment.fullname}</span>
+            <span className="capitalize">
+              {comment.user_comment.fullname || comment.user_comment.username}
+            </span>
 
             <BiTime className="ml-2 mr-1 font-semibold animate-spin" />
             <span className="text-small flex ">

@@ -39,10 +39,11 @@ export interface TpropComment {
 
 class PathLink {
   seeFilmDetail = "xem-thong-tin";
-  seeFilm = "xem-phim";
+  seeFilm = "/xem-phim/";
   seeProfile = "tai-khoan";
   domain = "http://localhost:3000/";
   nameToken = "_myToken";
+  seeCategories = "/the-loai-phim/";
 }
 // Configure Firebase.
 export const configFireBase = {

@@ -37,6 +37,7 @@ module.exports = {
         main: "#212C37",
         content: "#151D25",
         hover: "#12171b",
+        third: "#224361",
         input: "#17242E",
         admin: "#383f44",
         vip: "#0e0e0e",

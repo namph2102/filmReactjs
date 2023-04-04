@@ -9,7 +9,6 @@
   }
   body {
     overflow-x: hidden;
-
     -webkit-font-smoothing: antialiased;
     background: #222d38 url("/images/halimBg.png") fixed center;
     -webkit-transition: background-color 150ms ease-out !important;
@@ -57,5 +56,8 @@
   }
   .commemt_effect-form {
     @apply lg:w-1/2  md:w-3/4 w-11/12 h-0 transition-all duration-500 opacity-0;
+  }
+  .film_kinds-item {
+    @apply bg-gray-600 p-3  text-xs font-light py-1.5 hover:text-primary hover:bg-gray-700 rounded-md;
   }
 }

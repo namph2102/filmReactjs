@@ -12,10 +12,10 @@ export interface Ifilm {
   thumb_url: string;
   poster_url: string;
   kind: string;
-  category: string;
+  category: string[];
   status: string;
   view: number;
-  stars: number;
+  star: number;
   year: string;
   time: string;
   episode_current: number;
