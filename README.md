@@ -26,7 +26,7 @@ LIBRARY: MUI,
         <p>HOME</p>
         <figure>
         <img src="/movie/public/des/home.png"/>
-        <img src="/movie/public/des/home1.png"/>
+     <img src="/movie/public/des/home1.png"/>
         </figure>
     </li>
 </ul>
