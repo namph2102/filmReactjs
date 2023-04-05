@@ -31,7 +31,6 @@ const UserSlice = createSlice({
       _id: "",
       _uid: "",
       username: "",
-      password: "",
       fullname: "",
       avata: "",
       coin: 0,
@@ -50,12 +49,13 @@ const UserSlice = createSlice({
     updateUser(state, action) {
       const account = action.payload.data;
       if (action.payload.status === 200) {
-        axios.create({
-          baseURL: PathLink.domain,
-          headers: {
-            Authorization: "Bearer " + account.accessToken,
-          },
-        });
+        axios.defaults.headers.common["Authorization"] = account.accessToken;
+        // axios.create({
+        //   baseURL: PathLink.domain,
+        //   headers: {
+        //     Authorization: "Bearer " + account.accessToken,
+        //   },
+        // });
 
         if (account.permission == "admin") {
           account.chatLength = 2000;
@@ -77,6 +77,8 @@ const UserSlice = createSlice({
     updateToken(state, action) {
       state.user.accessToken = action.payload.accessToken;
       console.log("Upload token thành công");
+      axios.defaults.headers.common["Authorization"] =
+        action.payload.accessToken;
     },
   },
   extraReducers: (builder) => {
@@ -105,15 +107,17 @@ export const acctachkedAccount = createAsyncThunk(
     const accessToken = localStorage.getItem(PathLink.nameToken) || "";
     if (!accessToken) throw new Error("Not have actoken");
     try {
-      const res = await axios.get(PathLink.domain + "user/login", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Methods": "GET",
-          "Access-Control-Allow-Origin": PathLink.domain,
-          Accept: "*/*",
-        },
-      });
+      // const res = await axios.get(PathLink.domain + "user/login", {
+      //   headers: {
+      //     Authorization: `Bearer ${accessToken}`,
+      //     "Content-Type": "application/json",
+      //     "Access-Control-Allow-Methods": "GET",
+      //     "Access-Control-Allow-Origin": PathLink.domain,
+      //     Accept: "*/*",
+      //   },
+      // });
+      axios.defaults.headers.common["Authorization"] = accessToken;
+      const res = await axios.get(PathLink.domain + "user/login");
       return res.data;
     } catch (error) {
       return {};

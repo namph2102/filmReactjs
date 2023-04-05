@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { CreateUser } from "../../Redux/UserSlice";
 import { AppDispatch } from "../../Redux/Store";
 import PathLink from "../../contants";
+import axios from "axios";
 const RegisterMovie = ({
   onHandleClose,
   onShowFormRegister,
@@ -49,16 +50,15 @@ const RegisterMovie = ({
       repassword = password.trim();
       username = username.trim();
       dispatch(CreateUser({ username, password })).then((state) => {
-        console.log(state?.payload);
         if (state?.payload.status === 200) {
           localStorage.setItem(
             PathLink.nameToken,
             state?.payload.data.accessToken
           );
+          axios.defaults.headers.common = state?.payload.data.accessToken;
           localStorage.setItem("username", state?.payload.data.username);
           ToastMessage(state?.payload.message).success();
           formik.handleReset();
-          console.log(state?.payload);
           onHandleClose(false);
         } else {
           ToastMessage(state?.payload.message).warning();

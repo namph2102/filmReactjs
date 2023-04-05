@@ -83,12 +83,18 @@ const CommenItem: React.FC<{
   };
   const handleEditFisrt = async (e: any) => {
     if (!account.accessToken) return;
+
     if (e.target.innerHTML !== comment.comment) {
       let newCommemt: string = e.target.innerHTML
         .trim()
         .replaceAll("&nbsp;", " ");
       newCommemt = newCommemt.replace(/ {2}/g, " ");
-
+      if (newCommemt.length > account.chatLength) {
+        ToastMessage(
+          `Bạn không được chat quá ${account.chatLength} ký tự !`
+        ).warning();
+        return;
+      }
       const response = await axios.put(
         PathLink.domain + "comments/user/update",
         {
