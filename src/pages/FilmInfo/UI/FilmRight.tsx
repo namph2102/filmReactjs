@@ -1,8 +1,8 @@
 import { Rating } from "@mui/material";
-import React from "react";
+import React, { memo } from "react";
 import { BiCalendar, BiTime, BiWifi0 } from "react-icons/bi";
 import { Link } from "react-router-dom";
-
+import { HiOutlineCubeTransparent } from "react-icons/hi";
 import { Ifilm } from "../../../Redux/FilmSlice";
 import star from "../../../assets/star.png";
 import PathLink, { defaultIconSize } from "../../../contants";
@@ -88,8 +88,8 @@ const FilmRight: React.FC<{ film: Ifilm }> = ({ film }) => {
               }}
             />{" "}
             <span className="flex animate-spin absolute">
-              <BiWifi0 fontSize={defaultIconSize} />
-              <BiWifi0 fontSize={defaultIconSize} />
+              <HiOutlineCubeTransparent fontSize={defaultIconSize} />
+              <HiOutlineCubeTransparent fontSize={defaultIconSize} />
             </span>
           </span>
         </p>
@@ -98,4 +98,4 @@ const FilmRight: React.FC<{ film: Ifilm }> = ({ film }) => {
   );
 };
 
-export default FilmRight;
+export default memo(FilmRight);

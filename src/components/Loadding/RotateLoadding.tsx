@@ -1,6 +1,8 @@
 import React from "react";
 import imgaeLoading from "../../assets/loading.png";
-const RotateLoadding = () => {
+const RotateLoadding: React.FC<{ message?: string }> = ({
+  message = "Chờ tí xíu ....",
+}) => {
   return (
     <div className="wrapper-loading my-5  mx-auto w-full">
       <img
@@ -9,9 +11,7 @@ const RotateLoadding = () => {
         width="40"
         height="40"
       />
-      <span className="text-lg text-primary font-medium ml-4">
-        Chờ tí xíu ....{" "}
-      </span>
+      <span className="text-sm text-primary font-medium ml-4">{message}</span>
     </div>
   );
 };

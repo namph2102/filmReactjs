@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import PathLink, { defaultIconSize } from "../../../contants";
 import { RiArrowDownSFill, RiPlayCircleLine } from "react-icons/ri";
@@ -8,9 +8,22 @@ import bookmark from "../../../assets/bookmark.png";
 import bookmarked from "../../../assets/bookmarked.png";
 import { Ifilm } from "../../../Redux/FilmSlice";
 const FilmLeft: React.FC<{ film: Ifilm }> = ({ film }) => {
+  const leftContainer = useRef<HTMLElement>(null);
+  const handleScrolltoEpisode = () => {
+    if (leftContainer.current) {
+      window.scrollTo({
+        top:
+          window.scrollY +
+          leftContainer.current.getBoundingClientRect().y +
+          (window.innerWidth <= 1024 ? 700 : 200),
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <div className="fiml_info--thumb relative flex justify-center">
-      <figure className="relative w-56 lg:w-full">
+      <figure ref={leftContainer} className="relative w-56 lg:w-full">
         <Link to={`/${PathLink.seeFilm + "/" + film.slug}`}>
           <img
             src={film.thumb_url}
@@ -19,7 +32,10 @@ const FilmLeft: React.FC<{ film: Ifilm }> = ({ film }) => {
           />
         </Link>
         <div className="btn_detail absolute left-0 bottom-2 flex justify-between lg:w-full w-56 px-1">
-          <button className="flex gap-0.5 p-2 rounded">
+          <button
+            onClick={handleScrolltoEpisode}
+            className="flex gap-0.5 p-2 rounded"
+          >
             Tập Phim <RiArrowDownSFill size={defaultIconSize} />
           </button>
           <Link to={PathLink.seeFilm + film.slug}>
