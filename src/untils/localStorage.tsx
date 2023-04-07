@@ -8,7 +8,7 @@ function CreateLocal(key: string) {
     get() {
       return storage || [];
     },
-    set<t>(value: string | number, key: string) {
+    set(value: string | number, key: string) {
       const result = store.addValues(value, key);
       if (!result) {
         if (key) {
@@ -34,7 +34,7 @@ function CreateLocal(key: string) {
       return (
         storage.find(
           (item: { key: string; value: string | number }) => item.key === key
-        )?.value || 0
+        )?.value || null
       );
     },
   };
@@ -42,4 +42,6 @@ function CreateLocal(key: string) {
 }
 
 export const likeLocal = CreateLocal("likelocal");
+export const starLocal = CreateLocal("starlocal");
+
 export const bookmarkLocal = CreateLocal("bookmarkLocal");

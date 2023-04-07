@@ -45,11 +45,12 @@ const SearchFilm: React.FC<{ totalEsopide: number; slug: string }> = ({
       });
     }
   };
+
   return (
     <div>
       <label className="relative  w-full lg:w-80 my-3 flex">
         <Tooltip
-          title="Enter để tìm kiếm... "
+          title="Bấm nút search để tìm kiếm.. "
           componentsProps={componentsProps}
           arrow
           placement="top"
@@ -66,7 +67,8 @@ const SearchFilm: React.FC<{ totalEsopide: number; slug: string }> = ({
           onClick={handleFindEpisode}
           className="bg-menu py-2 px-3 ml-2 rounded-full flex justify-center items-center hover:text-primary hover:bg-menu"
         >
-          <BiSearchAlt size={defaultIconSize} /> Search{" "}
+          <BiSearchAlt size={defaultIconSize} />
+          <span className="px-1">Search</span>
         </button>
       </label>
       <div className="">

@@ -12,7 +12,9 @@ import SearchFilm from "../component/SearchFilm";
 const EpisodeContainer: React.FC<{
   film: Ifilm;
 }> = ({ film }) => {
-  const [currentEpisode, setCurrentEsopide] = useState<number>(-1);
+  const [currentEpisode, setCurrentEsopide] = useState<number>(
+    film.kind == "series" ? film.episode_current : 0
+  );
 
   return (
     <section className="p-4 pp-2">
@@ -24,8 +26,9 @@ const EpisodeContainer: React.FC<{
       <SearchFilm slug={film.slug} totalEsopide={film.episode_current} />
 
       <ul className="flex flex-wrap gap-1 mt-8">
-        {film.episode_current &&
-          new Array(film.episode_current).fill(0).map((_, index) => (
+        {currentEpisode > 1 &&
+          film.episode_current &&
+          new Array(currentEpisode).fill(0).map((_, index) => (
             <li key={index}>
               <Link
                 className={`text-center film_kinds-item w-20 text-sm block ${

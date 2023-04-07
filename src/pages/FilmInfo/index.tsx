@@ -6,12 +6,17 @@ import { Ifilm } from "../../Redux/FilmSlice";
 import ToastMessage from "../../untils/ToastMessage";
 import "./fiml.scss";
 import RotateLoadding from "../../components/Loadding/RotateLoadding";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../Redux/Store";
+import { updateStatusShowComment } from "../../Redux/CommentSlice";
 const FilmLeft = React.lazy(() => import("./UI/FilmLeft"));
 const FilmRight = React.lazy(() => import("./UI/FilmRight"));
 const FilmDescription = React.lazy(() => import("./UI/FilmDescription"));
 const EpisodeContainer = React.lazy(() => import("./UI/Episode"));
 
 const FilmInfo = () => {
+  const isShow = useSelector((state: RootState) => state.commemt.isComment);
+  const dispatch: AppDispatch = useDispatch();
   let { slug } = useParams();
   const [film, setFilm] = useState<Ifilm | any>();
   const EsopiceRef = useRef<HTMLElement | any>(null);
@@ -26,9 +31,13 @@ const FilmInfo = () => {
           });
           setFilm(responsive.data.film);
         } catch (err: any) {
-          ToastMessage(err.response.data.message).info();
+          ToastMessage("Lỗi gì đó").info();
         }
       })();
+    }
+
+    if (isShow) {
+      dispatch(updateStatusShowComment({ isShow: false }));
     }
   }, [slug]);
 
@@ -43,7 +52,7 @@ const FilmInfo = () => {
             </Suspense>
           </div>
           <Suspense fallback={<RotateLoadding message="Chờ xíu nhé..." />}>
-            <EpisodeContainer film={film} />
+            {film.kind == "series" && <EpisodeContainer film={film} />}
             <FilmDescription film={film} />
           </Suspense>
         </section>

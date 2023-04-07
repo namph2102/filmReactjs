@@ -11,20 +11,23 @@ const FilmDescription: React.FC<{ film: Ifilm }> = ({ film }) => {
         <figure className="flex items-center gap-2 py-4 bg-third text-base px-2 rounded">
           <img src={danger} width={40} height={40} />
           <figcaption className="m-0">
-            <ol className="m-0">
-              <li>
-                Mẹo tìm kiếm : Thêm{" "}
-                <span className="italic text-primary font-bold">videotv</span>{" "}
-                phía sau để ra kết quả tốt nhất, ví dụ :{" "}
-                <span className="capitalize"> {film.name} </span>{" "}
-                <span className="italic text-primary font-bold">videotv</span>
-              </li>
-              <li>
-                Đừng tiếc 1{" "}
-                <span className="italic text-primary font-bold">comment</span>{" "}
-                bên dưới để đánh giá phim
-              </li>
-            </ol>
+            <li>
+              Mẹo tìm kiếm : Thêm{" "}
+              <span className="italic text-primary font-bold">videotv</span>{" "}
+              phía sau để ra kết quả tốt nhất, ví dụ :{" "}
+              <span className="capitalize"> {film.name} </span>{" "}
+              <span className="italic text-primary font-bold">videotv</span>
+            </li>
+            <li>
+              Đừng tiếc 1{" "}
+              <span className="italic text-primary font-bold">comment</span> bên
+              dưới để đánh giá phim
+            </li>
+            <li>
+              {" "}
+              <span className="italic text-primary font-bold">Đăng nhập </span>
+              để bình chọn sao nhé !
+            </li>
           </figcaption>
         </figure>
         <figure className="flex items-center gap-2 py-4 bg-third text-base mt-4 px-2 rounded">

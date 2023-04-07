@@ -4,6 +4,7 @@ import PathLink from "../contants";
 import { TpropComment } from "../contants";
 import { AppDispatch, RootState } from "./Store";
 import UserSlice from "./UserSlice";
+import { RiCompassDiscoverLine } from "react-icons/ri";
 type TCommetSlice = {
   isloading: boolean;
   listMainComment: TpropComment[];
@@ -29,6 +30,9 @@ const CommentSlice = createSlice({
     updateIdFim(state, action) {
       state.idFilm = action.payload.idFilm;
     },
+    updateStatusShowComment(state, action) {
+      state.isComment = action.payload.isShow;
+    },
     updateLimit(state) {
       if (state.limit > state.count) state.limit = state.count;
       else state.limit += 15;
@@ -42,7 +46,7 @@ const CommentSlice = createSlice({
     });
   },
 });
-export const { updateLimit } = CommentSlice.actions;
+export const { updateLimit, updateStatusShowComment } = CommentSlice.actions;
 export default CommentSlice.reducer;
 export interface IApiSendDataComment {
   subcomment: string | number;
