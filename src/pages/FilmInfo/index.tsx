@@ -19,7 +19,10 @@ const FilmInfo = () => {
   const dispatch: AppDispatch = useDispatch();
   let { slug } = useParams();
   const [film, setFilm] = useState<Ifilm | any>();
-  const EsopiceRef = useRef<HTMLElement | any>(null);
+  if (film) {
+    document.title = film.name.toUpperCase();
+  }
+
   useEffect(() => {
     setFilm(() => {});
     if (slug) {

@@ -42,6 +42,7 @@ module.exports = {
         admin: "#383f44",
         vip: "#0e0e0e",
         member: "#333",
+        btn: "#25354c",
       },
       backgroundImage: {
         status: "linear-gradient(to right,#ff00cc 0%,#333399 51%,#ff00cc 100%)",

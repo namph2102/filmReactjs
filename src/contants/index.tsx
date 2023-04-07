@@ -38,6 +38,9 @@ export interface TpropComment {
 }
 
 class PathLink {
+  home = "/trang-chu";
+  categories = "/the-loai";
+  contry = "/quoc-gia/";
   seeFilmDetail = "xem-thong-tin";
   seeFilm = "/xem-phim/";
   seeProfile = "tai-khoan";

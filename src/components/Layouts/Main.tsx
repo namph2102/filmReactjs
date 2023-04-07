@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import Routers from "../../routers/Routers";
 import Aside from "../Aside";
-
+import PathLink from "../../contants";
 import Header from "../Header";
 const Footer = React.lazy(() => {
   return new Promise((resolve: any) => {
@@ -15,6 +15,9 @@ const Footer = React.lazy(() => {
 import RotateLoadding from "../Loadding/RotateLoadding";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/Store";
+import HaveAside from "./HaveAside";
+import { Route, Routes } from "react-router-dom";
+import WatchFilm from "../../pages/WatchFilm";
 const CommemtContainers = React.lazy(() => import("../BaseRealTime"));
 
 const Main = () => {
@@ -22,16 +25,15 @@ const Main = () => {
   return (
     <>
       <Header />
+
       <section className="container mx-auto">
         <main className="flex flex-wrap bg-content py-4 px-2">
-          <article className="wrapper-container basis-full lg:basis-2/3 lg:pt-4">
-            <Routers />
-          </article>
-          <aside className="wrapper-aside basis-full lg:basis-1/3 relative">
-            <Aside />
-          </aside>
+          <Routes>
+            <Route path="*" element={<HaveAside />} />
+          </Routes>
         </main>
       </section>
+
       <div className="container mx-auto relative">
         <Suspense fallback={<RotateLoadding />}>
           {isCommemt && <CommemtContainers />}
