@@ -43,18 +43,36 @@ const RenderProfile = (): JSX.Element => {
 const RenderDesktopProfile: React.FC<{
   isOppenBookmark: boolean;
   onhandleBookMark: () => void;
-}> = ({ isOppenBookmark, onhandleBookMark }): JSX.Element => {
+  bookmarklength: number;
+  listBookmarks: any;
+}> = ({
+  isOppenBookmark,
+  onhandleBookMark,
+  bookmarklength,
+  listBookmarks,
+}): JSX.Element => {
+  console.log(listBookmarks);
   return (
     <>
-      <Tooltip onClick={onhandleBookMark} title="Phim yêu thích của bạn" arrow>
+      <Tooltip
+        onClick={onhandleBookMark}
+        title="Phim yêu thích của bạn"
+        arrow
+        placement="left"
+      >
         <div className="popper-container bg-bookmark mr-4">
           <BiBookmark fontSize={defaultIconSize} />
           <p className="mx-2">Phim yêu thích</p>
-          <span className="total-bookmark">1</span>
+          <span className="total-bookmark">{bookmarklength}</span>
         </div>
       </Tooltip>
       <RenderProfile />
-      {isOppenBookmark && <BookMark />}
+      {
+        <BookMark
+          isOppenBookmark={isOppenBookmark}
+          listBookmarks={listBookmarks}
+        />
+      }
     </>
   );
 };

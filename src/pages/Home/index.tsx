@@ -4,12 +4,23 @@ import MainFilmContainer from "../../components/MainFilmContainer";
 import { RootState } from "../../Redux/Store";
 import { Ifilm } from "../../Redux/FilmSlice";
 import imgaeLoading from "../../assets/loading.png";
+import { Helmet } from "react-helmet-async";
+import seoPage from "../../untils/seo";
 const Banner = React.lazy(() => import("./Banner"));
+
 const Home = () => {
   const filmSlice = useSelector((state: RootState) => state.film);
   const films: Ifilm[] = filmSlice.filmsHome || [];
   return (
     <>
+      <Helmet>
+        <title>{seoPage.titleHome}</title>
+        <meta name="description" content={seoPage.desHome} />
+        <meta property="og:image" content={seoPage.posterHome} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={seoPage.titleHome} />
+        <meta property="og:description" content={seoPage.desHome} />
+      </Helmet>
       <Suspense
         fallback={
           <p className="wrapper-container basis-full h-96 bg-main border-zinc-100 lg:basis-2/3 lg:pt-4 "></p>

@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useRef } from "react";
+import React, { useMemo, useState, useRef, useLayoutEffect } from "react";
 import logo from "../../assets/logo.png";
 import "./header.scss";
 import { BiBookmark, BiMenu } from "react-icons/bi";
@@ -8,18 +8,21 @@ import Menu from "../NavContainer";
 import SearchContainer from "../Search";
 import BookMark from "../BookMark";
 import { RenderDesktopProfile, RenderProfile } from "./BookMarkDestop";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getListBookmarks } from "../../Redux/BookmarkSlice";
+import { AppDispatch, RootState } from "../../Redux/Store";
 const Header = () => {
-  console.log("re-render header");
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
-  const [isOppenBookmark, setOppenBookmark] = useState<boolean>(false);
-  const navRef = useRef<any>(null);
-  const screenLG = useMemo<number>(
-    () => window.innerWidth,
-    [window.innerWidth]
+  const [isOppenBookmark, setOppenBookmark] = useState<boolean>(true);
+  const listBookmarks = useSelector(
+    (state: RootState) => state.bookmark.listfilm
   );
+  const dispatch: AppDispatch = useDispatch();
+  useLayoutEffect(() => {
+    dispatch(getListBookmarks());
+  }, []);
   const HandleClick = () => {
-    isOppenBookmark && setOppenBookmark(false);
+    setOppenBookmark(true);
     setIsOpenMenu(!isOpenMenu);
   };
   const handleBookMark = () => {
@@ -42,27 +45,36 @@ const Header = () => {
           <SearchContainer />
         </div>
 
-        <div className="header-bookmark p-0 m-0 items-center basis-3/12 lg:flex justify-end">
-          {screenLG >= 1024 && (
-            <RenderDesktopProfile
-              onhandleBookMark={handleBookMark}
-              isOppenBookmark={isOppenBookmark}
-            />
-          )}
+        <div className="header-bookmark p-0 m-0 items-center hidden basis-3/12 lg:flex justify-end">
+          <RenderDesktopProfile
+            bookmarklength={listBookmarks.length}
+            onhandleBookMark={handleBookMark}
+            isOppenBookmark={isOppenBookmark}
+            listBookmarks={listBookmarks}
+          />
         </div>
       </div>
       {/* Navigation */}
-      <div ref={navRef} className="basis-full flex items-center bg-menu">
+      <div className="basis-full flex items-center bg-menu">
         <nav className="container relative sm:mx-auto w-full mx-3">
           <div className="flex justify-between items-center my-2 lg:hidden">
             <BiMenu size="3rem" cursor="pointer" onClick={HandleClick} />
             <div className="flex items-center">
               <div>
-                <Badge onClick={handleBookMark} badgeContent={4}>
+                <Badge
+                  onClick={handleBookMark}
+                  badgeContent={listBookmarks.length}
+                >
                   <BiBookmark cursor="pointer" size="2rem" />
                 </Badge>
-
-                {screenLG < 1024 && isOppenBookmark && <BookMark />}
+                <div className="height_effect">
+                  <div className="lg:hidden block ">
+                    <BookMark
+                      isOppenBookmark={isOppenBookmark}
+                      listBookmarks={listBookmarks}
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className="info-avata ml-5">

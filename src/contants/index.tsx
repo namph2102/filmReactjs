@@ -46,6 +46,7 @@ class PathLink {
   seeProfile = "tai-khoan";
   domain = "http://localhost:3000/";
   nameToken = "_myToken";
+  localusername = "username";
   seeCategories = "/the-loai-phim/";
 }
 // Configure Firebase.

@@ -28,7 +28,7 @@ const Profile: React.FC<{ children: any }> = ({ children }) => {
   const dispatch: AppDispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [isOpenLoginForm, setIsOpenLoginForm] = useState<boolean>(false);
-  const user: IUser = useSelector((state: RootState) => state.account.user);
+  const user: any = useSelector((state: RootState) => state.account.user);
   const open = Boolean(anchorEl);
   const usernameLocal = localStorage.getItem("username") ?? "";
   const [ShowFormRegister, setShowFormRegister] = useState<boolean>(
@@ -51,7 +51,12 @@ const Profile: React.FC<{ children: any }> = ({ children }) => {
   };
   const handleLogout = () => {
     setAnchorEl(null);
-    localStorage.removeItem(PathLink.nameToken);
+    localStorage.clear();
+    // localStorage.removeItem(PathLink.nameToken);
+    // localStorage.removeItem(PathLink.localusername);
+    // localStorage.removeItem("bookmarkLocal");
+    // localStorage.removeItem("likelocal");
+
     localStorage.setItem("loginwithfirebase", "0");
     dispatch(removeUser({ setNull: {} }));
     ToastMessage("Đăng xuất thành công !").success();

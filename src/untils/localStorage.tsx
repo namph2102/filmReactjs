@@ -8,12 +8,12 @@ function CreateLocal(key: string) {
     get() {
       return storage || [];
     },
-    set(value: string | number, key: string) {
+    set(value: any, key?: string) {
       const result = store.addValues(value, key);
       if (!result) {
         if (key) {
           storage.find(
-            (item: { key: string; value: string | number }) => item.key === key
+            (item: { key: string; value: any }) => item.key === key
           ).value = value;
         }
       } else {
@@ -21,7 +21,7 @@ function CreateLocal(key: string) {
       }
       save();
     },
-    addValues(value: string | number, key: string) {
+    addValues(value: any, key?: string) {
       if (!key) {
         return storage.includes(value) ? "" : value;
       } else {
@@ -30,18 +30,42 @@ function CreateLocal(key: string) {
           : { key, value };
       }
     },
-    getValues(key: string) {
-      return (
-        storage.find(
-          (item: { key: string; value: string | number }) => item.key === key
-        )?.value || null
-      );
+    checkExtended(value: string) {
+      return storage.includes(value);
+    },
+    deleteValue(value: any, key?: string) {
+      if (key) {
+        const index = storage.findIndex((item: any) => item.key === key);
+        if (index) {
+          storage.splice(index, 1);
+        }
+      } else {
+        if (storage.indexOf(value)) {
+          storage.splice(storage.indexOf(value), 1);
+        }
+      }
+      save();
+    },
+    getValues(key: any) {
+      if (key)
+        return (
+          storage.find((item: { key: string; value: any }) => item.key === key)
+            ?.value || null
+        );
     },
   };
   return store;
 }
 
 export const likeLocal = CreateLocal("likelocal");
-export const starLocal = CreateLocal("starlocal");
-
 export const bookmarkLocal = CreateLocal("bookmarkLocal");
+//
+type TBookmarkLocal = {
+  key: string;
+  value: {
+    time: Date;
+    avata: string;
+    name: string;
+    slug: string;
+  };
+};

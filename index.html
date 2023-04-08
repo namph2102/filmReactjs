@@ -7,26 +7,28 @@
     <meta http-equiv="Cache-Control" content="no-cache" />
     <meta http-equiv="Expires" content="-1" />
     <link rel="shortcut icon" href="/images/logoweb.png" type="image/x-icon" />
-    <meta
-      name="description"
-      content="Chuyên cung cấp bộ phim hay, nội dung hấp dẫn lôi cuốn được tuyển chọn toàn tập."
-    />
-    <meta
-      name="keywords"
-      content="videotv, movibes, phim hay, videotv, phim tuyển chọn"
-    />
     <meta name="viewport" content="width=1024" />
     <title>Video TV</title>
+    <meta
+      name="keywords"
+      content="videotv, phim hay truyen chon, phim le, phim gay can, video, movies"
+    />
   </head>
   <body>
     <div id="fb-root"></div>
-    <script
-      async
-      defer
-      crossorigin="anonymous"
-      src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v16.0&appId=3210650549173249&autoLogAppEvents=1"
-      nonce="0oh9u8sI"
-    ></script>
+
+    <script>
+      (function (d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src =
+          "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, "script", "facebook-jssdk");
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

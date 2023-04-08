@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import "./bookmark.scss";
 import { BiTrash } from "react-icons/bi";
-const BookMark = () => {
-  console.log("renrender book mar 2k");
+import { TBookmark } from "../../Redux/BookmarkSlice";
+import BookmarkItem from "./BookmarkItem";
 
+const BookMark: React.FC<{
+  listBookmarks: TBookmark[];
+  isOppenBookmark: boolean;
+}> = ({ listBookmarks, isOppenBookmark }) => {
   return (
     <>
-      <div className="header-bookmark_drop">
+      <div
+        className={`header-bookmark_drop ${
+          isOppenBookmark ? "height_effect" : "height_auto"
+        }`}
+      >
         <div className="bookmark_drop-container">
           <div className="bookmark_drop-head flex items-center justify-between bg-menu">
             <h6 className="title_special">BOOKMARKS</h6>
@@ -16,34 +24,10 @@ const BookMark = () => {
           </div>
           <div className="bookmark_drop-container  bg-menu">
             <ul className="bookmark_drop-list_film">
-              <li>
-                <a href="" className="bookmark-film flex-bettween-center-wrap">
-                  <img
-                    className="bookmark-film_avata"
-                    src="/images/thumsfilm.jpg"
-                    alt=""
-                  />
-                  <div style={{ flex: "1" }} className="h-full">
-                    <h6 className="bookmark-film_title">Quý cô cademy</h6>
-                    <p className="bookmark-film_time">13/03/2023</p>
-                  </div>
-                  <button className="btn_bookmark-close">x</button>
-                </a>
-              </li>
-              <li>
-                <a href="" className="bookmark-film flex-bettween-center-wrap">
-                  <img
-                    className="bookmark-film_avata"
-                    src="/images/thumsfilm.jpg"
-                    alt=""
-                  />
-                  <div style={{ flex: "1" }} className="h-full">
-                    <h6 className="bookmark-film_title">Quý cô cademy</h6>
-                    <p className="bookmark-film_time">13/03/2023</p>
-                  </div>
-                  <button className="btn_bookmark-close">x</button>
-                </a>
-              </li>
+              {listBookmarks?.length > 0 &&
+                listBookmarks.map((film) => (
+                  <BookmarkItem key={film.name} film={film} />
+                ))}
             </ul>
           </div>
         </div>

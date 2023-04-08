@@ -11,7 +11,11 @@ const Menu: React.FC<TMenu> = ({ isOpenMenu }) => {
   console.log("re-render menu");
 
   return (
-    <ul className={`main-menu text-xs lg:flex ${!isOpenMenu && "hidden"}`}>
+    <ul
+      className={`main-menu text-xs lg:flex ${
+        !isOpenMenu ? "height_effect_menu" : "height_auto"
+      }`}
+    >
       {listMenuNav.map((menu: INav) => {
         return (
           <li key={menu.title}>

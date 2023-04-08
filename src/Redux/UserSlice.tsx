@@ -50,13 +50,6 @@ const UserSlice = createSlice({
       const account = action.payload.data;
       if (action.payload.status === 200) {
         axios.defaults.headers.common["Authorization"] = account.accessToken;
-        // axios.create({
-        //   baseURL: PathLink.domain,
-        //   headers: {
-        //     Authorization: "Bearer " + account.accessToken,
-        //   },
-        // });
-
         if (account.permission == "admin") {
           account.chatLength = 2000;
         } else if (account.permission === "vip") {
@@ -107,15 +100,6 @@ export const acctachkedAccount = createAsyncThunk(
     const accessToken = localStorage.getItem(PathLink.nameToken) || "";
     if (!accessToken) throw new Error("Not have actoken");
     try {
-      // const res = await axios.get(PathLink.domain + "user/login", {
-      //   headers: {
-      //     Authorization: `Bearer ${accessToken}`,
-      //     "Content-Type": "application/json",
-      //     "Access-Control-Allow-Methods": "GET",
-      //     "Access-Control-Allow-Origin": PathLink.domain,
-      //     Accept: "*/*",
-      //   },
-      // });
       axios.defaults.headers.common["Authorization"] = accessToken;
       const res = await axios.get(PathLink.domain + "user/login");
       return res.data;
