@@ -1,8 +1,8 @@
 function CreateLocal(key: string) {
   const getLocal: any = localStorage.getItem(key);
   const storage = (getLocal && JSON.parse(getLocal)) || [];
-  const save = () => {
-    localStorage.setItem(key, JSON.stringify(storage));
+  const save = (listitems: any = "") => {
+    localStorage.setItem(key, JSON.stringify(listitems ? listitems : storage));
   };
   const store = {
     get() {
@@ -17,30 +17,47 @@ function CreateLocal(key: string) {
           ).value = value;
         }
       } else {
-        storage.push(result);
+        save([...storage, result]);
+        return;
       }
       save();
     },
     addValues(value: any, key?: string) {
       if (!key) {
-        return storage.includes(value) ? "" : value;
+        if (value.name) {
+          return storage.find((item: any) => item.name == value.name)
+            ? null
+            : value;
+        }
+        return storage.includes(value) ? null : value;
       } else {
         return storage.map((item: any) => item.key).includes(key)
           ? ""
           : { key, value };
       }
     },
-    checkExtended(value: string) {
-      return storage.includes(value);
+    checkExtended({ value, keyCheck }: { value: string; keyCheck: string }) {
+      // TBookmarkLocal[]
+      return storage.find((item: any) => item[keyCheck] == value)
+        ? true
+        : false;
     },
     deleteValue(value: any, key?: string) {
       if (key) {
         const index = storage.findIndex((item: any) => item.key === key);
-        if (index) {
+        if (index >= 0) {
           storage.splice(index, 1);
         }
       } else {
-        if (storage.indexOf(value)) {
+        if (value.keyCheck) {
+          if (store.checkExtended(value)) {
+            const newStore = storage.filter(
+              (item: any) => item[value.keyCheck] !== value.value
+            );
+            save(newStore);
+          }
+          return;
+        } else if (storage.indexOf(value)) {
           storage.splice(storage.indexOf(value), 1);
         }
       }
@@ -58,14 +75,16 @@ function CreateLocal(key: string) {
 }
 
 export const likeLocal = CreateLocal("likelocal");
+//t
+type TlikeLocal = {
+  key: string;
+  value: string;
+};
 export const bookmarkLocal = CreateLocal("bookmarkLocal");
 //
 type TBookmarkLocal = {
-  key: string;
-  value: {
-    time: Date;
-    avata: string;
-    name: string;
-    slug: string;
-  };
+  time: Date;
+  avata: string;
+  name: string;
+  slug: string;
 };

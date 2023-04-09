@@ -8,12 +8,10 @@ type TMenu = {
   isOpenMenu: boolean;
 };
 const Menu: React.FC<TMenu> = ({ isOpenMenu }) => {
-  console.log("re-render menu");
-
   return (
     <ul
       className={`main-menu text-xs lg:flex ${
-        !isOpenMenu ? "height_effect_menu" : "height_auto"
+        !isOpenMenu ? "height_effect_menu" : "height_auto_menu"
       }`}
     >
       {listMenuNav.map((menu: INav) => {

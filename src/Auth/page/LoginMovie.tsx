@@ -10,6 +10,7 @@ import FireBaseMovie from "./FireBaseMovie";
 import "./form.scss";
 import { LoginForm } from "../../Redux/UserSlice";
 import ToastMessage from "../../untils/ToastMessage";
+import { getListBookmarks } from "../../Redux/BookmarkSlice";
 const LoginMovie = ({
   onHandleClose,
   onShowFormRegister,
@@ -38,6 +39,7 @@ const LoginMovie = ({
             ToastMessage(response.message).success();
             onHandleClose(false);
             formik.handleReset();
+            dispatch(getListBookmarks());
           } else {
             ToastMessage(response.message).warning();
           }

@@ -13,6 +13,7 @@ import { CreateUser } from "../../Redux/UserSlice";
 import { AppDispatch } from "../../Redux/Store";
 import PathLink from "../../contants";
 import axios from "axios";
+import { getListBookmarks } from "../../Redux/BookmarkSlice";
 const RegisterMovie = ({
   onHandleClose,
   onShowFormRegister,
@@ -56,9 +57,13 @@ const RegisterMovie = ({
             state?.payload.data.accessToken
           );
           axios.defaults.headers.common = state?.payload.data.accessToken;
-          localStorage.setItem("username", state?.payload.data.username);
+          localStorage.setItem(
+            PathLink.localusername,
+            state?.payload.data.username
+          );
           ToastMessage(state?.payload.message).success();
           formik.handleReset();
+          dispatch(getListBookmarks());
           onHandleClose(false);
         } else {
           ToastMessage(state?.payload.message).warning();

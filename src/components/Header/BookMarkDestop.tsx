@@ -51,7 +51,6 @@ const RenderDesktopProfile: React.FC<{
   bookmarklength,
   listBookmarks,
 }): JSX.Element => {
-  console.log(listBookmarks);
   return (
     <>
       <Tooltip
@@ -67,12 +66,11 @@ const RenderDesktopProfile: React.FC<{
         </div>
       </Tooltip>
       <RenderProfile />
-      {
-        <BookMark
-          isOppenBookmark={isOppenBookmark}
-          listBookmarks={listBookmarks}
-        />
-      }
+
+      <BookMark
+        isOppenBookmark={isOppenBookmark}
+        listBookmarks={listBookmarks}
+      />
     </>
   );
 };

@@ -1,9 +1,9 @@
-import React, { useMemo, useState, useRef, useLayoutEffect } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import logo from "../../assets/logo.png";
 import "./header.scss";
 import { BiBookmark, BiMenu } from "react-icons/bi";
 import { Tooltip, Badge } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Menu from "../NavContainer";
 import SearchContainer from "../Search";
 import BookMark from "../BookMark";
@@ -17,6 +17,7 @@ const Header = () => {
   const listBookmarks = useSelector(
     (state: RootState) => state.bookmark.listfilm
   );
+
   const dispatch: AppDispatch = useDispatch();
   useLayoutEffect(() => {
     dispatch(getListBookmarks());
@@ -29,7 +30,26 @@ const Header = () => {
     isOpenMenu && setIsOpenMenu(false);
     setOppenBookmark(!isOppenBookmark);
   };
-
+  useEffect(() => {
+    const handleRemoveModel = () => {
+      if (isOpenMenu) {
+        setIsOpenMenu(!isOpenMenu);
+      }
+      if (!isOppenBookmark) {
+        setOppenBookmark(true);
+      }
+    };
+    document.addEventListener("click", handleRemoveModel);
+    return () => {
+      document.removeEventListener("click", handleRemoveModel);
+    };
+  }, [isOpenMenu, isOppenBookmark]);
+  const location = useLocation();
+  useEffect(() => {
+    if (isOpenMenu) {
+      setIsOpenMenu(!isOpenMenu);
+    }
+  }, [location.pathname]);
   return (
     <header className="header bg-main flex items-center flex-wrap sticky">
       <div className="container sm:h-header mx-auto flex justify-between flex-wrap items-center">
@@ -47,7 +67,7 @@ const Header = () => {
 
         <div className="header-bookmark p-0 m-0 items-center hidden basis-3/12 lg:flex justify-end">
           <RenderDesktopProfile
-            bookmarklength={listBookmarks.length}
+            bookmarklength={listBookmarks?.length}
             onhandleBookMark={handleBookMark}
             isOppenBookmark={isOppenBookmark}
             listBookmarks={listBookmarks}
@@ -56,14 +76,19 @@ const Header = () => {
       </div>
       {/* Navigation */}
       <div className="basis-full flex items-center bg-menu">
-        <nav className="container relative sm:mx-auto w-full mx-3">
+        <nav
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          className="container relative sm:mx-auto w-full mx-3"
+        >
           <div className="flex justify-between items-center my-2 lg:hidden">
             <BiMenu size="3rem" cursor="pointer" onClick={HandleClick} />
             <div className="flex items-center">
               <div>
                 <Badge
                   onClick={handleBookMark}
-                  badgeContent={listBookmarks.length}
+                  badgeContent={listBookmarks?.length}
                 >
                   <BiBookmark cursor="pointer" size="2rem" />
                 </Badge>
@@ -82,6 +107,7 @@ const Header = () => {
               </div>
             </div>
           </div>
+
           <Menu isOpenMenu={isOpenMenu} />
         </nav>
       </div>

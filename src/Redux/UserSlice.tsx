@@ -115,6 +115,7 @@ export const CreateUser = (account: TUserForm) => {
         username: account.username,
         password: account.password,
       });
+      localStorage.clear();
       return dispatch(UserSlice.actions.updateUser(res.data));
     } catch (err) {
       ToastMessage("Đăng ký không thành công!").error();
@@ -130,6 +131,7 @@ export const LoginForm = (account: TUserForm) => {
         account: account,
       });
       if (res.data.account) {
+        localStorage.clear();
         dispatch(
           UserSlice.actions.updateUser({ status: 200, data: res.data.account })
         );
@@ -150,6 +152,7 @@ export const loginWithFireBase = (account: any) => {
         account,
       });
       if (res.data.account) {
+        localStorage.clear();
         dispatch(
           UserSlice.actions.updateUser({ status: 200, data: res.data.account })
         );

@@ -8,12 +8,22 @@ import bookmark from "../../../assets/bookmark.png";
 import bookmarked from "../../../assets/bookmarked.png";
 import { Ifilm } from "../../../Redux/FilmSlice";
 import { bookmarkLocal } from "../../../untils/localStorage";
-import moment from "moment-timezone";
 import ToastMessage from "../../../untils/ToastMessage";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../Redux/Store";
+import {
+  TBookmark,
+  addBookmark,
+  deleteBookmark,
+} from "../../../Redux/BookmarkSlice";
 const FilmLeft: React.FC<{ film: Ifilm }> = ({ film }) => {
+  const dispatch: AppDispatch = useDispatch();
   const [extended, setExtended] = useState<boolean>(false);
+  const account = useSelector((state: RootState) => state.account.user);
   useEffect(() => {
-    setExtended(bookmarkLocal.getValues(film._id) !== null);
+    setExtended(
+      bookmarkLocal.checkExtended({ value: film.name, keyCheck: "name" })
+    );
   }, [film._id]);
   const leftContainer = useRef<HTMLElement>(null);
   const handleScrolltoEpisode = () => {
@@ -30,19 +40,19 @@ const FilmLeft: React.FC<{ film: Ifilm }> = ({ film }) => {
 
   const handleUpdateBookmark = () => {
     if (extended) {
-      bookmarkLocal.deleteValue({}, film._id);
+      bookmarkLocal.deleteValue({ value: film.name, keyCheck: "name" });
+      dispatch(deleteBookmark(film.name, account.username));
       ToastMessage(`Xóa thành công phim ${film.name}`).success();
     } else {
+      const item: TBookmark = {
+        time: new Date(Date.now()).toUTCString(),
+        avata: film.thumb_url,
+        name: film.name,
+        slug: film.slug,
+      };
+      dispatch(addBookmark(item, account.username));
+      bookmarkLocal.set(item);
       ToastMessage(`Thêm thành công phim ${film.name}`).success();
-      bookmarkLocal.set(
-        {
-          time: new Date(Date.now()),
-          avata: film.thumb_url,
-          name: film.name,
-          slug: film.slug,
-        },
-        film._id
-      );
     }
     setExtended(!extended);
   };

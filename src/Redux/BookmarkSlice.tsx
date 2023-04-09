@@ -26,7 +26,7 @@ const BookmarkSlice = createSlice({
       const index = state.listfilm.findIndex(
         (film) => film.name == action.payload.name
       );
-      if (index !== -1) {
+      if (index >= 0) {
         state.listfilm.splice(index, 1);
       }
     },
@@ -41,11 +41,9 @@ export const getListBookmarks = () => {
       const username = localStorage.getItem("username") ?? "";
       let listBookmark = [];
       if (!username) {
-        const lists = bookmarkLocal.get();
+        const lists: TBookmark[] = bookmarkLocal.get();
         if (lists.length > 0) {
-          listBookmark = bookmarkLocal
-            .get()
-            .map((bk: { key: string; value: TBookmark }) => bk.value);
+          listBookmark = lists;
         }
       } else {
         const response = await axios.post(PathLink.domain + "bookmark", {
@@ -56,9 +54,60 @@ export const getListBookmarks = () => {
         listBookmark = response.data.listBookMark;
         console.log(listBookmark);
       }
-      if (listBookmark.length > 0) {
-        dispatch(BookmarkSlice.actions.updateLisBookmark({ listBookmark }));
+      dispatch(BookmarkSlice.actions.updateLisBookmark({ listBookmark }));
+    } catch {}
+  };
+};
+
+export const addBookmark = (item: TBookmark, username: string) => {
+  return (dispatch: AppDispatch) => {
+    try {
+      if (username) {
+        axios.post(PathLink.domain + "bookmark/addbookmark", {
+          method: "post",
+          data: {
+            username: username,
+            item,
+          },
+        });
       }
+
+      dispatch(BookmarkSlice.actions.addBookmark({ item }));
+    } catch {}
+  };
+};
+
+export const deleteBookmark = (name: string, username: string) => {
+  return (dispatch: AppDispatch) => {
+    try {
+      if (username) {
+        axios.post(PathLink.domain + "bookmark/deletebookmark", {
+          method: "post",
+          data: {
+            username: username,
+            name,
+          },
+        });
+      }
+      dispatch(BookmarkSlice.actions.deleteBookmark({ name }));
+      console.log("Xóa thành công");
+    } catch {}
+  };
+};
+
+export const deleAllBookmark = (username: string) => {
+  return (dispatch: AppDispatch) => {
+    try {
+      if (username) {
+        axios.post(PathLink.domain + "bookmark/deleteallbookmark", {
+          method: "post",
+          data: {
+            username: username,
+          },
+        });
+      }
+      localStorage.removeItem("bookmarkLocal");
+      dispatch(BookmarkSlice.actions.updateLisBookmark({ listBookmark: [] }));
     } catch {}
   };
 };

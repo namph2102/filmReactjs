@@ -19,7 +19,8 @@ import PathLink, { configFireBase } from "../../contants";
 import ToastMessage from "../../untils/ToastMessage";
 import LoginMovie from "../../Auth/page/LoginMovie";
 import firebase from "firebase/compat/app";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth } from "firebase/auth";
+import { getListBookmarks } from "../../Redux/BookmarkSlice";
 // firebase
 const app = firebase.initializeApp(configFireBase);
 const auth = getAuth(app);
@@ -51,15 +52,16 @@ const Profile: React.FC<{ children: any }> = ({ children }) => {
   };
   const handleLogout = () => {
     setAnchorEl(null);
-    localStorage.clear();
-    // localStorage.removeItem(PathLink.nameToken);
-    // localStorage.removeItem(PathLink.localusername);
-    // localStorage.removeItem("bookmarkLocal");
-    // localStorage.removeItem("likelocal");
+    // localStorage.clear();
+    localStorage.removeItem(PathLink.nameToken);
+    localStorage.removeItem(PathLink.localusername);
+    localStorage.removeItem("bookmarkLocal");
+    localStorage.removeItem("likelocal");
 
     localStorage.setItem("loginwithfirebase", "0");
     dispatch(removeUser({ setNull: {} }));
     ToastMessage("Đăng xuất thành công !").success();
+    dispatch(getListBookmarks());
     firebase.auth().signOut();
   };
   useEffect(() => {
