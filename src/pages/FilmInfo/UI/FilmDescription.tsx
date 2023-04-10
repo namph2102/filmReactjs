@@ -3,6 +3,7 @@ import { Ifilm } from "../../../Redux/FilmSlice";
 import moment from "moment";
 import calendar from "../../../assets/calendar.png";
 import danger from "../../../assets/danger.png";
+import "./filmdes.scss";
 const FilmDescription: React.FC<{ film: Ifilm }> = ({ film }) => {
   const [openDes, setOpenDes] = useState<boolean>(false);
   return (

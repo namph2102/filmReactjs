@@ -54,7 +54,9 @@ const RenderDesktopProfile: React.FC<{
   return (
     <>
       <Tooltip
-        onClick={onhandleBookMark}
+        onClick={(e) => {
+          e.stopPropagation(), onhandleBookMark();
+        }}
         title="Phim yêu thích của bạn"
         arrow
         placement="left"

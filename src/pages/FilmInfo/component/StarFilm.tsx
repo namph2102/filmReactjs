@@ -87,7 +87,9 @@ const StarFilm: React.FC<{ film: Ifilm }> = ({ film }) => {
   // console.log("avarage", avarage, "isExtend", isExtend, "star", star);
   return (
     <>
-      <img width="40" src={starImage} alt="" />{" "}
+      <span>
+        <img width="40" height="40" src={starImage} alt="" />
+      </span>
       <span className="font-semibold text-4xl pt-2 ml-2">
         {String(avarage).length > 4 ? avarage.toFixed(2) : avarage}
         <sub className="text-sm ml-1 font-normal">
@@ -95,7 +97,7 @@ const StarFilm: React.FC<{ film: Ifilm }> = ({ film }) => {
           / 5 <span className="text-xs font-light">({totalStar} lượt)</span>
         </sub>
       </span>
-      <span className="relative flex flex-col items-center ml-2 gap-y-1">
+      <span className="relative flex flex-col items-center ml-2 gap-y-1 min-w-[110px]">
         {!isLoadding && (
           <RatingUI
             handleSubmitStar={handleSubmitStar}
@@ -104,7 +106,7 @@ const StarFilm: React.FC<{ film: Ifilm }> = ({ film }) => {
           />
         )}
         {isLoadding && (
-          <span className="absolute flex top-0 left-2">
+          <span className="flex pt-4">
             <HiOutlineCubeTransparent
               className="animate-spin"
               size={defaultIconSize}

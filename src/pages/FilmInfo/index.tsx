@@ -13,7 +13,7 @@ import { Helmet } from "react-helmet-async";
 const FilmLeft = React.lazy(() => import("./UI/FilmLeft"));
 const FilmRight = React.lazy(() => import("./UI/FilmRight"));
 const FilmDescription = React.lazy(() => import("./UI/FilmDescription"));
-const EpisodeContainer: any = React.lazy(() => import("./UI/Episode"));
+const EpisodeContainer: any = React.lazy(() => import("./UI/EpisodeContainer"));
 
 const FilmInfo = () => {
   const isShow = useSelector((state: RootState) => state.commemt.isComment);

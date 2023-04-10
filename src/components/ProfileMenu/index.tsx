@@ -51,16 +51,15 @@ const Profile: React.FC<{ children: any }> = ({ children }) => {
     }
   };
   const handleLogout = () => {
+    localStorage.setItem("loginwithfirebase", "0");
+    dispatch(removeUser({ setNull: {} }));
+    ToastMessage("Đăng xuất thành công !").success();
     setAnchorEl(null);
-    // localStorage.clear();
+    localStorage.clear();
     localStorage.removeItem(PathLink.nameToken);
     localStorage.removeItem(PathLink.localusername);
     localStorage.removeItem("bookmarkLocal");
     localStorage.removeItem("likelocal");
-
-    localStorage.setItem("loginwithfirebase", "0");
-    dispatch(removeUser({ setNull: {} }));
-    ToastMessage("Đăng xuất thành công !").success();
     dispatch(getListBookmarks());
     firebase.auth().signOut();
   };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
 import "./header.scss";
 import { BiBookmark, BiMenu } from "react-icons/bi";
@@ -9,17 +9,18 @@ import SearchContainer from "../Search";
 import BookMark from "../BookMark";
 import { RenderDesktopProfile, RenderProfile } from "./BookMarkDestop";
 import { useDispatch, useSelector } from "react-redux";
-import { getListBookmarks } from "../../Redux/BookmarkSlice";
+import { getListBookmarks, updateLisBookmark } from "../../Redux/BookmarkSlice";
 import { AppDispatch, RootState } from "../../Redux/Store";
+import { bookmarkLocal } from "../../untils/localStorage";
 const Header = () => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const [isOppenBookmark, setOppenBookmark] = useState<boolean>(true);
   const listBookmarks = useSelector(
     (state: RootState) => state.bookmark.listfilm
   );
-
+  const account = useSelector((state: RootState) => state.account.user);
   const dispatch: AppDispatch = useDispatch();
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch(getListBookmarks());
   }, []);
   const HandleClick = () => {
@@ -27,6 +28,7 @@ const Header = () => {
     setIsOpenMenu(!isOpenMenu);
   };
   const handleBookMark = () => {
+    console.log(isOpenMenu);
     isOpenMenu && setIsOpenMenu(false);
     setOppenBookmark(!isOppenBookmark);
   };

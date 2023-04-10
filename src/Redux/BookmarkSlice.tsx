@@ -34,17 +34,15 @@ const BookmarkSlice = createSlice({
 });
 
 export default BookmarkSlice.reducer;
-
+export const { updateLisBookmark } = BookmarkSlice.actions;
 export const getListBookmarks = () => {
   return async (dispatch: AppDispatch) => {
     try {
       const username = localStorage.getItem("username") ?? "";
       let listBookmark = [];
+      const lists: TBookmark[] = bookmarkLocal.get() || [];
       if (!username) {
-        const lists: TBookmark[] = bookmarkLocal.get();
-        if (lists.length > 0) {
-          listBookmark = lists;
-        }
+        listBookmark = lists;
       } else {
         const response = await axios.post(PathLink.domain + "bookmark", {
           data: {
@@ -52,8 +50,9 @@ export const getListBookmarks = () => {
           },
         });
         listBookmark = response.data.listBookMark;
-        console.log(listBookmark);
       }
+      listBookmark = listBookmark || [];
+
       dispatch(BookmarkSlice.actions.updateLisBookmark({ listBookmark }));
     } catch {}
   };

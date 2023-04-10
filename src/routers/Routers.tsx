@@ -11,7 +11,12 @@ const Routers = () => {
       <Route path={PathLink.home} element={<Home />} />
       <Route path="/" element={<Home />} />
       <Route path={PathLink.contry + ":slug"} element={<Country />} />
-      <Route path={`${PathLink.seeFilm}`} element={<WatchFilm />} />
+      <Route path={`${PathLink.seeFilm}:slug`} element={<WatchFilm />} />
+      <Route
+        path={`${PathLink.seeFilm}:slug-tap-:esopide`}
+        element={<WatchFilm />}
+      />
+
       <Route
         path={`${PathLink.seeFilmDetail}/:slug`}
         element={<FilmInfo />}

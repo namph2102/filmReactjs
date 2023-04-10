@@ -33,7 +33,7 @@ const FilmRight: React.FC<{ film: Ifilm }> = ({ film }) => {
               {film.kind == "series"
                 ? ` Tập ${
                     film.episode_current === film.eposode_total
-                      ? `${film.episode_current} End`
+                      ? `${film.episode_current} END`
                       : film.episode_current
                   }`
                 : ` Full ${film.lang}`}

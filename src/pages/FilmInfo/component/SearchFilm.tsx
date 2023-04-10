@@ -79,7 +79,7 @@ const SearchFilm: React.FC<{ totalEsopide: number; slug: string }> = ({
           ? listSearch.map((episode) => (
               <li key={episode}>
                 <Link
-                  to={PathLink.seeFilm + slug}
+                  to={`${PathLink.seeFilm + slug}-tap-${episode}`}
                   className="text-center film_kinds-item w-20 text-sm block esopide"
                 >
                   Tập {episode}

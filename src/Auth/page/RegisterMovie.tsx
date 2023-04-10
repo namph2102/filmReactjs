@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./form.scss";
-import logo from "../../../src/assets/logo.png";
 import { BiXCircle } from "react-icons/bi";
 import FireBaseMovie from "./FireBaseMovie";
 import { RiEyeCloseFill, RiEyeFill, RiUserHeartLine } from "react-icons/ri";
