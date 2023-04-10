@@ -5,15 +5,25 @@ import { Link } from "react-router-dom";
 const EsopideList: React.FC<{
   currentEpisode?: any;
   setCurrentEsopide?: (esopide: number) => void;
+  setSeverWatch?: (sever: string) => void;
+  nameSever?: string;
+
   film: Ifilm;
-}> = ({ currentEpisode = "", film, setCurrentEsopide }) => {
+}> = ({
+  currentEpisode = "",
+  film,
+  setCurrentEsopide,
+  setSeverWatch,
+  nameSever,
+}) => {
   return (
-    <ul className="flex flex-wrap gap-1 mt-8">
+    <ul className="flex flex-wrap gap-1 text-yellow-50">
       {new Array(film.episode_current).fill(0).map((_, index) => (
         <li
           key={index}
           onClick={() => {
             setCurrentEsopide && setCurrentEsopide(index + 1);
+            setSeverWatch && nameSever && setSeverWatch(nameSever);
           }}
         >
           <Link

@@ -1,14 +1,20 @@
 import React, { useRef, useLayoutEffect, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./video..scss";
-import "./video..scss";
+
 import clsx from "clsx";
 import { BiChevronsLeft, BiChevronsRight, BiLike } from "react-icons/bi";
 import { defaultIconSize } from "../../contants";
-import { RiAlertFill, RiEyeFill, RiVirusFill } from "react-icons/ri";
+import {
+  RiAlertFill,
+  RiEyeFill,
+  RiLightbulbFill,
+  RiLightbulbFlashFill,
+  RiStackFill,
+  RiVirusFill,
+} from "react-icons/ri";
 import { HandleView } from "../../untils/HandleView";
 import { Helmet } from "react-helmet-async";
-import Film from "../../components/MainFilmContainer/Film";
 import FilmDescription from "../FilmInfo/UI/FilmDescription";
 import PathLink from "../../contants";
 import VideoIfame from "../FilmInfo/UI/VideoIfame";
@@ -19,13 +25,15 @@ import StarFilm from "../FilmInfo/component/StarFilm";
 import Bookmark from "../FilmInfo/component/Bookmark";
 import ToastMessage from "../../untils/ToastMessage";
 import EsopideList from "../FilmInfo/UI/EsopideList";
+import VideoTag from "../FilmInfo/UI/VideoTag";
 const WatchFilm = () => {
   const [film, setFilm] = useState<Ifilm>();
   const [currentEsopide, setCurrentEsopide] = useState<number>(0);
   const [currentLink, setCurrentLink] = useState<string>("");
-  const [severWatch, setSeverWatch] = useState<string>("embedded");
+  const [severWatch, setSeverWatch] = useState<string>("m3u8");
   const [listEmbed, setListEmbeded] = useState([]);
   const [listM3u8, setListM3U8] = useState([]);
+  const [isOpenLight, setIsOpenLight] = useState<Boolean>(true);
   const currentPage = "https://movibes.online/";
   let { slug } = useParams();
   let newslug: string | any = "",
@@ -65,16 +73,21 @@ const WatchFilm = () => {
       top: 100,
     });
     if (currentEsopide > 0) {
+      let filmDetail: { link: string; esopide: string } | any;
       if (severWatch == "embedded" && listEmbed.length > 0) {
-        const filmDetail: { link: string; esopide: string } | any =
-          listEmbed.find(
-            (item: { esopide: string; link: string }) =>
-              item.esopide.toLowerCase() == `tập ${currentEsopide}`
-          );
-        if (filmDetail.link) {
-          setCurrentLink(filmDetail.link);
-        }
+        filmDetail = listEmbed.find(
+          (item: { esopide: string; link: string }) =>
+            item.esopide.toLowerCase() == `tập ${currentEsopide}`
+        );
       } else if (severWatch == "m3u8" && listM3u8.length > 0) {
+        filmDetail = listM3u8.find(
+          (item: { esopide: string; link: string }) =>
+            item.esopide.toLowerCase() == `tập ${currentEsopide}`
+        );
+      }
+
+      if (filmDetail.link) {
+        setCurrentLink(filmDetail.link);
       }
     }
   }, [currentEsopide]);
@@ -91,11 +104,15 @@ const WatchFilm = () => {
     setCurrentEsopide(calcEsopide);
   };
   return (
-    <section>
+    <section className="relative">
+      {!isOpenLight && <div className="ovelay-switch_light"></div>}
       <div className="video_wrapper text-text">
         {severWatch == "embedded" && <VideoIfame link={currentLink} />}
-        <div className="video_controller-esopide">
-          <div className="flex gap-1 mt-4 justify-end flex-wrap">
+        {severWatch == "m3u8" && film && (
+          <VideoTag film={film} link={currentLink} />
+        )}
+        <div className="video_controller-esopide z-30 absolute right-0">
+          <div className="flex gap-1 mt-4 justify-end flex-wrap ">
             <button
               onClick={() => hanleChangeEsopide(-1)}
               className="flex gap-0.5 bg-btn hover:bg-gray-900 items-center py-1 px-2 rounded-md"
@@ -108,8 +125,12 @@ const WatchFilm = () => {
             >
               Tập tiếp theo <BiChevronsRight />
             </button>
-            <button className="flex gap-0.5 bg-btn hover:bg-gray-900 items-center py-1 px-2 rounded-md">
-              <RiVirusFill /> Tắt đèn
+            <button
+              onClick={() => setIsOpenLight(!isOpenLight)}
+              className="flex gap-0.5 bg-btn hover:bg-gray-900 items-center py-1 px-2 rounded-md"
+            >
+              {isOpenLight ? <RiLightbulbFlashFill /> : <RiLightbulbFill />}
+              {isOpenLight ? "Tắt đèn" : "Bật đèn"}
             </button>
             <button className="flex gap-0.5 bg-btn hover:bg-gray-900 items-center py-1 px-2 rounded-md">
               <RiAlertFill /> Báo lỗi
@@ -131,7 +152,7 @@ const WatchFilm = () => {
           <meta property="og:image:height" content="400" />
         </Helmet>
 
-        <div className="seoo_facebook flex gap-2 my-2 text-xs">
+        <div className="seoo_facebook flex gap-2 mt-14 text-xs px-4">
           <button className="flex gap-1 py-1 px-3 bg-blue-700  rounded-lg items-center">
             <BiLike fontStyle={defaultIconSize} /> Thích 199
           </button>
@@ -144,7 +165,7 @@ const WatchFilm = () => {
             <span className=" py-1 px-3 bg-blue-700  rounded-lg">Chia sẻ</span>
           </FacebookShareButton>
         </div>
-        <p className="text-center text-gray-400 mt-4">
+        <p className="text-center text-gray-400 mt-4 px-4">
           Thông Báo, hiện tại 3 tuyến cáp quang biển của các nhà mạng bị lỗi,khi
           xem phim buổi tối sẽ bị nhà mạng bóp đường truyền Dấn Đến Lag…Nên hãy
           xem phim vào ban ngày
@@ -167,15 +188,40 @@ const WatchFilm = () => {
         </div>
       </div>
       <div className="sever">
-        <div>
-          <span>Sever 1</span>
-          {film && (
-            <EsopideList
-              currentEpisode={currentEsopide}
-              setCurrentEsopide={setCurrentEsopide}
-              film={film}
-            />
-          )}
+        <div className="sever_embedded">
+          <span className="bg-menu inline-flex items-center rounded-t-xl font-bold text-primary py-2 px-4">
+            <RiStackFill size="1rem" />
+            <span className="text-base ml-1"> VIP</span>
+          </span>
+          <div className="bg-menu p-4">
+            {film && listEmbed.length > 0 && (
+              <EsopideList
+                currentEpisode={severWatch == "embedded" ? currentEsopide : 0}
+                setCurrentEsopide={setCurrentEsopide}
+                setSeverWatch={setSeverWatch}
+                nameSever="embedded"
+                film={film}
+              />
+            )}
+          </div>
+        </div>
+
+        <div className="sever_m3u8">
+          <span className="bg-menu inline-flex items-center rounded-t-xl font-bold text-primary py-2 px-4">
+            <RiStackFill size="1rem" />
+            <span className="text-base ml-1"> HLS</span>
+          </span>
+          <div className="bg-menu p-4">
+            {film && listM3u8.length > 0 && (
+              <EsopideList
+                currentEpisode={severWatch == "m3u8" ? currentEsopide : 0}
+                setCurrentEsopide={setCurrentEsopide}
+                setSeverWatch={setSeverWatch}
+                nameSever="m3u8"
+                film={film}
+              />
+            )}
+          </div>
         </div>
       </div>
       {film?.description && <FilmDescription film={film} />}

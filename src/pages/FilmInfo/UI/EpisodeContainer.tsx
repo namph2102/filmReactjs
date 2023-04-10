@@ -11,14 +11,16 @@ const EpisodeContainer: React.FC<{
 }> = ({ film }) => {
   return (
     <section className="p-4 pp-2">
-      <div className="flex gap-1 text-base ">
+      <div className="flex gap-1 text-base">
         <BiSearchAlt size={defaultIconSize} /> <span>TÌM TẬP NHANH</span>
         <BiDownArrowCircle size={defaultIconSize} />
       </div>
 
       <SearchFilm slug={film.slug} totalEsopide={film.episode_current} />
 
-      <EsopideList film={film} />
+      <div className="mt-6">
+        <EsopideList film={film} />
+      </div>
     </section>
   );
 };

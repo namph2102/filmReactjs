@@ -43,7 +43,9 @@ const FilmLeft: React.FC<{ film: Ifilm }> = ({ film }) => {
               Tập Phim <RiArrowDownSFill size={defaultIconSize} />
             </button>
           )}
-          <Link to={PathLink.seeFilm + film.slug}>
+          <Link
+            to={`${PathLink.seeFilm + film.slug}-tap-${film.episode_current}`}
+          >
             <button className="flex gap-0.5 p-2 rounded">
               <RiPlayCircleLine size={defaultIconSize} /> Xem Phim
             </button>

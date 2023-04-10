@@ -19,6 +19,7 @@
     "clsx": "^1.2.1",
     "firebase": "^9.18.0",
     "formik": "^2.2.9",
+    "hls.js": "^1.4.0-rc.1.0.canary.9042",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.43",
     "react": "^18.2.0",
