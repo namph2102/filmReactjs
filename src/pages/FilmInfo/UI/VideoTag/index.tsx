@@ -1,29 +1,31 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import { Box, Slider, Tooltip } from "@mui/material";
 import Hls from "hls.js";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { BiCrosshair, BiPause, BiPlay } from "react-icons/bi";
 import {
-  BiCog,
-  BiCrosshair,
-  BiPause,
-  BiPlay,
-  BiRotateLeft,
-  BiRotateRight,
-  BiTimer,
-  BiXCircle,
-} from "react-icons/bi";
-import { Ifilm } from "../../../Redux/FilmSlice";
-import ToastMessage from "../../../untils/ToastMessage";
-import {
-  RiFullscreenFill,
   RiVolumeDownFill,
   RiVolumeMuteFill,
   RiVolumeUpFill,
 } from "react-icons/ri";
-import { Box, Slider, Tooltip } from "@mui/material";
-import { handleCoverTime, handlePercent } from "../../../untils";
-const listSpeend = [0.25, 0.5, 1, 1.25, 1.5, 2];
-const VideoTag: React.FC<{ link?: string; film: Ifilm }> = ({
+import { Ifilm } from "../../../../Redux/FilmSlice";
+import {
+  handleCoverTime,
+  handlePercent,
+  handleFormat,
+} from "../../../../untils";
+import ToastMessage from "../../../../untils/ToastMessage";
+import ChangeCurrentTime from "./ChangeCurrentTime";
+import SettingSpeed from "./SettingSpeed";
+import FullScreenVideo from "./FullScreenVideo";
+
+const VideoTag: React.FC<{
+  link?: string;
+  film: Ifilm;
+  onChangeEsopide: (crease: number) => void;
+}> = ({
   link = "https://1080.hdphimonline.com/20230408/43196_575586e5/index.m3u8",
   film,
+  onChangeEsopide,
 }) => {
   const [volume, setVolume] = useState<number>(100);
   const [videoDuration, setVideoDuration] = useState<number>(0);
@@ -45,6 +47,9 @@ const VideoTag: React.FC<{ link?: string; film: Ifilm }> = ({
           setIsLoading(true);
           setVideoDuration(videoRef.current.duration);
         });
+        videoRef.current.addEventListener("ended", () => {
+          onChangeEsopide(1);
+        });
       } else if (
         videoRef.current.canPlayType("application/vnd.apple.mpegurl")
       ) {
@@ -55,6 +60,15 @@ const VideoTag: React.FC<{ link?: string; film: Ifilm }> = ({
       ToastMessage("Sever lỗi rồi bạn chuyển sever khác nhen !").info();
     }
     setIsPlay(false);
+    return () => {
+      videoRef.current?.removeEventListener("ended", () => {
+        onChangeEsopide(1);
+      });
+      videoRef.current?.removeEventListener("loadeddata", function () {
+        setIsLoading(true);
+        setVideoDuration(videoRef.current.duration);
+      });
+    };
   }, [link]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   function preventHorizontalKeyboardNavigation(event: any, value: any) {
@@ -62,7 +76,6 @@ const VideoTag: React.FC<{ link?: string; film: Ifilm }> = ({
     videoRef.current.volume = value / 100;
     setVolume(value);
     console.log(videoRef.current.volume);
-    console.log(value);
     if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
       event.preventDefault();
     }
@@ -75,10 +88,8 @@ const VideoTag: React.FC<{ link?: string; film: Ifilm }> = ({
     }
     setIsPlay(!isPlay);
   };
-  const handleFormat = (x: any) => {
-    return x + "%";
-  };
-  const handleFormatProcess = (event: any, value: any) => {
+
+  const handleFormatProcess = () => {
     return handleCoverTime(videoCurrent);
   };
   const handleChaneVideo = (e: any) => {
@@ -96,6 +107,11 @@ const VideoTag: React.FC<{ link?: string; film: Ifilm }> = ({
       videoRef.current.currentTime = videoCurrent - 10;
     }
   };
+  const handleChangeSound = (run: number) => {
+    videoRef.current.playbackRate = run;
+    ToastMessage("Chỉnh tốc độ thành công").success();
+    setSpeed(run);
+  };
   useEffect(() => {
     // mouse move render percent
     const handleMouseMover = (e: any) => {
@@ -104,13 +120,13 @@ const VideoTag: React.FC<{ link?: string; film: Ifilm }> = ({
     };
 
     processRef.current.addEventListener("mousemove", handleMouseMover);
+
     return () => {
       processRef.current?.removeEventListener("mousemove", handleMouseMover);
     };
   }, []);
   useEffect(() => {
     const handleKeypress = (e: any) => {
-      console.log(e.code);
       switch (e.code) {
         case "Space":
           handlePlayvideo();
@@ -130,17 +146,9 @@ const VideoTag: React.FC<{ link?: string; film: Ifilm }> = ({
       document.removeEventListener("keydown", handleKeypress);
     };
   }, []);
-  function openFullscreen() {
-    if (videoRef.current.requestFullscreen) {
-      videoRef.current.requestFullscreen();
-    } else if (videoRef.current.webkitRequestFullscreen) {
-      /* Safari */
-      videoRef.current.webkitRequestFullscreen();
-    } else if (videoRef.current.msRequestFullscreen) {
-      /* IE11 */
-      videoRef.current.msRequestFullscreen();
-    }
-  }
+  const hamdleTimeUpdate = useCallback(() => {
+    setVideoCurrent(videoRef.current.currentTime);
+  }, []);
   return (
     <div className="responsive-iframe">
       <video
@@ -149,26 +157,29 @@ const VideoTag: React.FC<{ link?: string; film: Ifilm }> = ({
         poster="https://movibes.online/avata/636939627ccac-thon-phe-tinh-khong-poster.jpg"
         id="ifame_video"
         ref={videoRef}
-        onTimeUpdate={() => {
-          setVideoCurrent(videoRef.current.currentTime);
-        }}
+        onTimeUpdate={hamdleTimeUpdate}
       >
         {" "}
         <p>Video bị lỗi</p>
       </video>
+
       <div className="video_controler flex justify-between">
         <div className="controller_left gap-2 flex items-center">
+          {/* button Stop or player */}
           <Tooltip arrow placement="top" title={!isPlay ? "Phát" : "Dừng"}>
             <button onClick={handlePlayvideo}>
               {!isPlay ? <BiPlay size="2.5rem" /> : <BiPause size="2.5rem" />}
             </button>
           </Tooltip>
-          <Tooltip title="Tua lại 10s" placement="top" arrow>
-            <button ref={btn_pre10} onClick={pre10s} className="relative mr-1">
-              <BiRotateLeft size="1.875rem" />
-              <span className="content_center-absolute">10s</span>
-            </button>
-          </Tooltip>
+          {/*button Rewind 10s  */}
+          <ChangeCurrentTime
+            left={true}
+            ref={btn_pre10}
+            handleChangeTime={pre10s}
+          />
+
+          {/*controls volume   */}
+
           <div className="relative flex items-center btn_volute">
             <button>
               {volume > 50 ? (
@@ -179,6 +190,7 @@ const VideoTag: React.FC<{ link?: string; film: Ifilm }> = ({
                 <RiVolumeDownFill size="1.5rem" />
               )}
             </button>
+            {/* Processs Sounded */}
             <span className="absolute z-50 left-0 volute_container">
               <Box sx={{ height: 100 }}>
                 <Slider
@@ -198,60 +210,29 @@ const VideoTag: React.FC<{ link?: string; film: Ifilm }> = ({
               </Box>
             </span>
           </div>
+          {/*Show  Time current and durion */}
           <span className="ml-2 font-bold">
             {handleCoverTime(videoCurrent)} / {handleCoverTime(videoDuration)}
           </span>
         </div>
         <div className="controller_right flex items-center gap-3 pr-2">
-          <Tooltip title="Tua lại 10s" placement="top" arrow>
-            <button ref={btn_pre10} onClick={pre10s} className="relative">
-              <BiRotateLeft size="1.875rem" />
-              <span className="content_center-absolute">10s</span>
-            </button>
-          </Tooltip>
-          <Tooltip title="Tua Tới 10s" placement="top" arrow>
-            <button onClick={next10s} ref={btn_next10} className="relative">
-              <BiRotateRight size="1.875rem" />
-              <span className="content_center-absolute">10s</span>
-            </button>
-          </Tooltip>
-          <div
-            className="relative video_speed-container z-50
-           flex items-center"
-          >
-            <Tooltip title="Cài đặt" arrow placement="top">
-              <button>
-                <BiCog size="1.5rem" />
-              </button>
-            </Tooltip>
-            <div className="box_settings__overlay text-white w-28  right-0 bottom-4 absolute">
-              <span className="flex items-center justify-between px-2 py-1  bg-black">
-                <BiTimer size="2rem" />
-                <BiXCircle size="1.75rem" />
-              </span>
-              <ul className="text-base list-disc flex flex-col ml-6">
-                {listSpeend.map((run, index) => (
-                  <li
-                    onClick={() => {
-                      videoRef.current.playbackRate = run;
-                      ToastMessage("Chỉnh tốc độ thành công").success();
-                      setSpeed(run);
-                    }}
-                    className={speed == run ? "active" : ""}
-                    key={index}
-                  >
-                    {run}X
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <Tooltip title="Zoom" arrow placement="top">
-            <button onClick={openFullscreen}>
-              <RiFullscreenFill size="1.5rem" />
-            </button>
-          </Tooltip>
+          {/*button Rewind 10s  */}
+          <ChangeCurrentTime
+            left={true}
+            ref={btn_pre10}
+            handleChangeTime={pre10s}
+          />
+          {/*button next 10s*/}
+          <ChangeCurrentTime
+            left={false}
+            ref={btn_next10}
+            handleChangeTime={next10s}
+          />
+          {/* "Setting for speend video player" */}
+          <SettingSpeed handleChangeSound={handleChangeSound} speed={speed} />
+          <FullScreenVideo videoRef={videoRef} />
         </div>
+        {/* Khung slider video */}
         <div className="absolute process_container left-0 -top-4 w-full">
           <div className="w-full h-1 bg-slate-400 process_main-show absolute top-3">
             <div

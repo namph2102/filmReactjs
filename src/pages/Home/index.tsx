@@ -1,15 +1,26 @@
-import React, { Suspense } from "react";
-import { useSelector } from "react-redux";
+import React, { Suspense, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import MainFilmContainer from "../../components/MainFilmContainer";
-import { RootState } from "../../Redux/Store";
+import { AppDispatch, RootState } from "../../Redux/Store";
 import { Ifilm } from "../../Redux/FilmSlice";
 import imgaeLoading from "../../assets/loading.png";
 import { Helmet } from "react-helmet-async";
 import seoPage from "../../untils/seo";
+import { updateIdFim, updateStatusShowComment } from "../../Redux/CommentSlice";
 const Banner = React.lazy(() => import("./Banner"));
 
 const Home = () => {
-  const filmSlice = useSelector((state: RootState) => state.film);
+  const dispatch: AppDispatch = useDispatch();
+  const [filmSlice, CommentSlice] = useSelector((state: RootState | any) => [
+    state.film,
+    state.commemt,
+  ]);
+  useEffect(() => {
+    dispatch(updateIdFim({ idFilm: "0" }));
+    return () => {
+      dispatch(updateStatusShowComment({ isShow: false }));
+    };
+  }, []);
   const films: Ifilm[] = filmSlice.filmsHome || [];
   return (
     <>

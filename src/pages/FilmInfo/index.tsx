@@ -8,17 +8,15 @@ import "./fiml.scss";
 import RotateLoadding from "../../components/Loadding/RotateLoadding";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../Redux/Store";
-import { updateStatusShowComment } from "../../Redux/CommentSlice";
 import { Helmet } from "react-helmet-async";
 const FilmLeft = React.lazy(() => import("./UI/FilmLeft"));
 const FilmRight = React.lazy(() => import("./UI/FilmRight"));
 const FilmDescription = React.lazy(() => import("./UI/FilmDescription"));
 const EpisodeContainer: any = React.lazy(() => import("./UI/EpisodeContainer"));
-
+import { updateIdFim, updateStatusShowComment } from "../../Redux/CommentSlice";
 const FilmInfo = () => {
   const isShow = useSelector((state: RootState) => state.commemt.isComment);
   const dispatch: AppDispatch = useDispatch();
-  document.title = "Phim hay tuyển chọn";
   let { slug } = useParams();
   const [film, setFilm] = useState<Ifilm>();
   useEffect(() => {
@@ -36,16 +34,18 @@ const FilmInfo = () => {
       })();
     }
 
-    if (isShow) {
-      dispatch(updateStatusShowComment({ isShow: false }));
-    }
     window.scrollTo({
       top: 100,
       left: 100,
       behavior: "smooth",
     });
   }, [slug]);
-
+  useEffect(() => {
+    dispatch(updateIdFim({ idFilm: film?._id }));
+    return () => {
+      dispatch(updateStatusShowComment({ isShow: false }));
+    };
+  }, [film]);
   return (
     <>
       {film && (

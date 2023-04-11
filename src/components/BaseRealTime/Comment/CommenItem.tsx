@@ -239,7 +239,6 @@ const CommenItem: React.FC<{
             })}`}
           >
             <UserComment
-              id_film={idFilm}
               getNewCommemt={getNewCommemt}
               subcomment={comment._id}
             />

@@ -13,11 +13,10 @@ import { RootState } from "../../../Redux/Store";
 import moment from "moment";
 const UserComment: React.FC<{
   subcomment?: string;
-  id_film?: string;
   getNewCommemt?: any;
-}> = ({ subcomment = "", id_film = 0, getNewCommemt }) => {
+}> = ({ subcomment = "", getNewCommemt }) => {
   const myAccount = useSelector((state: RootState) => state.account.user);
-
+  const id_film = useSelector((state: RootState) => state.commemt.idFilm);
   let maxlength = myAccount?.chatLength || 40;
   const formik: any = useFormik({
     initialValues: {

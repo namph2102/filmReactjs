@@ -22,6 +22,7 @@ const CommemtContainers = React.lazy(() => import("../BaseRealTime"));
 
 const Main = () => {
   const isCommemt = useSelector((state: RootState) => state.commemt.isComment);
+  console.log(isCommemt);
   return (
     <>
       <Header />

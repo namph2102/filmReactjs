@@ -1,33 +1,34 @@
-import React, { useRef, useLayoutEffect, useState, useEffect } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./video..scss";
 
-import clsx from "clsx";
+import axios from "axios";
+import { Helmet } from "react-helmet-async";
 import { BiChevronsLeft, BiChevronsRight, BiLike } from "react-icons/bi";
-import { defaultIconSize } from "../../contants";
 import {
   RiAlertFill,
-  RiEyeFill,
   RiLightbulbFill,
   RiLightbulbFlashFill,
   RiStackFill,
-  RiVirusFill,
 } from "react-icons/ri";
-import { HandleView } from "../../untils/HandleView";
-import { Helmet } from "react-helmet-async";
-import FilmDescription from "../FilmInfo/UI/FilmDescription";
-import PathLink from "../../contants";
-import VideoIfame from "../FilmInfo/UI/VideoIfame";
-import axios from "axios";
+import { useDispatch } from "react-redux";
 import { FacebookShareButton } from "react-share";
+import { updateIdFim, updateStatusShowComment } from "../../Redux/CommentSlice";
 import { Ifilm } from "../../Redux/FilmSlice";
-import StarFilm from "../FilmInfo/component/StarFilm";
-import Bookmark from "../FilmInfo/component/Bookmark";
+import { AppDispatch } from "../../Redux/Store";
+import PathLink, { defaultIconSize } from "../../contants";
+import { HandleView } from "../../untils/HandleView";
 import ToastMessage from "../../untils/ToastMessage";
 import EsopideList from "../FilmInfo/UI/EsopideList";
+import FilmDescription from "../FilmInfo/UI/FilmDescription";
+import VideoIfame from "../FilmInfo/UI/VideoIfame";
 import VideoTag from "../FilmInfo/UI/VideoTag";
+import Bookmark from "../FilmInfo/component/Bookmark";
+import StarFilm from "../FilmInfo/component/StarFilm";
+
 const WatchFilm = () => {
   const [film, setFilm] = useState<Ifilm>();
+  const dispatch: AppDispatch = useDispatch();
   const [currentEsopide, setCurrentEsopide] = useState<number>(0);
   const [currentLink, setCurrentLink] = useState<string>("");
   const [severWatch, setSeverWatch] = useState<string>("m3u8");
@@ -35,6 +36,7 @@ const WatchFilm = () => {
   const [listM3u8, setListM3U8] = useState([]);
   const [isOpenLight, setIsOpenLight] = useState<Boolean>(true);
   const currentPage = "https://movibes.online/";
+  const nextElment = useRef<HTMLButtonElement | any>(null);
   let { slug } = useParams();
   let newslug: string | any = "",
     esopide: string = "";
@@ -98,18 +100,31 @@ const WatchFilm = () => {
     } else if (film && calcEsopide > film?.episode_current) {
       calcEsopide = 1;
     }
-    ToastMessage(
-      `Bạn đang xem tập ${calcEsopide} phim ${film?.name}`
-    ).success();
     setCurrentEsopide(calcEsopide);
+
+    if (window.location.href.includes("-tap-")) {
+      const url = window.location.href;
+      const newurl = url.slice(url.lastIndexOf("-tap-"), url.length);
+      history.replaceState("", "", url.replace(newurl, "-tap-" + calcEsopide));
+    }
   };
+  useEffect(() => {
+    dispatch(updateIdFim({ idFilm: film?._id }));
+    return () => {
+      dispatch(updateStatusShowComment({ isShow: false }));
+    };
+  }, [film]);
   return (
     <section className="relative">
       {!isOpenLight && <div className="ovelay-switch_light"></div>}
       <div className="video_wrapper text-text">
         {severWatch == "embedded" && <VideoIfame link={currentLink} />}
         {severWatch == "m3u8" && film && (
-          <VideoTag film={film} link={currentLink} />
+          <VideoTag
+            film={film}
+            link={currentLink}
+            onChangeEsopide={hanleChangeEsopide}
+          />
         )}
         <div className="video_controller-esopide z-30 absolute right-0">
           <div className="flex gap-1 mt-4 justify-end flex-wrap ">

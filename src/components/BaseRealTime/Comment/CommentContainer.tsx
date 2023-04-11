@@ -17,14 +17,16 @@ const CommentContainer = () => {
   const dispatch: AppDispatch = useDispatch();
   const CommemtContainer = useRef<HTMLElement | any>(null);
   useEffect(() => {
-    const handleEventComment = () => {
+    const handleEventComment = (e: any) => {
+      console.log(e.detail);
       dispatch(GetListComments({ idFilm, limit: limitCommemt }));
     };
     window.addEventListener(`commemts-id:${idFilm}`, handleEventComment);
     return () => {
-      window.removeEventListener(`commemts-id:${idFilm}`, handleEventComment);
+      window?.removeEventListener(`commemts-id:${idFilm}`, handleEventComment);
+      console.log("cleanr", idFilm);
     };
-  }, [limitCommemt]);
+  }, [limitCommemt, idFilm]);
   const loadingMoreCommemt = () => {
     dispatch(updateLimit());
     ToastMessage("Tải thêm bình luận thành công!").success();

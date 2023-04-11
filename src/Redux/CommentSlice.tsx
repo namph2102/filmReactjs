@@ -2,9 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import PathLink from "../contants";
 import { TpropComment } from "../contants";
-import { AppDispatch, RootState } from "./Store";
-import UserSlice from "./UserSlice";
-import { RiCompassDiscoverLine } from "react-icons/ri";
+
 type TCommetSlice = {
   isloading: boolean;
   listMainComment: TpropComment[];
@@ -12,12 +10,12 @@ type TCommetSlice = {
   limit: number;
   count: number;
   totalHeader: number;
-  isComment: Boolean;
+  isComment: boolean;
 };
 const CommentSlice = createSlice({
   name: "comment",
   initialState: {
-    isComment: true,
+    isComment: false,
     idFilm: "0",
     limit: 15,
     count: 0,
@@ -28,7 +26,11 @@ const CommentSlice = createSlice({
   reducers: {
     // When click new film handle but now dont have handle
     updateIdFim(state, action) {
-      state.idFilm = action.payload.idFilm;
+      if (action.payload.idFilm) {
+        state.limit = 15;
+        state.isComment = true;
+        state.idFilm = action.payload.idFilm;
+      }
     },
     updateStatusShowComment(state, action) {
       state.isComment = action.payload.isShow;
@@ -46,7 +48,8 @@ const CommentSlice = createSlice({
     });
   },
 });
-export const { updateLimit, updateStatusShowComment } = CommentSlice.actions;
+export const { updateLimit, updateStatusShowComment, updateIdFim } =
+  CommentSlice.actions;
 export default CommentSlice.reducer;
 export interface IApiSendDataComment {
   subcomment: string | number;

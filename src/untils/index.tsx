@@ -51,11 +51,14 @@ const handleCoverTime = (time: number): string => {
     return `00:${time.toString().padStart(2, "0")}`;
   }
 };
-
+const handleFormat = (x: any) => {
+  return x + "%";
+};
 export {
   Handle,
   componentsProps,
   handleCoverTime,
   handlePercent,
   componentsPropsCommemt,
+  handleFormat,
 };
