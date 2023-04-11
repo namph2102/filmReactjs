@@ -15,6 +15,7 @@ export interface Ifilm {
   category: string[];
   status: string;
   view: number;
+  like: number;
   star: number;
   year: string;
   time: string;
@@ -77,3 +78,28 @@ export const fetchDataFilm = createAsyncThunk("film/featchfilm", async () => {
   }
   return { filmsHome: [] };
 });
+
+export const updateView = async (idFilm: string) => {
+  axios
+    .post(PathLink.domain + "api/updateView", {
+      method: "POST",
+      data: {
+        idFilm,
+      },
+    })
+    .then((res) => {
+      console.log(res.data);
+    });
+};
+
+export const updateLike = async (idFilm: string) => {
+  console.log(idFilm);
+  try {
+    await axios.post(PathLink.domain + "api/updateLike", {
+      method: "POST",
+      data: {
+        idFilm,
+      },
+    });
+  } catch {}
+};

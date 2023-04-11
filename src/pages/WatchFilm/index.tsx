@@ -14,7 +14,7 @@ import {
 import { useDispatch } from "react-redux";
 import { FacebookShareButton } from "react-share";
 import { updateIdFim, updateStatusShowComment } from "../../Redux/CommentSlice";
-import { Ifilm } from "../../Redux/FilmSlice";
+import { Ifilm, updateLike, updateView } from "../../Redux/FilmSlice";
 import { AppDispatch } from "../../Redux/Store";
 import PathLink, { defaultIconSize } from "../../contants";
 import { HandleView } from "../../untils/HandleView";
@@ -35,6 +35,7 @@ const WatchFilm = () => {
   const [listEmbed, setListEmbeded] = useState([]);
   const [listM3u8, setListM3U8] = useState([]);
   const [isOpenLight, setIsOpenLight] = useState<Boolean>(true);
+  const [like, setLike] = useState<number>(0);
   const currentPage = "https://movibes.online/";
   const nextElment = useRef<HTMLButtonElement | any>(null);
   let { slug } = useParams();
@@ -63,6 +64,7 @@ const WatchFilm = () => {
             setListM3U8(listEsopideStream);
             setFilm(findFilm);
             setCurrentEsopide(Number(esopide));
+            idFilm && updateView(idFilm);
           } catch {
             ToastMessage("Sorry! , Lỗi hệ thống chưa cập nhập").info();
           }
@@ -101,7 +103,7 @@ const WatchFilm = () => {
       calcEsopide = 1;
     }
     setCurrentEsopide(calcEsopide);
-
+    film?._id && updateView(film._id);
     if (window.location.href.includes("-tap-")) {
       const url = window.location.href;
       const newurl = url.slice(url.lastIndexOf("-tap-"), url.length);
@@ -110,10 +112,18 @@ const WatchFilm = () => {
   };
   useEffect(() => {
     dispatch(updateIdFim({ idFilm: film?._id }));
+    film?.like && setLike(film.like);
     return () => {
       dispatch(updateStatusShowComment({ isShow: false }));
     };
   }, [film]);
+  const handleIncreaseLike = () => {
+    console.log(like, film?.like);
+    if (film?._id && film.like == like) {
+      updateLike(film._id);
+      setLike(like + 1);
+    }
+  };
   return (
     <section className="relative">
       {!isOpenLight && <div className="ovelay-switch_light"></div>}
@@ -156,7 +166,7 @@ const WatchFilm = () => {
           </div>
         </div>
         <Helmet>
-          <title>Xem Phim tại Video TV</title>
+          <title>Xem Phim {film?.name || ""} Video TV</title>
           <meta name="description" content={film?.description} />
           <meta property="og:url" content={currentPage} />
           <meta property="og:type" content="website" />
@@ -168,8 +178,13 @@ const WatchFilm = () => {
         </Helmet>
 
         <div className="seoo_facebook flex gap-2 mt-14 text-xs px-4">
-          <button className="flex gap-1 py-1 px-3 bg-blue-700  rounded-lg items-center">
-            <BiLike fontStyle={defaultIconSize} /> Thích 199
+          <button
+            onClick={handleIncreaseLike}
+            className={`flex gap-1 py-1 px-3 bg-blue-700  rounded-lg items-center ${
+              film?.like !== like && "text-primary"
+            }`}
+          >
+            <BiLike fontStyle={defaultIconSize} /> Thích {like}
           </button>
 
           <FacebookShareButton

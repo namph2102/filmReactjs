@@ -10,6 +10,9 @@ const VideoIfame: React.FC<{
 
   useEffect(() => {
     setIsLoading(true);
+    return () => {
+      setIsLoading(true);
+    };
   }, [link]);
   const handleLoadded = () => {
     setIsLoading(false);

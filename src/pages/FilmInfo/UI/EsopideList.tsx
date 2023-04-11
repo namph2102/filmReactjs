@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Ifilm } from "../../../Redux/FilmSlice";
+import { Ifilm, updateView } from "../../../Redux/FilmSlice";
 import PathLink from "../../../contants";
 import { Link } from "react-router-dom";
 const EsopideList: React.FC<{
@@ -24,6 +24,7 @@ const EsopideList: React.FC<{
           onClick={() => {
             setCurrentEsopide && setCurrentEsopide(index + 1);
             setSeverWatch && nameSever && setSeverWatch(nameSever);
+            updateView(film._id);
           }}
         >
           <Link

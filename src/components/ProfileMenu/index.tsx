@@ -123,6 +123,7 @@ const Profile: React.FC<{ children: any }> = ({ children }) => {
         >
           <MenuItem onClick={handleClose}>
             <Avatar src={user.avata} />
+
             <div className="flex flex-col">
               <span className="displayname">
                 {" "}

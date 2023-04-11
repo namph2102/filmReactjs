@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useRef, useState, Suspense } from "react";
 import { useParams } from "react-router-dom";
 import PathLink from "../../contants";
-import { Ifilm } from "../../Redux/FilmSlice";
+import { Ifilm, updateView } from "../../Redux/FilmSlice";
 import ToastMessage from "../../untils/ToastMessage";
 import "./fiml.scss";
 import RotateLoadding from "../../components/Loadding/RotateLoadding";
@@ -22,11 +22,13 @@ const FilmInfo = () => {
   useEffect(() => {
     if (slug) {
       (async () => {
+        console.log("change", slug);
         try {
           const responsive = await axios.post(PathLink.domain + "api/film", {
             method: "post",
             slug,
           });
+          console.log(responsive.data);
           setFilm(responsive.data.film);
         } catch (err: any) {
           ToastMessage("Lỗi gì đó").info();
@@ -40,17 +42,20 @@ const FilmInfo = () => {
       behavior: "smooth",
     });
   }, [slug]);
+
   useEffect(() => {
     dispatch(updateIdFim({ idFilm: film?._id }));
+
     return () => {
       dispatch(updateStatusShowComment({ isShow: false }));
     };
   }, [film]);
+
   return (
     <>
       {film && (
         <Helmet>
-          <title> {film.name} Tại VideoTV</title>
+          <title>Xem phim {film.name} Tại VideoTV</title>
           <meta name="description" content={film.description} />
           <meta name="keywords" content={film.name} />
           <meta property="og:url" content="" />
