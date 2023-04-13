@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { BiCrosshair } from "react-icons/bi";
 
 const VideoIfame: React.FC<{
@@ -7,11 +7,13 @@ const VideoIfame: React.FC<{
   link = "https://1080.hdphimonline.com/share/cbbda0778454f639ae7182a4ec209142",
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const refIfame = useRef<HTMLIFrameElement>(null);
   useEffect(() => {
     setIsLoading(true);
+    refIfame.current?.setAttribute("src", link);
     return () => {
       setIsLoading(true);
+      refIfame.current?.setAttribute("src", "");
     };
   }, [link]);
   const handleLoadded = () => {
@@ -20,6 +22,7 @@ const VideoIfame: React.FC<{
   return (
     <div className="responsive-iframe ">
       <iframe
+        ref={refIfame}
         loading="lazy"
         id="ifame_video"
         allowFullScreen

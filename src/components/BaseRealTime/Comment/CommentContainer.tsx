@@ -17,14 +17,12 @@ const CommentContainer = () => {
   const dispatch: AppDispatch = useDispatch();
   const CommemtContainer = useRef<HTMLElement | any>(null);
   useEffect(() => {
-    const handleEventComment = (e: any) => {
-      console.log(e.detail);
+    const idInterval = setInterval(() => {
+      console.log("Lấy nội dung comment", idFilm);
       dispatch(GetListComments({ idFilm, limit: limitCommemt }));
-    };
-    window.addEventListener(`commemts-id:${idFilm}`, handleEventComment);
+    }, 2000);
     return () => {
-      window?.removeEventListener(`commemts-id:${idFilm}`, handleEventComment);
-      console.log("cleanr", idFilm);
+      clearInterval(idInterval);
     };
   }, [limitCommemt, idFilm]);
   const loadingMoreCommemt = () => {

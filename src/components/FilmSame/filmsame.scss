@@ -1,0 +1,9 @@
+.film_sameSlider {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+  .film-item {
+    position: absolute !important;
+    transition: all 0.5s ease-in-out !important;
+  }
+}

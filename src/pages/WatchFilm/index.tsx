@@ -25,15 +25,19 @@ import VideoIfame from "../FilmInfo/UI/VideoIfame";
 import VideoTag from "../FilmInfo/UI/VideoTag";
 import Bookmark from "../FilmInfo/component/Bookmark";
 import StarFilm from "../FilmInfo/component/StarFilm";
-
+import FilmSameContainer from "../../components/FilmSame";
+interface Iesopide {
+  esopide: string;
+  link: string;
+}
 const WatchFilm = () => {
   const [film, setFilm] = useState<Ifilm>();
   const dispatch: AppDispatch = useDispatch();
   const [currentEsopide, setCurrentEsopide] = useState<number>(0);
   const [currentLink, setCurrentLink] = useState<string>("");
   const [severWatch, setSeverWatch] = useState<string>("m3u8");
-  const [listEmbed, setListEmbeded] = useState([]);
-  const [listM3u8, setListM3U8] = useState([]);
+  const [listEmbed, setListEmbeded] = useState<Iesopide[]>([]);
+  const [listM3u8, setListM3U8] = useState<Iesopide[]>([]);
   const [isOpenLight, setIsOpenLight] = useState<Boolean>(true);
   const [like, setLike] = useState<number>(0);
   const currentPage = "https://movibes.online/";
@@ -45,7 +49,7 @@ const WatchFilm = () => {
     newslug = slug.split("-tap-")[0];
     esopide = slug.split("-tap-")[1];
   } else {
-    newslug = slug;
+    newslug = slug?.slice(0, slug.lastIndexOf("-"));
   }
   useLayoutEffect(() => {
     if (newslug) {
@@ -76,7 +80,7 @@ const WatchFilm = () => {
       behavior: "smooth",
       top: 100,
     });
-    if (currentEsopide > 0) {
+    if (currentEsopide > 0 && film?.kind == "series") {
       let filmDetail: { link: string; esopide: string } | any;
       if (severWatch == "embedded" && listEmbed.length > 0) {
         filmDetail = listEmbed.find(
@@ -93,8 +97,15 @@ const WatchFilm = () => {
       if (filmDetail.link) {
         setCurrentLink(filmDetail.link);
       }
+    } else if (film?.kind != "series") {
+      console.log(currentLink);
+      if (severWatch == "embedded" && listEmbed.length > 0) {
+        setCurrentLink(listEmbed[0].link);
+      } else if (listM3u8.length > 0) {
+        setCurrentLink(listM3u8[0].link);
+      }
     }
-  }, [currentEsopide]);
+  }, [currentEsopide, severWatch]);
   const hanleChangeEsopide = (value: number) => {
     let calcEsopide = currentEsopide + value;
     if (calcEsopide <= 0) {
@@ -124,6 +135,7 @@ const WatchFilm = () => {
       setLike(like + 1);
     }
   };
+
   return (
     <section className="relative">
       {!isOpenLight && <div className="ovelay-switch_light"></div>}
@@ -208,9 +220,10 @@ const WatchFilm = () => {
           </div>
           <div>
             <h1 className="text-2xl capitalize text-primary">
-              {film?.name} Tập {currentEsopide} full {film?.lang}
+              {film?.name} {film?.kind == "series" && `Tập ${currentEsopide}`} -
+              full {film?.lang}
             </h1>
-            <p className="text-base text-gray-400">{film?.slug}</p>
+            <p className="text-base text-gray-400">{film?.origin_name}</p>
           </div>
         </div>
         <div className="flex justify-end  flex-1 min-w-[260px] relative">
@@ -255,6 +268,13 @@ const WatchFilm = () => {
         </div>
       </div>
       {film?.description && <FilmDescription film={film} />}
+      {film?._id && (
+        <FilmSameContainer
+          category={film.category[0]}
+          limit={10}
+          id={film._id}
+        />
+      )}
     </section>
   );
 };

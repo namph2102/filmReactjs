@@ -23,7 +23,13 @@ const FilmLeft: React.FC<{ film: Ifilm }> = ({ film }) => {
   return (
     <div className="fiml_info--thumb relative flex justify-center">
       <figure ref={leftContainer} className="relative w-56 lg:w-full">
-        <Link to={`${PathLink.seeFilm + film.slug}`}>
+        <Link
+          to={`${
+            film.kind == "series"
+              ? `${PathLink.seeFilm + film.slug}-tap-${film.episode_current}`
+              : `${PathLink.seeFilm + film.slug}-full`
+          }`}
+        >
           <img
             src={film.thumb_url}
             className="rounded shadow-sm object-cover shadow-blue-800 w-full h-full opacity-90"
@@ -44,7 +50,11 @@ const FilmLeft: React.FC<{ film: Ifilm }> = ({ film }) => {
             </button>
           )}
           <Link
-            to={`${PathLink.seeFilm + film.slug}-tap-${film.episode_current}`}
+            to={`${
+              film.kind == "series"
+                ? `${PathLink.seeFilm + film.slug}-tap-${film.episode_current}`
+                : `${PathLink.seeFilm + film.slug}-full`
+            } `}
           >
             <button className="flex gap-0.5 p-2 rounded">
               <RiPlayCircleLine size={defaultIconSize} /> Xem Phim

@@ -28,7 +28,13 @@ const FilmRight: React.FC<{ film: Ifilm }> = ({ film }) => {
           {film.kind == "feature" ? "Trọn bộ" : "Tập mới nhất"}:
         </p>{" "}
         <h1 className="capitalize">
-          <Link to={PathLink.seeFilm + film.slug}>
+          <Link
+            to={`${
+              film.kind == "series"
+                ? `${PathLink.seeFilm + film.slug}-tap-${film.episode_current}`
+                : `${PathLink.seeFilm + film.slug}-full`
+            } `}
+          >
             <button className="bg-blue-700 hover:bg-blue-600 py-2 rounded-xl px-4">
               {film.kind == "series"
                 ? ` Tập ${

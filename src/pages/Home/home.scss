@@ -28,18 +28,7 @@
       white-space: nowrap;
     }
   }
-  .btn_left,
-  .btn_right {
-    position: absolute;
-    top: 38%;
-    @include button_effect;
-  }
-  .btn_left {
-    left: 12px;
-  }
-  .btn_right {
-    right: 12px;
-  }
+
   .slider_dots {
     position: absolute;
     display: flex;
@@ -51,7 +40,18 @@
     font-size: 32px;
   }
 }
-
+.btn_left,
+.btn_right {
+  position: absolute;
+  top: 38%;
+  @include button_effect;
+}
+.btn_left {
+  left: 12px;
+}
+.btn_right {
+  right: 12px;
+}
 @media screen and (max-width: 500px) {
   .banner_list-item {
     .slider_dots {

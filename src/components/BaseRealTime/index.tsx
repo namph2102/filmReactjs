@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { commemtReadTime } from "../../App";
+
 import RotateLoadding from "../Loadding/RotateLoadding";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/Store";
@@ -7,18 +7,17 @@ import { RootState } from "../../Redux/Store";
 const UIBaseReadTime = React.lazy(() => import("./UIBaseReadTime"));
 const Comment = React.lazy(() => import("./Comment"));
 const CommemtRealtime = () => {
-  const idFilm = useSelector((state: RootState) => state.commemt.idFilm);
-  commemtReadTime(idFilm);
-  console.log("render der CommemtRealtime");
-
+  const isCommemt = useSelector((state: RootState) => state.commemt.isComment);
   return (
     <>
-      <Suspense fallback={<RotateLoadding />}>
-        <UIBaseReadTime />
-        <article>
-          <Comment />
-        </article>
-      </Suspense>
+      {isCommemt && (
+        <Suspense fallback={<RotateLoadding />}>
+          <UIBaseReadTime />
+          <article>
+            <Comment />
+          </article>
+        </Suspense>
+      )}
     </>
   );
 };

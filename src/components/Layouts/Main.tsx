@@ -21,8 +21,6 @@ import WatchFilm from "../../pages/WatchFilm";
 const CommemtContainers = React.lazy(() => import("../BaseRealTime"));
 
 const Main = () => {
-  const isCommemt = useSelector((state: RootState) => state.commemt.isComment);
-  console.log(isCommemt);
   return (
     <>
       <Header />
@@ -37,7 +35,7 @@ const Main = () => {
 
       <div className="container mx-auto relative">
         <Suspense fallback={<RotateLoadding />}>
-          {isCommemt && <CommemtContainers />}
+          <CommemtContainers />
         </Suspense>
       </div>
       <Suspense>

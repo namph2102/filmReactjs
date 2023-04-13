@@ -4,11 +4,15 @@ import { Ifilm } from "../../Redux/FilmSlice";
 
 type props = {
   film: Ifilm;
+  translateX?: string;
 };
 import PathLink from "../../contants";
-const Film: React.FC<props> = ({ film }) => {
+const Film: React.FC<props> = ({ film, translateX }) => {
   return (
-    <article className="basis-1/3 sm:basis-1/3 md:basis-1/4">
+    <article
+      style={translateX ? { transform: `translateX(${translateX})` } : {}}
+      className="film-item basis-1/3 sm:basis-1/3 md:basis-1/4  min-h-[200px]"
+    >
       <div className="films-item p-1">
         <Link
           to={`/${PathLink.seeFilmDetail}/${film.slug}`}

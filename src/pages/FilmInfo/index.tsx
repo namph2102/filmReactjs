@@ -14,6 +14,7 @@ const FilmRight = React.lazy(() => import("./UI/FilmRight"));
 const FilmDescription = React.lazy(() => import("./UI/FilmDescription"));
 const EpisodeContainer: any = React.lazy(() => import("./UI/EpisodeContainer"));
 import { updateIdFim, updateStatusShowComment } from "../../Redux/CommentSlice";
+import FilmSameContainer from "../../components/FilmSame";
 const FilmInfo = () => {
   const isShow = useSelector((state: RootState) => state.commemt.isComment);
   const dispatch: AppDispatch = useDispatch();
@@ -77,6 +78,11 @@ const FilmInfo = () => {
             {film.kind == "series" && <EpisodeContainer film={film} />}
             <FilmDescription film={film} />
           </Suspense>
+          <FilmSameContainer
+            id={film._id}
+            category={film.category[0]}
+            limit={10}
+          />
         </section>
       )}
     </>

@@ -21,7 +21,7 @@ const Routers = () => {
         path={`${PathLink.seeFilmDetail}/:slug`}
         element={<FilmInfo />}
       ></Route>
-      {/* <Route path="/*" element={<Product />} /> */}
+      <Route path="/*" element={<Product />} />
     </Routes>
   );
 };

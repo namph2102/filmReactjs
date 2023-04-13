@@ -23,17 +23,22 @@ const EsopideList: React.FC<{
           key={index}
           onClick={() => {
             setCurrentEsopide && setCurrentEsopide(index + 1);
-            setSeverWatch && nameSever && setSeverWatch(nameSever);
             updateView(film._id);
+
+            setSeverWatch && nameSever && setSeverWatch(nameSever);
           }}
         >
           <Link
             className={`text-center film_kinds-item w-20 text-sm block ${
               currentEpisode == index + 1 && "bg-yellow-600 text-white"
             }`}
-            to={`${PathLink.seeFilm + film.slug}-tap-${index + 1}`}
+            to={`${
+              film.kind == "series"
+                ? `${PathLink.seeFilm + film.slug}-tap-${index + 1}`
+                : `${PathLink.seeFilm + film.slug}-full`
+            }`}
           >
-            Tập {index + 1}
+            {film.kind == "series" ? `Tập ${index + 1}` : "FULL"}
           </Link>
         </li>
       ))}

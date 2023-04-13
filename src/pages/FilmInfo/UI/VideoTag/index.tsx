@@ -75,7 +75,7 @@ const VideoTag: React.FC<{
     // set voulme
     videoRef.current.volume = value / 100;
     setVolume(value);
-    console.log(videoRef.current.volume);
+
     if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
       event.preventDefault();
     }
@@ -243,7 +243,7 @@ const VideoTag: React.FC<{
           <div ref={processRef} className="process_sub-hidden relative">
             <span
               style={{ left: `calc(${percentMouseMove + "%"} - 25px)` }}
-              className="absolute w-full sub_mouse-hover"
+              className="absolute w-full px-2 sub_mouse-hover"
             >
               {handleCoverTime((percentMouseMove / 100) * videoDuration)}
             </span>
