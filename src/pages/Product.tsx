@@ -9,8 +9,12 @@ const MainFilmContainer = React.lazy(
   () => import("../components/MainFilmContainer")
 );
 const kindfilm: any = {
-  "phim-le": "Phim lẻ",
+  "phim-le": "Danh Sách Phim lẻ",
   "phim-hoan-thanh": "Phim đã hoàn thành",
+  "phim-dang-chieu": "Danh sách Phim Đang Chiếu",
+  "phim-sap-chieu": "Danh sách Phim Trailer",
+  "quoc-gia": "Phim theo quốc gia  ",
+  "the-loai": "phim theo thể loại ",
 };
 const Product = () => {
   const router = useLocation();
@@ -19,15 +23,19 @@ const Product = () => {
   const [totalPage, setTotalPage] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [loadding, setLoading] = useState<boolean>(false);
+  const [namePathTwo, setNamePathTwo] = useState<string>("");
   const pathname = router.pathname.split("/");
   useEffect(() => {
     setLoading(true);
+    setTotalPage(0);
+    setNamePathTwo("");
     if (pathname[1]) {
       axios
         .post(PathLink.domain + "api/pagefilm", {
           method: "post",
           data: {
             kind: pathname[1],
+            slug: pathname[2],
           },
         })
         .then((response) => {
@@ -35,12 +43,13 @@ const Product = () => {
             setKindPath(pathname[1]);
             setListFilm(response.data.data);
             setTotalPage(response.data.totalPage);
+            response.data.subName && setNamePathTwo(response.data.subName);
             setCurrentPage(1);
             setLoading(false);
           }
         });
     }
-  }, [pathname[1]]);
+  }, [pathname[1], pathname[2]]);
   const handleChanePage = (event: any, page: number) => {
     setLoading(true);
     axios
@@ -48,11 +57,16 @@ const Product = () => {
         method: "post",
         data: {
           kind: pathname[1],
+          slug: pathname[2],
           page,
         },
       })
       .then((response) => {
         if (response.status === 200) {
+          window.scrollTo({
+            behavior: "smooth",
+            top: 0,
+          });
           setKindPath(pathname[1]);
           setListFilm(response.data.data);
           setTotalPage(response.data.totalPage);
@@ -67,7 +81,7 @@ const Product = () => {
         <Suspense fallback={<RotateLoadding message="Loading ..." />}>
           {listfilm && (
             <MainFilmContainer
-              title={kindfilm[kindSPath]}
+              title={kindfilm[kindSPath] + namePathTwo}
               listFilms={listfilm}
             />
           )}
@@ -80,9 +94,6 @@ const Product = () => {
           <Pagination
             onChange={handleChanePage}
             sx={{
-              "& .MuiPaginationItem-root": {
-                color: "#ffffff",
-              },
               "& .MuiPaginationItem-root:hover": {
                 backgroundColor: "#3d3c22",
               },
@@ -105,6 +116,11 @@ const Product = () => {
             boundaryCount={2}
           />
         </div>
+      )}
+      {listfilm && listfilm.length <= 0 && (
+        <p className="text-primary font-bold text-sm">
+          - Hiện tại chưa có phim nào
+        </p>
       )}
     </section>
   );

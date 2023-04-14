@@ -13,11 +13,11 @@ const Footer = React.lazy(() => {
 });
 
 import RotateLoadding from "../Loadding/RotateLoadding";
-import { useSelector } from "react-redux";
-import { RootState } from "../../Redux/Store";
+
 import HaveAside from "./HaveAside";
 import { Route, Routes } from "react-router-dom";
-import WatchFilm from "../../pages/WatchFilm";
+import Profile from "../../pages/profile";
+
 const CommemtContainers = React.lazy(() => import("../BaseRealTime"));
 
 const Main = () => {
@@ -26,9 +26,10 @@ const Main = () => {
       <Header />
 
       <section className="container mx-auto">
-        <main className="flex flex-wrap bg-content py-4 px-2">
+        <main className="flex flex-wrap bg-content py-4 px-2 min-h-[80vh]">
           <Routes>
             <Route path="*" element={<HaveAside />} />
+            <Route path="tai-khoan" element={<Profile />} />
           </Routes>
         </main>
       </section>

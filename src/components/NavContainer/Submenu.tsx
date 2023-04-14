@@ -5,15 +5,16 @@ interface TItem {
   name: string;
 }
 type Tprops = {
+  path: string;
   listItems: TItem[];
 };
-const Submenu: React.FC<Tprops> = ({ listItems }) => {
+const Submenu: React.FC<Tprops> = ({ listItems, path }) => {
   return (
     <div className=" drop-menu">
       <ul>
         {listItems.map((menu, index) => (
           <li key={menu.name}>
-            <Link to={menu.slug}>{menu.name}</Link>
+            <Link to={path + "/" + menu.slug}>{menu.name}</Link>
           </li>
         ))}
       </ul>

@@ -22,7 +22,9 @@ const Menu: React.FC<TMenu> = ({ isOpenMenu }) => {
               {menu.title}
               {menu.iconLeft && menu.iconElement}
             </NavLink>
-            {menu.submenu && <Submenu listItems={menu.submenu} />}
+            {menu.submenu && (
+              <Submenu path={menu.path} listItems={menu.submenu} />
+            )}
           </li>
         );
       })}

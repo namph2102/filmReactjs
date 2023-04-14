@@ -1,6 +1,6 @@
 import React, { memo, useState, useEffect, useRef } from "react";
 import { TpropComment, defaultIconSize } from "../../../contants";
-import { Avatar, Tooltip } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import HandleTimeDiff from "../../../untils/HandleTime";
 import {
   BiCaretDown,
@@ -8,7 +8,6 @@ import {
   BiChat,
   BiCheck,
   BiEditAlt,
-  BiInfoCircle,
   BiTime,
   BiTrash,
 } from "react-icons/bi";
@@ -26,6 +25,7 @@ import { AppDispatch, RootState } from "../../../Redux/Store";
 import { GetSubcommentComment } from "../../../Redux/CommentSlice";
 import PathLink from "../../../contants";
 import axios from "axios";
+import ModalContent from "../../Modal";
 const UserComment = React.lazy(() => import("./UserComment"));
 const CommenItem: React.FC<{
   comment: TpropComment;
@@ -39,6 +39,7 @@ const CommenItem: React.FC<{
   const [listSubCommemt, setListSubCommemt] = useState<TpropComment[]>([]);
   const BoxchatElement = useRef<HTMLElement | any>(null);
   const commentElement = useRef<HTMLElement | any>(null);
+
   const [seeResponseSubComment, setSeeResponseSubComment] =
     useState<boolean>(false);
   const getNewCommemt = (listSubCommemt: any) => {
@@ -116,6 +117,7 @@ const CommenItem: React.FC<{
       } else ToastMessage(response.data.message).warning();
     }
   };
+
   return (
     <li ref={BoxchatElement} className="pb-2 commemt_parent w-full block">
       <div className="flex gap-4  relative">

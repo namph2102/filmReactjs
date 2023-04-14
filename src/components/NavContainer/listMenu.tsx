@@ -32,16 +32,16 @@ const listMenuNav: INav[] = [
     iconLeft: true,
     submenu: [
       {
-        slug: "trinh-tham",
-        name: "Trinh Thám",
+        slug: "ea",
+        name: "ea",
       },
       {
-        slug: "hanh-dong",
-        name: "Hành Động",
+        slug: "minima",
+        name: "minima",
       },
       {
-        slug: "phieu-luu",
-        name: "Phiêu Lưu ",
+        slug: "non",
+        name: "non",
       },
       {
         slug: "trung-sinh",
@@ -76,20 +76,12 @@ const listMenuNav: INav[] = [
     iconLeft: true,
     submenu: [
       {
-        slug: "trung-quoc",
-        name: "Trung Quốc",
-      },
-      {
-        slug: "han-quoc",
-        name: "Hàn Quốc",
-      },
-      {
         slug: "viet-nam",
         name: "Việt Nam",
       },
       {
-        slug: "thai-lan",
-        name: "Thái Lan",
+        slug: "trung-quoc",
+        name: "trung quốc",
       },
       {
         slug: "ba-lan",
@@ -107,14 +99,9 @@ const listMenuNav: INav[] = [
     iconElement: <BiFilm fontSize={defaultIconSize} className="mr-1.5" />,
   },
   {
-    path: "dang-chieu",
+    path: "phim-dang-chieu",
     title: "Đang chiếu",
     iconElement: <BiWindowOpen fontSize={defaultIconSize} className="mr-1.5" />,
-  },
-  {
-    path: "lich-chieu",
-    title: "Lịch chiếu",
-    iconElement: <BiCalendar fontSize={defaultIconSize} className="mr-1.5" />,
   },
   {
     path: "phim-hoan-thanh",

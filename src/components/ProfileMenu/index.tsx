@@ -21,6 +21,7 @@ import LoginMovie from "../../Auth/page/LoginMovie";
 import firebase from "firebase/compat/app";
 import { getAuth } from "firebase/auth";
 import { getListBookmarks } from "../../Redux/BookmarkSlice";
+import { Link } from "react-router-dom";
 // firebase
 const app = firebase.initializeApp(configFireBase);
 const auth = getAuth(app);
@@ -131,21 +132,30 @@ const Profile: React.FC<{ children: any }> = ({ children }) => {
               </span>
               <span className="flex">
                 <BiCoinStack size="1.3rem" />{" "}
-                <span className="ml-1"> {user.coin}</span>
+                <span className="ml-1">
+                  {" "}
+                  {user.coin?.toLocaleString("en-vi") + " coin"}
+                </span>
               </span>
             </div>
           </MenuItem>
           <Divider />
           <MenuItem onClick={handleClose}>
-            <RiCoinsLine className="mr-2.5" size="1.3rem" /> Nạp tiền
+            <Link to="/nap-tien" className="flex">
+              <RiCoinsLine className="mr-2.5" size="1.3rem" /> Nạp tiền
+            </Link>
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <RiContactsBookLine className="mr-2.5" size="1.3rem" />
-            Thông tin
+            <Link to="/tai-khoan" className="flex">
+              <RiContactsBookLine className="mr-2.5" size="1.3rem" />
+              Thông tin
+            </Link>
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <RiMoreLine className="mr-2.5" size="1.3rem" />
-            Thay đổi
+            <Link to="/mat-khau" className="flex">
+              <RiMoreLine className="mr-2.5" size="1.3rem" />
+              Thay đổi
+            </Link>
           </MenuItem>
           <MenuItem onClick={handleLogout}>
             <RiLogoutBoxRLine className="mr-2.5" size="1.3rem" />

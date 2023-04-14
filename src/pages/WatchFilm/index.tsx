@@ -11,11 +11,11 @@ import {
   RiLightbulbFlashFill,
   RiStackFill,
 } from "react-icons/ri";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FacebookShareButton } from "react-share";
 import { updateIdFim, updateStatusShowComment } from "../../Redux/CommentSlice";
 import { Ifilm, updateLike, updateView } from "../../Redux/FilmSlice";
-import { AppDispatch } from "../../Redux/Store";
+import { AppDispatch, RootState } from "../../Redux/Store";
 import PathLink, { defaultIconSize } from "../../contants";
 import { HandleView } from "../../untils/HandleView";
 import ToastMessage from "../../untils/ToastMessage";
@@ -33,6 +33,7 @@ interface Iesopide {
 const WatchFilm = () => {
   const [film, setFilm] = useState<Ifilm>();
   const dispatch: AppDispatch = useDispatch();
+  const account = useSelector((state: RootState) => state.account.user);
   const [currentEsopide, setCurrentEsopide] = useState<number>(0);
   const [currentLink, setCurrentLink] = useState<string>("");
   const [severWatch, setSeverWatch] = useState<string>("m3u8");
@@ -131,7 +132,7 @@ const WatchFilm = () => {
   const handleIncreaseLike = () => {
     console.log(like, film?.like);
     if (film?._id && film.like == like) {
-      updateLike(film._id);
+      updateLike(film._id, account.username);
       setLike(like + 1);
     }
   };

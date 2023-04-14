@@ -80,25 +80,29 @@ export const fetchDataFilm = createAsyncThunk("film/featchfilm", async () => {
 });
 
 export const updateView = async (idFilm: string) => {
-  axios
-    .post(PathLink.domain + "api/updateView", {
-      method: "POST",
-      data: {
-        idFilm,
-      },
-    })
-    .then((res) => {
-      console.log(res.data);
-    });
+  try {
+    const username = localStorage.getItem("username") || "";
+    axios
+      .post(PathLink.domain + "api/updateView", {
+        method: "POST",
+        data: {
+          idFilm,
+          username,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  } catch {}
 };
 
-export const updateLike = async (idFilm: string) => {
-  console.log(idFilm);
+export const updateLike = async (idFilm: string, username: string) => {
   try {
     await axios.post(PathLink.domain + "api/updateLike", {
       method: "POST",
       data: {
         idFilm,
+        username,
       },
     });
   } catch {}

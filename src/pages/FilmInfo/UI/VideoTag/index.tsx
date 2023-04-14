@@ -50,6 +50,7 @@ const VideoTag: React.FC<{
         videoRef.current.addEventListener("ended", () => {
           onChangeEsopide(1);
         });
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {});
       } else if (
         videoRef.current.canPlayType("application/vnd.apple.mpegurl")
       ) {
@@ -61,6 +62,10 @@ const VideoTag: React.FC<{
     }
     setIsPlay(false);
     return () => {
+      hls.stopLoad();
+      hls.destroy();
+      hls.detachMedia();
+
       videoRef.current?.removeEventListener("ended", () => {
         onChangeEsopide(1);
       });
