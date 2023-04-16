@@ -13,8 +13,7 @@ import "./profile.scss";
 import RegisterMovie from "../../Auth/page/RegisterMovie";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../Redux/Store";
-import { BiCoinStack } from "react-icons/bi";
-import { acctachkedAccount, removeUser, IUser } from "../../Redux/UserSlice";
+import { acctachkedAccount, removeUser } from "../../Redux/UserSlice";
 import PathLink, { configFireBase } from "../../contants";
 import ToastMessage from "../../untils/ToastMessage";
 import LoginMovie from "../../Auth/page/LoginMovie";
@@ -32,7 +31,6 @@ const Profile: React.FC<{ children: any }> = ({ children }) => {
   const [isOpenLoginForm, setIsOpenLoginForm] = useState<boolean>(false);
   const user: any = useSelector((state: RootState) => state.account.user);
   const open = Boolean(anchorEl);
-  const usernameLocal = localStorage.getItem("username") ?? "";
   const [ShowFormRegister, setShowFormRegister] = useState<boolean>(
     user.username ? true : false
   );
@@ -131,10 +129,9 @@ const Profile: React.FC<{ children: any }> = ({ children }) => {
                 {user.fullname || user.username}
               </span>
               <span className="flex">
-                <BiCoinStack size="1.3rem" />{" "}
-                <span className="ml-1">
-                  {" "}
-                  {user.coin?.toLocaleString("en-vi") + " coin"}
+                <img width={20} height={20} src="/images/coin.png" />
+                <span className="ml-1 flex">
+                  {user.coin?.toLocaleString("en-vi")}
                 </span>
               </span>
             </div>

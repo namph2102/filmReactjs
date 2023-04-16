@@ -9,9 +9,7 @@ const SublistIcon: React.FC<{
       {listIcons.map((icon, index) => (
         <Tooltip key={index} title={icon.title} placement="top" arrow>
           <img
-            width="28px"
-            height="28px"
-            className="object-cover cursor-pointer"
+            className="object-cover cursor-pointer sm:w-7 sm:h-7 w-5 h-5"
             src={icon.link}
             alt=""
           />

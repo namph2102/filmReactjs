@@ -17,11 +17,17 @@ const Menu: React.FC<TMenu> = ({ isOpenMenu }) => {
       {listMenuNav.map((menu: INav) => {
         return (
           <li key={menu.title}>
-            <NavLink to={menu.path}>
+            <NavLink
+              to={menu.path}
+              onClick={(e) => {
+                menu.submenu && e.preventDefault();
+              }}
+            >
               {!menu.iconLeft && menu.iconElement}
               {menu.title}
               {menu.iconLeft && menu.iconElement}
             </NavLink>
+
             {menu.submenu && (
               <Submenu path={menu.path} listItems={menu.submenu} />
             )}

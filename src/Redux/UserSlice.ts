@@ -7,11 +7,11 @@ export interface IUser {
   _id: string;
   _uid: string;
   username: string;
-  password: string;
   fullname: string;
   avata: string;
   coin: number;
   description: string;
+  phone: number;
   vip: number;
   icons: any[];
   created_at: Number;
@@ -36,6 +36,7 @@ const UserSlice = createSlice({
       coin: 0,
       description: "",
       vip: 0,
+      phone: 0,
       icons: [],
       created_at: 0,
       updated_at: 0,

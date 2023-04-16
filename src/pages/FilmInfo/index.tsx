@@ -80,7 +80,7 @@ const FilmInfo = () => {
           </Suspense>
           <FilmSameContainer
             id={film._id}
-            category={film.category[0]}
+            category={film.category}
             limit={10}
           />
         </section>

@@ -7,6 +7,7 @@ type props = {
   translateX?: string;
 };
 import PathLink from "../../contants";
+import HandleHookKind from "../../untils/HandleHookKind";
 const Film: React.FC<props> = ({ film, translateX }) => {
   return (
     <article
@@ -27,10 +28,12 @@ const Film: React.FC<props> = ({ film, translateX }) => {
             />
           </figure>
           <span className="episode">
-            {" "}
-            {film.episode_current > 1
-              ? `Tập ${film.episode_current}`
-              : "Phim lẻ "}
+            {HandleHookKind(
+              film.kind,
+              film.eposode_total,
+              film.episode_current,
+              film.trailer
+            )}
           </span>
           <span className="status">{film.lang}</span>
 

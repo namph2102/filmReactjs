@@ -6,7 +6,7 @@ import PathLink, { defaultIconSize } from "../../contants";
 import "./filmsame.scss";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 const FilmSameContainer: React.FC<{
-  category: string;
+  category: string[];
   limit: number;
   id: string;
 }> = ({ category, limit, id }) => {

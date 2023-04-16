@@ -6,6 +6,7 @@ import { RootState } from "../../Redux/Store";
 import BookMark from "../BookMark";
 import Profile from "../ProfileMenu";
 import { componentsProps, componentsPropsCommemt } from "../../untils";
+import AccountAvata from "./AccountAvata";
 
 const RenderProfile = (): JSX.Element => {
   const user = useSelector((state: RootState) => state.account.user);
@@ -14,51 +15,7 @@ const RenderProfile = (): JSX.Element => {
     <>
       <Profile>
         {user.username ? (
-          <div
-            className={`relative rounded-full ${
-              user.permission == "vip" && "border-2 border-yellow-600"
-            } ${user.permission == "admin" && "border-2 border-blue-600"}`}
-          >
-            <Tooltip title="Hồ sơ của bạn" arrow>
-              <Avatar
-                alt={user.fullname}
-                src={user.avata}
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  cursor: "pointer",
-                }}
-              />
-            </Tooltip>
-            {user.permission !== "member" && (
-              <div className="absolute top-0 -right-2 ">
-                <Tooltip
-                  componentsProps={
-                    user.permission == "vip"
-                      ? componentsPropsCommemt
-                      : componentsProps
-                  }
-                  title={
-                    user.permission.toUpperCase() +
-                    ` ${user.vip ? user.vip : ""}`
-                  }
-                  arrow
-                  placement="top"
-                >
-                  <img
-                    src={
-                      user.permission == "admin"
-                        ? "/images/admin.png"
-                        : `/images/vip/vip${user.vip}.png`
-                    }
-                    width="20"
-                    height="20"
-                    alt=""
-                  />
-                </Tooltip>
-              </div>
-            )}
-          </div>
+          <AccountAvata user={user} message="Hồ sơ của bạn" />
         ) : (
           <Tooltip title="Đăng ký ngay" arrow>
             <Avatar

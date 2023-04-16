@@ -233,7 +233,7 @@ const CommenItem: React.FC<{
         </div>
       </div>
 
-      <div className="w-full ml-10 mt-2 ">
+      <div className="w-full ml-2 sm:ml-10 mt-2 ">
         {account._id && (
           <div
             className={`lg:w-1/2 w-ful sm:w-3/4  reply_animation ${clsx({

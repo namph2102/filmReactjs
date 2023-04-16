@@ -19,6 +19,7 @@ export interface Ifilm {
   star: number;
   year: string;
   time: string;
+  trailer: boolean;
   episode_current: number;
   eposode_total: number;
   lang: string;

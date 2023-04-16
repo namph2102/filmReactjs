@@ -3,6 +3,7 @@ import RotateLoadding from "../Loadding/RotateLoadding";
 const Film = React.lazy(() => import("./Film"));
 import "./mainfilm.scss";
 import { Ifilm } from "../../Redux/FilmSlice";
+import { Link } from "react-router-dom";
 interface IMain {
   title?: string;
   listFilms: Ifilm[];
@@ -26,7 +27,11 @@ const MainFilmContainer: React.FC<IMain> = ({
           </Suspense>
         ))}
       </div>
-      {seemore && <a className="see-more">xem tất cả</a>}
+      {seemore && (
+        <Link to="/xem-tat-ca" className="see-more">
+          xem tất cả
+        </Link>
+      )}
     </section>
   );
 };

@@ -15,6 +15,7 @@ const kindfilm: any = {
   "phim-sap-chieu": "Danh sách Phim Trailer",
   "quoc-gia": "Phim theo quốc gia  ",
   "the-loai": "phim theo thể loại ",
+  "xem-tat-ca": "Tất cả phim",
 };
 const Product = () => {
   const router = useLocation();
@@ -25,6 +26,7 @@ const Product = () => {
   const [loadding, setLoading] = useState<boolean>(false);
   const [namePathTwo, setNamePathTwo] = useState<string>("");
   const pathname = router.pathname.split("/");
+  console.log(currentPage);
   useEffect(() => {
     setLoading(true);
     setTotalPage(0);
@@ -36,6 +38,7 @@ const Product = () => {
           data: {
             kind: pathname[1],
             slug: pathname[2],
+            page: 0,
           },
         })
         .then((response) => {
@@ -58,7 +61,7 @@ const Product = () => {
         data: {
           kind: pathname[1],
           slug: pathname[2],
-          page,
+          page: page - 1,
         },
       })
       .then((response) => {
@@ -94,6 +97,13 @@ const Product = () => {
           <Pagination
             onChange={handleChanePage}
             sx={{
+              "& .MuiPaginationItem-root.Mui-selected": {
+                backgroundColor: "#ff871b",
+                color: "#fff",
+              },
+              "& .MuiPaginationItem-root": {
+                color: "#fff",
+              },
               "& .MuiPaginationItem-root:hover": {
                 backgroundColor: "#3d3c22",
               },
@@ -104,10 +114,6 @@ const Product = () => {
               "& button": {
                 fontSize: "16px",
                 color: "#ffffff",
-              },
-              "& .Mui-selected": {
-                backgroundColor: "#ff871b",
-                color: "#fff",
               },
             }}
             count={totalPage}

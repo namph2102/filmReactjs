@@ -11,6 +11,7 @@ import { IApiSendDataComment } from "../../../Redux/CommentSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../Redux/Store";
 import moment from "moment";
+import AccountAvata from "../../Header/AccountAvata";
 const UserComment: React.FC<{
   subcomment?: string;
   getNewCommemt?: any;
@@ -100,7 +101,9 @@ const UserComment: React.FC<{
           arrow
           placement="bottom"
         >
-          <Avatar src={myAccount.avata} />
+          <div className=" mr-2 hidden sm:block">
+            {myAccount.username && <AccountAvata user={myAccount} width={50} />}
+          </div>
         </Tooltip>
         <textarea
           placeholder="Tham gia bình luận ..."
