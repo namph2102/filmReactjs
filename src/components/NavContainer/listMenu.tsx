@@ -2,14 +2,15 @@ import {
   BiCaretDown,
   BiCheckCircle,
   BiTime,
-  BiCalendar,
   BiFilm,
   BiWindowOpen,
 } from "react-icons/bi";
 const defaultIconSize: string = "1.225rem";
 interface IsubMenu {
   slug: string;
-  name: string;
+  _id: string;
+  country?: string;
+  category?: string;
 }
 export interface INav {
   path: string;
@@ -30,68 +31,14 @@ const listMenuNav: INav[] = [
     title: "Thể Loại",
     iconElement: <BiCaretDown fontSize={defaultIconSize} className="mr-1" />,
     iconLeft: true,
-    submenu: [
-      {
-        slug: "ea",
-        name: "ea",
-      },
-      {
-        slug: "minima",
-        name: "minima",
-      },
-      {
-        slug: "non",
-        name: "non",
-      },
-      {
-        slug: "trung-sinh",
-        name: "Trùng Sinh",
-      },
-      {
-        slug: "tien-hiep1",
-        name: "Tiên Hiệp 1",
-      },
-      {
-        slug: "tien-hiep2",
-        name: "Tiên Hiệp 2",
-      },
-      {
-        slug: "tien-hiep3",
-        name: "Tiên Hiệp 3",
-      },
-      {
-        slug: "tien-hiep4",
-        name: "Tiên Hiệp 4",
-      },
-      {
-        slug: "tien-hiep5",
-        name: "Tiên Hiệp 5",
-      },
-    ],
+    submenu: [],
   },
   {
     path: "quoc-gia",
     title: "Quốc Gia",
     iconElement: <BiCaretDown fontSize={defaultIconSize} className="mr-1" />,
     iconLeft: true,
-    submenu: [
-      {
-        slug: "viet-nam",
-        name: "Việt Nam",
-      },
-      {
-        slug: "trung-quoc",
-        name: "trung quốc",
-      },
-      {
-        slug: "ba-lan",
-        name: "Ba lan",
-      },
-      {
-        slug: "au-my",
-        name: "Âu Mỹ",
-      },
-    ],
+    submenu: [],
   },
   {
     path: "phim-le",

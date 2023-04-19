@@ -24,6 +24,7 @@ export interface IUserComment {
   permission: string;
   vip: number;
   token?: string;
+  blocked: boolean;
 }
 export interface TpropComment {
   _id: string;
@@ -44,6 +45,9 @@ class PathLink {
   seeFilmDetail = "xem-thong-tin";
   seeFilm = "/xem-phim/";
   seeProfile = "tai-khoan";
+  recharge = "nap-tien";
+  changePassword = "doi-mat-khau";
+  pagenotfound = "not-found";
   domain = "http://localhost:3000/";
   nameToken = "_myToken";
   localusername = "username";

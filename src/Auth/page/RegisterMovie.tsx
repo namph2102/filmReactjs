@@ -41,8 +41,10 @@ const RegisterMovie = ({
         .max(40, "Không vượt quá 40 ký tự"),
       repassword: Yup.string()
         .required("Trường nhập lại mật khẩu không được bỏ trống")
-        .max(40, "Không vượt quá 40 ký tự")
-        .oneOf([Yup.ref("password")], "Trường mật khẩu không khớp nhau"),
+        .oneOf(
+          [Yup.ref("password")],
+          "Trường nhập lại mật khẩu không khớp nhau"
+        ),
     }),
     onSubmit(values: any) {
       let { username, password, repassword } = values;
@@ -61,7 +63,7 @@ const RegisterMovie = ({
             state?.payload.data.username
           );
           ToastMessage(state?.payload.message).success();
-          formik.handleReset();
+          formik.resetForm();
           dispatch(getListBookmarks());
           onHandleClose(false);
         } else {
@@ -118,7 +120,6 @@ const RegisterMovie = ({
                     className="flex-1 py-3 px-2 border-0 outline-none text-sm"
                     placeholder="Nhập tài khoản của bạn ..."
                     onBlur={() => handleBlur("username")}
-                    required
                   />
                   <button type="button" disabled={true} className="p-2">
                     {" "}
@@ -143,7 +144,6 @@ const RegisterMovie = ({
                     className="flex-1 py-3 px-2 border-0 outline-none text-sm"
                     placeholder="*******"
                     onBlur={() => handleBlur("password")}
-                    required
                   />
                   <button
                     type="button"
@@ -176,7 +176,6 @@ const RegisterMovie = ({
                     onBlur={() => handleBlur("repassword")}
                     className="flex-1 py-3 px-2 border-0 outline-none text-sm"
                     placeholder="*******"
-                    required
                   />
                   <button
                     type="button"
@@ -192,6 +191,7 @@ const RegisterMovie = ({
                   </button>
                 </div>
               </div>
+
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
@@ -220,6 +220,7 @@ const RegisterMovie = ({
                   Đã có tài khoản ?
                 </button>
               </div>
+
               <button
                 type="submit"
                 onClick={HandleConfirmPassword}

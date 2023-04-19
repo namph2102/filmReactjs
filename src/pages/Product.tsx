@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState, Suspense } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PathLink from "../contants";
 import { Ifilm } from "../Redux/FilmSlice";
 import RotateLoadding from "../components/Loadding/RotateLoadding";
@@ -26,7 +26,6 @@ const Product = () => {
   const [loadding, setLoading] = useState<boolean>(false);
   const [namePathTwo, setNamePathTwo] = useState<string>("");
   const pathname = router.pathname.split("/");
-  console.log(currentPage);
   useEffect(() => {
     setLoading(true);
     setTotalPage(0);
@@ -53,6 +52,10 @@ const Product = () => {
         });
     }
   }, [pathname[1], pathname[2]]);
+  const navigate = useNavigate();
+  if (!kindfilm[pathname[1]]) {
+    navigate(`/${PathLink.pagenotfound}`);
+  }
   const handleChanePage = (event: any, page: number) => {
     setLoading(true);
     axios

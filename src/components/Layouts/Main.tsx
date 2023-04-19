@@ -17,6 +17,9 @@ import RotateLoadding from "../Loadding/RotateLoadding";
 import HaveAside from "./HaveAside";
 import { Route, Routes } from "react-router-dom";
 import Profile from "../../pages/profile";
+import Recharge from "../../pages/Recharge";
+import PasswordChange from "../../pages/ChangePasswork";
+import PageNotFound from "../../pages/PageNotFound";
 
 const CommemtContainers = React.lazy(() => import("../BaseRealTime"));
 
@@ -29,7 +32,13 @@ const Main = () => {
         <main className="flex flex-wrap bg-content py-4 px-2 min-h-[80vh]">
           <Routes>
             <Route path="*" element={<HaveAside />} />
-            <Route path="tai-khoan" element={<Profile />} />
+            <Route path={PathLink.seeProfile} element={<Profile />} />
+            <Route path={PathLink.recharge} element={<Recharge />} />
+            <Route
+              path={PathLink.changePassword}
+              element={<PasswordChange />}
+            />
+            <Route path={PathLink.pagenotfound} element={<PageNotFound />} />
           </Routes>
         </main>
       </section>

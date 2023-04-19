@@ -12,6 +12,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../Redux/Store";
 import moment from "moment";
 import AccountAvata from "../../Header/AccountAvata";
+import PathLink from "../../../contants";
+
+import { Link } from "react-router-dom";
 const UserComment: React.FC<{
   subcomment?: string;
   getNewCommemt?: any;
@@ -31,6 +34,12 @@ const UserComment: React.FC<{
     }),
 
     onSubmit: (values) => {
+      const blocked = myAccount.blocked;
+      if (blocked) {
+        ToastMessage("Tài khoản của bạn đã bị khóa").warning();
+        return;
+      }
+
       const comment: string = values.comment
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;");
@@ -60,6 +69,12 @@ const UserComment: React.FC<{
   const disPatch: any = useDispatch();
 
   const handleBlur = () => {
+    const blocked = myAccount.blocked;
+    if (blocked) {
+      ToastMessage("Tài khoản đã bị khóa !").warning();
+      formik.handleReset();
+      return;
+    }
     if (formik.errors.comment) {
       ToastMessage(formik.errors.comment, "😚").warning({
         autoClose: 2000,
@@ -95,16 +110,20 @@ const UserComment: React.FC<{
           !myAccount.username && "hidden"
         } animae_reply`}
       >
-        <Tooltip
-          className="cursor-pointer"
-          title={myAccount.fullname}
-          arrow
-          placement="bottom"
-        >
-          <div className=" mr-2 hidden sm:block">
-            {myAccount.username && <AccountAvata user={myAccount} width={50} />}
-          </div>
-        </Tooltip>
+        <Link to={PathLink.seeProfile}>
+          <Tooltip
+            className="cursor-pointer"
+            title="Xem Hồ sơ"
+            arrow
+            placement="bottom"
+          >
+            <div className=" mr-2 hidden sm:block">
+              {myAccount.username && (
+                <AccountAvata user={myAccount} width={50} />
+              )}
+            </div>
+          </Tooltip>
+        </Link>
         <textarea
           placeholder="Tham gia bình luận ..."
           name="comment"

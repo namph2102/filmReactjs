@@ -270,11 +270,7 @@ const WatchFilm = () => {
       </div>
       {film?.description && <FilmDescription film={film} />}
       {film?._id && (
-        <FilmSameContainer
-          category={film.category[0]}
-          limit={10}
-          id={film._id}
-        />
+        <FilmSameContainer category={film.category} limit={10} id={film._id} />
       )}
     </section>
   );

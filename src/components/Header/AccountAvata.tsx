@@ -14,17 +14,19 @@ const AccountAvata: React.FC<{
         user.permission == "vip" && "border-2 border-yellow-600"
       } ${user.permission == "admin" && "border-2 border-blue-600"}`}
     >
-      <Tooltip title={message} arrow>
-        <Avatar
-          alt={user.fullname}
-          src={user.avata}
-          style={{
-            width: width,
-            height: width,
-            cursor: "pointer",
-          }}
-        />
-      </Tooltip>
+      {user.avata && (
+        <Tooltip title={message} arrow>
+          <Avatar
+            alt={user.fullname}
+            src={user.avata}
+            style={{
+              width: width,
+              height: width,
+              cursor: "pointer",
+            }}
+          />
+        </Tooltip>
+      )}
       {user.permission !== "member" && (
         <div className="absolute top-0 -right-2 ">
           <Tooltip
@@ -34,7 +36,7 @@ const AccountAvata: React.FC<{
                 : componentsProps
             }
             title={
-              user.permission.toUpperCase() + ` ${user.vip ? user.vip : ""}`
+              user.permission?.toUpperCase() + ` ${user.vip ? user.vip : ""}`
             }
             arrow
             placement="top"
@@ -43,7 +45,9 @@ const AccountAvata: React.FC<{
               src={
                 user.permission == "admin"
                   ? "/images/admin.png"
-                  : `/images/vip/vip${user.vip}.png`
+                  : user.vip
+                  ? `/images/vip/vip${user.vip}.png`
+                  : ""
               }
               width={width / 2}
               height={width / 2}

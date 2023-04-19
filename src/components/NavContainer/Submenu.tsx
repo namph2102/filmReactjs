@@ -2,7 +2,9 @@ import React, { memo } from "react";
 import { Link } from "react-router-dom";
 interface TItem {
   slug: string;
-  name: string;
+  _id: string;
+  country?: string;
+  category?: string;
 }
 type Tprops = {
   path: string;
@@ -13,8 +15,10 @@ const Submenu: React.FC<Tprops> = ({ listItems, path }) => {
     <div className=" drop-menu">
       <ul>
         {listItems.map((menu, index) => (
-          <li key={menu.name}>
-            <Link to={path + "/" + menu.slug}>{menu.name}</Link>
+          <li key={menu._id}>
+            <Link to={path + "/" + menu.slug}>
+              {menu.country || menu.category}
+            </Link>
           </li>
         ))}
       </ul>

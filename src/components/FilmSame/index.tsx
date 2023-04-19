@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Ifilm } from "../../Redux/FilmSlice";
 import Film from "../MainFilmContainer/Film";
 import axios from "axios";
@@ -12,6 +12,17 @@ const FilmSameContainer: React.FC<{
 }> = ({ category, limit, id }) => {
   const [listFilm, setListFilm] = useState<Ifilm[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const btn_increase = useRef<HTMLButtonElement>(null);
+  const DecreaseIndex = () => {
+    if (currentIndex <= 0) {
+      setCurrentIndex(listFilm.length - 3);
+    } else setCurrentIndex(currentIndex - 1);
+  };
+  const InCreaseIndex = () => {
+    if (currentIndex >= listFilm.length - 3) {
+      setCurrentIndex(0);
+    } else setCurrentIndex(currentIndex + 1);
+  };
   useEffect(() => {
     setCurrentIndex(0);
     axios
@@ -34,17 +45,14 @@ const FilmSameContainer: React.FC<{
       .catch(() => {
         setListFilm((pre) => []);
       });
+    const idTimeInterval = setInterval(() => {
+      btn_increase.current?.click();
+    }, 5000);
+    return () => {
+      clearInterval(idTimeInterval);
+    };
   }, [category]);
-  const DecreaseIndex = () => {
-    if (currentIndex <= 0) {
-      setCurrentIndex(listFilm.length - 3);
-    } else setCurrentIndex(currentIndex - 1);
-  };
-  const InCreaseIndex = () => {
-    if (currentIndex >= listFilm.length - 3) {
-      setCurrentIndex(0);
-    } else setCurrentIndex(currentIndex + 1);
-  };
+
   return (
     <>
       {listFilm.length > 0 ? (
@@ -63,7 +71,11 @@ const FilmSameContainer: React.FC<{
               </button>
             )}
             {listFilm.length > 4 && (
-              <button className="btn_right" onClick={InCreaseIndex}>
+              <button
+                className="btn_right"
+                ref={btn_increase}
+                onClick={InCreaseIndex}
+              >
                 <BiChevronRight size={defaultIconSize} />
               </button>
             )}

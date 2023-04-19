@@ -3,6 +3,7 @@ import { TpropComment, defaultIconSize } from "../../../contants";
 import { Tooltip } from "@mui/material";
 import HandleTimeDiff from "../../../untils/HandleTime";
 import {
+  BiBlock,
   BiCaretDown,
   BiCaretUp,
   BiChat,
@@ -25,7 +26,8 @@ import { AppDispatch, RootState } from "../../../Redux/Store";
 import { GetSubcommentComment } from "../../../Redux/CommentSlice";
 import PathLink from "../../../contants";
 import axios from "axios";
-import ModalContent from "../../Modal";
+import { Link } from "react-router-dom";
+
 const UserComment = React.lazy(() => import("./UserComment"));
 const CommenItem: React.FC<{
   comment: TpropComment;
@@ -82,6 +84,31 @@ const CommenItem: React.FC<{
       BoxchatElement.current && BoxchatElement.current.classList.add("hide");
     } else ToastMessage(res.data.message).warning();
   };
+  const handleBlockUser = async (isBlock = true) => {
+    console.log(isBlock);
+    if (account.permission !== "admin") {
+      ToastMessage("Bạn không có quyền này !").warning();
+      return;
+    }
+    if (account._id === comment.user_comment._id) {
+      ToastMessage("Bạn không thể block chính mình !").warning();
+      return;
+    }
+    axios
+      .post(PathLink.domain + "user/block", {
+        method: "post",
+        data: {
+          username: comment.user_comment.username,
+          _id: comment.user_comment._id,
+          blocked: isBlock,
+        },
+      })
+      .then((res) => {
+        if (res.status == 200) {
+          ToastMessage(res.data?.message).success();
+        }
+      });
+  };
   const handleEditFisrt = async (e: any) => {
     if (!account.accessToken) return;
 
@@ -121,9 +148,10 @@ const CommenItem: React.FC<{
   return (
     <li ref={BoxchatElement} className="pb-2 commemt_parent w-full block">
       <div className="flex gap-4  relative">
-        <div>
+        <Link to={PathLink.seeProfile + `#${comment.user_comment._id}`}>
           <PermissionAttacked account={comment.user_comment} />
-        </div>
+        </Link>
+
         <div className="comment_info">
           <div className="info_title flex gap-0.5 items-center">
             <span className="capitalize">
@@ -228,6 +256,22 @@ const CommenItem: React.FC<{
                   <BiTrash size={defaultIconSize} />
                 </button>
               </Tooltip>
+              {account.permission == "admin" &&
+                comment.user_comment._id !== account._id && (
+                  <Tooltip
+                    title={comment.user_comment.blocked ? "Mở Block" : "Block"}
+                    arrow
+                    placement="left"
+                  >
+                    <button
+                      onClick={() =>
+                        handleBlockUser(!comment.user_comment.blocked)
+                      }
+                    >
+                      <BiBlock size={defaultIconSize} />
+                    </button>
+                  </Tooltip>
+                )}
             </p>
           )}
         </div>

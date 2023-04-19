@@ -47,6 +47,11 @@
     );
   }
 }
+::selection {
+  background: #cf6767;
+  color: white;
+}
+
 @layer components {
   .btn_bookmark-close {
     @apply py-1 px-2.5 hover:bg-red-800 bg-red-700 rounded-full text-sm;

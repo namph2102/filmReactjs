@@ -9,7 +9,6 @@ const HandleHookKind = (
   if (trailer) {
     return "Trailer";
   } else {
-    console.log(kind);
     if (kind == "feature") {
       return "Phim lẻ";
     } else if (total == current && current != 1) {

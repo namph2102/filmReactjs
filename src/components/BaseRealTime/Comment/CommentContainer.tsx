@@ -18,7 +18,6 @@ const CommentContainer = () => {
   const CommemtContainer = useRef<HTMLElement | any>(null);
   useEffect(() => {
     const idInterval = setInterval(() => {
-      console.log("Lấy nội dung comment", idFilm);
       dispatch(GetListComments({ idFilm, limit: limitCommemt }));
     }, 2000);
     return () => {

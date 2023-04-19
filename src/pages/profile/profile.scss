@@ -1,0 +1,47 @@
+.profile_container {
+  .process_exp-lv {
+    cursor: pointer;
+    background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      from(#896e13),
+      to(#55ef36)
+    );
+  }
+  .process_exp-vip {
+    cursor: pointer;
+    background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      from(#896e13),
+      to(#fae900de)
+    );
+  }
+  .box_exp {
+    &:hover {
+      .process_exp-sub_exp {
+        display: block;
+      }
+    }
+  }
+  .process_exp-sub_exp {
+    background-color: black;
+    padding: 4px 12px;
+
+    border-radius: 8px;
+    top: -40px;
+    display: none;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 8px;
+      border-color: black transparent transparent transparent;
+      border-style: solids;
+    }
+  }
+}

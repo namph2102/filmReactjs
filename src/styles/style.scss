@@ -4,3 +4,7 @@
 .title_special {
   @include title_special;
 }
+.list_exp li:last-child {
+  color: rgb(192, 192, 2);
+  font-size: 16px;
+}

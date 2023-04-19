@@ -13,6 +13,9 @@ export interface IUser {
   description: string;
   phone: number;
   vip: number;
+  expLv: number;
+  expVip: number;
+  blocked: boolean;
   icons: any[];
   created_at: Number;
   updated_at: number;
@@ -34,8 +37,11 @@ const UserSlice = createSlice({
       fullname: "",
       avata: "",
       coin: 0,
+      expLv: 0,
+      expVip: 0,
       description: "",
       vip: 0,
+      blocked: false,
       phone: 0,
       icons: [],
       created_at: 0,
@@ -59,6 +65,11 @@ const UserSlice = createSlice({
         state.user = account;
         localStorage.setItem("username", account.username);
         localStorage.setItem(PathLink.nameToken, account.accessToken);
+      }
+    },
+    updateAvata(state, action) {
+      if (action.payload.avata) {
+        state.user.avata = action.payload.avata;
       }
     },
     removeUser(state, action) {
@@ -91,9 +102,12 @@ const UserSlice = createSlice({
         localStorage.setItem(PathLink.nameToken, account.accessToken);
       }
     });
+    builder.addCase(updateProfileUser.fulfilled, (state, action) => {
+      state.user = { ...state.user, ...action.payload };
+    });
   },
 });
-export const { removeUser } = UserSlice.actions;
+export const { removeUser, updateAvata } = UserSlice.actions;
 export default UserSlice.reducer;
 export const acctachkedAccount = createAsyncThunk(
   "user/firstLogin",
@@ -165,3 +179,26 @@ export const loginWithFireBase = (account: any) => {
     }
   };
 };
+export const updateProfileUser = createAsyncThunk(
+  "user/updateprofile",
+  async (data: {
+    _id: string;
+    description: string;
+    fullname: string;
+    phone: number | string;
+    username:string;
+  }) => {
+    try {
+      const responsive = await axios.post(
+        PathLink.domain + "user/updateProfile",
+        {
+          method: "post",
+          data,
+        }
+      );
+      return responsive.data.account;
+    } catch (err) {
+      ToastMessage("Lỗi gì đó rồi bạn ơi !").warning();
+    }
+  }
+);

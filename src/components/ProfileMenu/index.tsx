@@ -34,6 +34,7 @@ const Profile: React.FC<{ children: any }> = ({ children }) => {
   const [ShowFormRegister, setShowFormRegister] = useState<boolean>(
     user.username ? true : false
   );
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     if (user.username) {
       setAnchorEl(event.currentTarget);
@@ -138,20 +139,20 @@ const Profile: React.FC<{ children: any }> = ({ children }) => {
           </MenuItem>
           <Divider />
           <MenuItem onClick={handleClose}>
-            <Link to="/nap-tien" className="flex">
+            <Link to={PathLink.recharge} className="flex">
               <RiCoinsLine className="mr-2.5" size="1.3rem" /> Nạp tiền
             </Link>
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <Link to="/tai-khoan" className="flex">
+            <Link to={PathLink.seeProfile} className="flex">
               <RiContactsBookLine className="mr-2.5" size="1.3rem" />
               Thông tin
             </Link>
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <Link to="/mat-khau" className="flex">
+            <Link to={PathLink.changePassword} className="flex">
               <RiMoreLine className="mr-2.5" size="1.3rem" />
-              Thay đổi
+              Đổi mật khẩu
             </Link>
           </MenuItem>
           <MenuItem onClick={handleLogout}>

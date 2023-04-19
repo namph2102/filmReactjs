@@ -21,7 +21,7 @@ const LoginMovie = ({
   const username = localStorage.getItem("username") ?? "";
   const [seePassword, setSeePassWord] = useState<boolean>(false);
   const dispatch: AppDispatch = useDispatch();
-  const formik: any = useFormik({
+  const formik = useFormik({
     initialValues: {
       username: username,
       password: "",
@@ -32,13 +32,16 @@ const LoginMovie = ({
     }),
     onSubmit(values) {
       dispatch(
-        LoginForm({ username: values.username, password: values.password })
+        LoginForm({
+          username: values.username.trim(),
+          password: values.password.trim(),
+        })
       )
         .then((response: any) => {
           if (response.status == 200) {
             ToastMessage(response.message).success();
             onHandleClose(false);
-            formik.handleReset();
+            formik.resetForm();
             dispatch(getListBookmarks());
           } else {
             ToastMessage(response.message).warning();
@@ -46,7 +49,7 @@ const LoginMovie = ({
         })
         .catch((err: any) => {
           ToastMessage(err.message).error();
-          formik.handleReset();
+          formik.resetForm();
         });
     },
   });
@@ -60,7 +63,7 @@ const LoginMovie = ({
               type="button"
               onClick={() => {
                 onHandleClose(false);
-                formik.handleReset();
+                formik.resetForm();
               }}
               className="absolute top-4 right-2"
             >
@@ -89,7 +92,6 @@ const LoginMovie = ({
                     className="flex-1 py-3 px-2 border-0 outline-none text-sm"
                     value={formik.values.username}
                     onChange={formik.handleChange}
-                    required
                   />
                   <button type="button" disabled={true} className="p-2">
                     <RiUserHeartLine size={defaultIconSize} />
@@ -107,7 +109,6 @@ const LoginMovie = ({
                     value={formik.values.password}
                     onChange={formik.handleChange}
                     className="flex-1 py-3 px-2 border-0 outline-none text-sm"
-                    required
                   />
                   <button
                     type="button"
