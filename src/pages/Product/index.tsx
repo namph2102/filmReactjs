@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState, Suspense } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import PathLink from "../contants";
-import { Ifilm } from "../Redux/FilmSlice";
-import RotateLoadding from "../components/Loadding/RotateLoadding";
+import PathLink from "../../contants";
+import { Ifilm } from "../../Redux/FilmSlice";
+import RotateLoadding from "../../components/Loadding/RotateLoadding";
 import { Pagination } from "@mui/material";
+import { Helmet } from "react-helmet-async";
 const MainFilmContainer = React.lazy(
-  () => import("../components/MainFilmContainer")
+  () => import("../../components/MainFilmContainer")
 );
 const kindfilm: any = {
   "phim-le": "Danh Sách Phim lẻ",
@@ -83,6 +84,9 @@ const Product = () => {
   };
   return (
     <section>
+      <Helmet>
+        <title>{kindfilm[kindSPath] + namePathTwo} tại VideoTV</title>
+      </Helmet>
       {!loadding ? (
         <Suspense fallback={<RotateLoadding message="Loading ..." />}>
           {listfilm && (

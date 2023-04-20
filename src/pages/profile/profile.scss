@@ -28,10 +28,12 @@
   }
   .process_exp-sub_exp {
     background-color: black;
-    padding: 4px 12px;
-
+    padding: 6px 12px;
+    text-align: center;
+    min-width: 200px;
     border-radius: 8px;
-    top: -40px;
+    top: -50px;
+    left: 0%;
     display: none;
     &::after {
       content: "";

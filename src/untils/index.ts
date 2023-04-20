@@ -54,11 +54,15 @@ const handleCoverTime = (time: number): string => {
 const handleFormat = (x: any) => {
   return x + "%";
 };
+const formatCurrent = (number: number) => {
+  return number.toLocaleString("en-vi");
+};
 export {
   Handle,
   componentsProps,
   handleCoverTime,
   handlePercent,
+  formatCurrent,
   componentsPropsCommemt,
   handleFormat,
 };

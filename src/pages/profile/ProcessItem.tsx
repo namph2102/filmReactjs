@@ -18,14 +18,7 @@ const ProcessItem: React.FC<{
             width: handlePercent(valueStart, valueEnd),
           }}
         ></div>
-        <div
-          style={{
-            left: `calc(${handlePercent(valueStart, valueEnd)} - 50px)`,
-          }}
-          className="absolute process_exp-sub_exp"
-        >
-          {nameSub}
-        </div>
+        <div className="absolute process_exp-sub_exp">{nameSub}</div>
         <span
           className="text-text pr-1 absolute"
           style={{

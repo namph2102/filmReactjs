@@ -93,7 +93,6 @@ const Profile = () => {
           }
         });
     } catch {
-      console.log("Éo có gì luôn");
       if (!account?._id && !user._id) {
         ToastMessage("Bạn không có quyền truy cập vào trang hồ sơ!").warning();
         navigate("/");
@@ -141,7 +140,11 @@ const Profile = () => {
                 name="vip"
                 icon={IconVip}
                 nameSub={`${
-                  account.vip ? `Hội viên Vip ${account.vip}` : "Chưa nạp "
+                  account.vip
+                    ? `Hội viên Vip ${account.vip}`
+                    : account.coin > 0
+                    ? "Đã nạp lần đầu"
+                    : "Chưa nạp "
                 }`}
                 valueStart={account.expVip}
                 valueEnd={account.nextExpVip}

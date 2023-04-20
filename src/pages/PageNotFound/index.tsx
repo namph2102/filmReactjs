@@ -3,6 +3,7 @@ import "./style404.scss";
 import { Link } from "react-router-dom";
 const PageNotFound = () => {
   window.scrollTo({ behavior: "smooth", top: 120 });
+  document.title = "Không tìm thấy trang";
   return (
     <div className="flex flex-col wrapper pagenotfound w-full">
       <h5 className="title_special">Trang không tồn tại</h5>

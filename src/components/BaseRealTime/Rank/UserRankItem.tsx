@@ -48,7 +48,7 @@ const UserRankItem: React.FC<Tprops> = ({ user, top }) => {
             <img
               className="w-20 h-20 object-cover border-[3px] border-gray-500 border-solid"
               src={user.avata}
-              alt=""
+              alt="Avata"
             />
           </Link>
         </Tooltip>
@@ -68,7 +68,7 @@ const UserRankItem: React.FC<Tprops> = ({ user, top }) => {
           </Tooltip>
         ) : user.permission == "vip" ? (
           <Tooltip
-            title={`Vip ${user.vip}`}
+            title={user.vip == 10 ? "Đại gia Vip 10" : `Vip ${user.vip}`}
             arrow
             placement="top"
             componentsProps={componentsPropsCommemt}

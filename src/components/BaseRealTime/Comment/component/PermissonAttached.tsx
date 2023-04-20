@@ -25,7 +25,11 @@ const PermissionAttacked: React.FC<{ account: IUserComment }> = ({
           account.vip && (
             <Tooltip
               componentsProps={componentsPropsCommemt}
-              title={`Vip ${account.vip}`}
+              title={
+                account.vip >= 9
+                  ? `Đại gia Vip ${account.vip}`
+                  : `Vip ${account.vip}`
+              }
               placement="top"
               arrow
             >

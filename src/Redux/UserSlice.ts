@@ -72,6 +72,9 @@ const UserSlice = createSlice({
         state.user.avata = action.payload.avata;
       }
     },
+    updateAccount(state, action) {
+      state.user = { ...state.user, ...action.payload };
+    },
     removeUser(state, action) {
       state.user = action.payload.setNull;
       state.isLogout = true;
@@ -107,7 +110,7 @@ const UserSlice = createSlice({
     });
   },
 });
-export const { removeUser, updateAvata } = UserSlice.actions;
+export const { removeUser, updateAvata, updateAccount } = UserSlice.actions;
 export default UserSlice.reducer;
 export const acctachkedAccount = createAsyncThunk(
   "user/firstLogin",
@@ -186,7 +189,7 @@ export const updateProfileUser = createAsyncThunk(
     description: string;
     fullname: string;
     phone: number | string;
-    username:string;
+    username: string;
   }) => {
     try {
       const responsive = await axios.post(

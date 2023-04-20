@@ -53,6 +53,12 @@ class PathLink {
   localusername = "username";
   seeCategories = "/the-loai-phim/";
 }
+export const configPaypal = {
+  clientID:
+    "AQPKJyF0O5Ari21cRYIeQXVfaNEvL7gn75CHu61JI8fiNcvdWu1K3Opu_N824PTn5d4MT4Soe5fvfUE4",
+  secret:
+    "EIBZ6vGSQJdz0ZE0OR8iaLifM3nNcSuAn4PMTwiFI12MY12z9pwy4JnJaZdVmGLTsO0e08P2dV_XVU_W",
+};
 // Configure Firebase.
 export const configFireBase = {
   apiKey: "AIzaSyDyJGXl7H7Z8X-c1kkQIyrWC9gGi9uw_rk",
