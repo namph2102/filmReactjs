@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useEffect, useRef } from "react";
 import { Avatar, Tooltip } from "@mui/material";
 import { RiSendPlaneLine } from "react-icons/ri";
 import { useFormik } from "formik";
@@ -19,10 +19,11 @@ const UserComment: React.FC<{
   subcomment?: string;
   getNewCommemt?: any;
 }> = ({ subcomment = "", getNewCommemt }) => {
+  const btn_submit = useRef<HTMLButtonElement | null>(null);
   const myAccount = useSelector((state: RootState) => state.account.user);
   const id_film = useSelector((state: RootState) => state.commemt.idFilm);
   let maxlength = myAccount?.chatLength || 40;
-  const formik: any = useFormik({
+  const formik = useFormik({
     initialValues: {
       comment: "",
     },
@@ -63,16 +64,17 @@ const UserComment: React.FC<{
         }
       }
       addComment(comment);
-      formik.handleReset();
+      formik.resetForm();
     },
   });
   const disPatch: any = useDispatch();
 
   const handleBlur = () => {
+    if (!formik.values.comment.trim()) return;
     const blocked = myAccount.blocked;
     if (blocked) {
       ToastMessage("Tài khoản đã bị khóa !").warning();
-      formik.handleReset();
+      formik.resetForm();
       return;
     }
     if (formik.errors.comment) {
@@ -97,7 +99,17 @@ const UserComment: React.FC<{
       })
       .catch(() => {});
   }
-
+  useEffect(() => {
+    const handleAddCommentEnter = (e: any) => {
+      if (e.key == "Enter") {
+        btn_submit && btn_submit.current?.click();
+      }
+    };
+    document.addEventListener("keydown", handleAddCommentEnter);
+    return () => {
+      document.removeEventListener("keydown", handleAddCommentEnter);
+    };
+  }, []);
   return (
     <form onSubmit={formik.handleSubmit} method="post">
       {!myAccount.username && (
@@ -138,6 +150,7 @@ const UserComment: React.FC<{
         className={`flex justify-end m-3 ${!myAccount.username && "hidden"} `}
       >
         <button
+          ref={btn_submit}
           type="submit"
           className="bg-teal-600 hover:bg-teal-700 text-sm text-text py-2 rounded-md px-6  lg:w-20 w-1/4 justify-center flex items-center"
         >

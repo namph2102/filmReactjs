@@ -16,7 +16,7 @@ const initialOptions = {
   intent: "capture",
 };
 
-const listMoney = [10000, 20000, 50000, 100000, 200000, 500000, 1000000];
+export const listMoney = [10000, 20000, 50000, 100000, 200000, 500000, 1000000];
 const PayPalContainer: React.FC<IPropsRecharge> = ({ idUser, username }) => {
   const dispatch: AppDispatch = useDispatch();
   const [money, setMoney] = useState<number>(0);

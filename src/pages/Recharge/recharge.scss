@@ -85,3 +85,32 @@
     }
   }
 }
+.card-topup_container {
+  .card-topup_container-header {
+    background-image: linear-gradient(360deg, #080b20, #141830);
+  }
+  .card-topup_container-body {
+    max-height: 160px;
+    min-height: 100px;
+    overflow: auto;
+    overscroll-behavior: none;
+    &::-webkit-scrollbar {
+      width: 0px;
+    }
+  }
+  .card-topup_container-item {
+    box-shadow: 2px 0px 5px #2196f3;
+  }
+  .overlay {
+    background-color: rgba(31, 17, 17, 0.5);
+    background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      from(#434242),
+      to(#38455d08)
+    );
+    height: 40px;
+    opacity: 0.6;
+  }
+}

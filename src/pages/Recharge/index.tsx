@@ -8,6 +8,7 @@ import Banking from "./component/Banking";
 import HistoryTopup from "./component/HistoryTopup";
 import Wallet from "./component/Wallet";
 import CodePayContainer from "./component/CodePay";
+import CardCode from "./component/CardCode";
 export const listButton = [
   {
     id: 1,
@@ -55,7 +56,7 @@ const Recharge = () => {
         <span className="text-primary">VideoTV !</span>
       </h2>
       <section className="flex flex-wrap">
-        <div className="lg:basis-1/6 md:basis-1/4 basis-full grid md:grid-cols-1 grid-cols-3 gap-2 max-h-[300px] ">
+        <div className="lg:basis-1/6 md:basis-1/4 basis-full  grid md:grid-cols-1 grid-cols-3 gap-2 max-h-[300px] ">
           <ReCharegeButton
             listButton={listButton}
             payCurrent={payCurrent}
@@ -78,6 +79,9 @@ const Recharge = () => {
               username={account.username}
               idUser={account._id}
             />
+          )}
+          {payCurrent == 4 && (
+            <CardCode username={account.username} idUser={account._id} />
           )}
           {payCurrent == 5 && (
             <Wallet username={account.username} idUser={account._id} />

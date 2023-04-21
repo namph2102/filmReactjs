@@ -16,7 +16,13 @@ const ReCharegeButton: React.FC<{
               item.id == payCurrent && "active"
             } lg:w-4/5 w-full`}
           >
-            {item.name} <img width={30} src={`/images/${item.icon}`} alt="" />
+            {item.name}{" "}
+            <img
+              width={30}
+              className="hidden sm:inline-block"
+              src={`/images/${item.icon}`}
+              alt=""
+            />
           </button>
         ))}
     </>
