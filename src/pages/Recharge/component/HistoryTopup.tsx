@@ -36,7 +36,8 @@ const HistoryTopup: React.FC<IPropsRecharge> = ({ idUser, username }) => {
     <div className="history_wrapper w-full px-7">
       <p className="mt-32"></p>
       <div className="pb-2 history__warraper-topup">
-        {history.length > 0 && history.map((h) => <ItemHistory history={h} />)}
+        {history.length > 0 &&
+          history.map((h) => <ItemHistory key={h.updatedAt} history={h} />)}
       </div>
     </div>
   );

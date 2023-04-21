@@ -48,7 +48,7 @@ const PayPalContainer: React.FC<IPropsRecharge> = ({ idUser, username }) => {
   };
   return (
     <>
-      <div className="flex flex-col pt-4 md:items-start items-center">
+      <div className="flex flex-col pt-4 md:items-start items-center lg:items-center">
         <img
           src={IconPaywin}
           className="rounded-xl max-w-[300px] w-full px-2"
@@ -65,24 +65,26 @@ const PayPalContainer: React.FC<IPropsRecharge> = ({ idUser, username }) => {
           <li>An toàn bảo mật nha</li>
         </ul>
       </div>
-      <div className="text-text flex flex-col items-center md:items-start ">
+      <div className="text-text flex flex-col md:items-start items-center ">
         <p className="font-bold text-xl my-2 w-full">Thanh toán bằng PayPal</p>
-        <p className="text-base my-2 font-semibold">Số Tiền: </p>
-        <select
-          className="input__style--topup py-4 px-3  text-lg w-28 cursor-pointer text-text bg-black "
-          name=""
-          id=""
-          onChange={(e) => {
-            setMoney(Number(e.target.value));
-          }}
-        >
-          <option value="0">Chọn số tiền</option>
-          {listMoney.map((money) => (
-            <option key={money} value={money}>
-              {formatCurrent(money)}
-            </option>
-          ))}
-        </select>
+        <div>
+          <p className="text-base my-2 font-semibold">Số Tiền: </p>
+          <select
+            className="input__style--topup py-4 px-3 text-lg w-28 cursor-pointer text-text bg-black "
+            name=""
+            id=""
+            onChange={(e) => {
+              setMoney(Number(e.target.value));
+            }}
+          >
+            <option value="0">Chọn số tiền</option>
+            {listMoney.map((money) => (
+              <option key={money} value={money}>
+                {formatCurrent(money)}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="text-sm  my-4 flex-1 ">
           <p className="text-base font-bold">Lưu ý: </p>
           <span className="text-primary">

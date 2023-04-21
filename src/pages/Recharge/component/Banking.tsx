@@ -10,10 +10,6 @@ import axios from "axios";
 import PathLink from "../../../contants";
 
 const Banking: React.FC<IPropsRecharge> = ({ username, idUser }) => {
-  const handleCoppy = (copyText: string) => {
-    ToastMessage(`Copy thành công "${copyText}"`).success();
-    navigator.clipboard.writeText(copyText);
-  };
   const formik = useFormik({
     initialValues: {
       money: "",
@@ -56,7 +52,7 @@ const Banking: React.FC<IPropsRecharge> = ({ username, idUser }) => {
 
   return (
     <>
-      <div className="flex flex-col md:p-4 ">
+      <div className="flex flex-col md:p-4">
         <p className="text-primary text-base">
           Khi chuyển khoản xong nhớ nhắn cho mình nha!
         </p>
@@ -80,16 +76,8 @@ const Banking: React.FC<IPropsRecharge> = ({ username, idUser }) => {
           defaultValue="AriBank"
           readOnly
         />
-        <RenderCopyField
-          name="Số Tài Khoản"
-          value="5409205132543"
-          handleCoppy={handleCoppy}
-        />
-        <RenderCopyField
-          name="Tên Tài Khoản"
-          value="Phạm Hoài Nam"
-          handleCoppy={handleCoppy}
-        />
+        <RenderCopyField name="Số Tài Khoản" value="5409205132543" />
+        <RenderCopyField name="Tên Tài Khoản" value="Phạm Hoài Nam" />
       </div>
       <form
         onSubmit={formik.handleSubmit}

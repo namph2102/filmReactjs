@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/Store";
 import Banking from "./component/Banking";
 import HistoryTopup from "./component/HistoryTopup";
+import Wallet from "./component/Wallet";
+import CodePayContainer from "./component/CodePay";
 export const listButton = [
   {
     id: 1,
@@ -70,6 +72,15 @@ const Recharge = () => {
           )}
           {payCurrent == 2 && (
             <Banking username={account.username} idUser={account._id} />
+          )}
+          {payCurrent == 3 && (
+            <CodePayContainer
+              username={account.username}
+              idUser={account._id}
+            />
+          )}
+          {payCurrent == 5 && (
+            <Wallet username={account.username} idUser={account._id} />
           )}
           {payCurrent == 6 && (
             <HistoryTopup username={account.username} idUser={account._id} />

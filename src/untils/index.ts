@@ -57,6 +57,11 @@ const handleFormat = (x: any) => {
 const formatCurrent = (number: number) => {
   return number.toLocaleString("en-vi");
 };
+const randomCharacters = (length: number) =>
+  Math.random()
+    .toString(36)
+    .slice(2, 2 + length);
+
 export {
   Handle,
   componentsProps,
@@ -64,5 +69,6 @@ export {
   handlePercent,
   formatCurrent,
   componentsPropsCommemt,
+  randomCharacters,
   handleFormat,
 };
