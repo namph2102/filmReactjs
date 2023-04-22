@@ -5,7 +5,6 @@ import { TBookmark, deleAllBookmark } from "../../Redux/BookmarkSlice";
 import BookmarkItem from "./BookmarkItem";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../Redux/Store";
-import PathLink from "../../contants";
 import ToastMessage from "../../untils/ToastMessage";
 const BookMark: React.FC<{
   listBookmarks: TBookmark[];

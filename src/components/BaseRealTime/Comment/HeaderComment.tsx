@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo } from "react";
 
 import { Tooltip } from "@mui/material";
 import { RiFireFill } from "react-icons/ri";
@@ -9,7 +9,6 @@ const HeaderComment = () => {
   const totalCommemt = useSelector(
     (state: RootState) => state.commemt.totalHeader
   );
-  const idFilm = useSelector((state: RootState) => state.commemt.idFilm);
 
   return (
     <div

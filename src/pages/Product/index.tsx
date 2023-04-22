@@ -28,6 +28,7 @@ const Product = () => {
   const [namePathTwo, setNamePathTwo] = useState<string>("");
   const pathname = router.pathname.split("/");
   useEffect(() => {
+    window.scrollTo({ behavior: "smooth", top: 0 });
     setLoading(true);
     setTotalPage(0);
     setNamePathTwo("");

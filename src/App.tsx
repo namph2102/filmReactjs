@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import { useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import Main from "./components/Layouts/Main";
+
+const Main = React.lazy(() => import("./components/Layouts/Main"));
 import { fetchDataFilm } from "./Redux/FilmSlice";
 import { AppDispatch } from "./Redux/Store";
 import "./styles/style.scss";
+import LoaddingFirstPage from "./components/LoaddingFirstPage";
 
 // export const commemtReadTime = (id_film: string) => {
 //   const idsetComment = setInterval(() => {
@@ -26,7 +28,9 @@ function App() {
 
   return (
     <div className="App">
-      <Main />
+      <Suspense fallback={<LoaddingFirstPage />}>
+        <Main />
+      </Suspense>
       <ToastContainer />
     </div>
   );

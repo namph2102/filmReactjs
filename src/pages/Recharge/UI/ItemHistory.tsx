@@ -17,7 +17,7 @@ const ItemHistory: React.FC<{ history: IHistory }> = ({ history }) => {
       <span className="text-primary">
         {history.money.toLocaleString("en-vi")} đ
       </span>
-      <span>Chuyển khoản</span>
+      <span>Nạp coin</span>
       <span className="break-words text-center sm:pr-4">
         #{history.payCode}
       </span>

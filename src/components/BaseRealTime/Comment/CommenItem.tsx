@@ -41,7 +41,7 @@ const CommenItem: React.FC<{
   const [listSubCommemt, setListSubCommemt] = useState<TpropComment[]>([]);
   const BoxchatElement = useRef<HTMLElement | any>(null);
   const commentElement = useRef<HTMLElement | any>(null);
-
+  const [isBlock, setIsBlock] = useState<boolean>(comment.user_comment.blocked);
   const [seeResponseSubComment, setSeeResponseSubComment] =
     useState<boolean>(false);
   const getNewCommemt = (listSubCommemt: any) => {
@@ -62,7 +62,7 @@ const CommenItem: React.FC<{
     dispatch(GetSubcommentComment(data)).then((data: any) => {
       setListSubCommemt(data);
     });
-  }, []);
+  }, [comment.subcomment.length]);
   const handleUserDelete = async () => {
     if (!account.accessToken) return;
 
@@ -85,7 +85,6 @@ const CommenItem: React.FC<{
     } else ToastMessage(res.data.message).warning();
   };
   const handleBlockUser = async (isBlock = true) => {
-    console.log(isBlock);
     if (account.permission !== "admin") {
       ToastMessage("Bạn không có quyền này !").warning();
       return;
@@ -106,6 +105,7 @@ const CommenItem: React.FC<{
       .then((res) => {
         if (res.status == 200) {
           ToastMessage(res.data?.message).success();
+          setIsBlock((isBlock) => !isBlock);
         }
       });
   };
@@ -259,15 +259,11 @@ const CommenItem: React.FC<{
               {account.permission == "admin" &&
                 comment.user_comment._id !== account._id && (
                   <Tooltip
-                    title={comment.user_comment.blocked ? "Mở Block" : "Block"}
+                    title={isBlock ? "Mở Block" : "Block"}
                     arrow
                     placement="left"
                   >
-                    <button
-                      onClick={() =>
-                        handleBlockUser(!comment.user_comment.blocked)
-                      }
-                    >
+                    <button onClick={() => handleBlockUser(!isBlock)}>
                       <BiBlock size={defaultIconSize} />
                     </button>
                   </Tooltip>

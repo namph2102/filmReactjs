@@ -45,20 +45,16 @@ const RenderDesktopProfile: React.FC<{
 }): JSX.Element => {
   return (
     <>
-      <Tooltip
+      <div
         onClick={(e) => {
           e.stopPropagation(), onhandleBookMark();
         }}
-        title="Phim yêu thích của bạn"
-        arrow
-        placement="left"
+        className="popper-container bg-bookmark mr-4"
       >
-        <div className="popper-container bg-bookmark mr-4">
-          <BiBookmark fontSize={defaultIconSize} />
-          <p className="mx-2">Phim yêu thích</p>
-          <span className="total-bookmark">{bookmarklength}</span>
-        </div>
-      </Tooltip>
+        <BiBookmark fontSize={defaultIconSize} />
+        <p className="mx-2">Phim yêu thích</p>
+        <span className="total-bookmark">{bookmarklength}</span>
+      </div>
       <RenderProfile />
 
       <BookMark

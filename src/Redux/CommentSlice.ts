@@ -27,6 +27,9 @@ const CommentSlice = createSlice({
     // When click new film handle but now dont have handle
     updateIdFim(state, action) {
       if (action.payload.idFilm) {
+        state.listMainComment = [];
+        state.totalHeader = 0;
+        state.count = 0;
         state.limit = 15;
         state.isComment = true;
         state.idFilm = action.payload.idFilm;
@@ -37,14 +40,22 @@ const CommentSlice = createSlice({
     },
     updateLimit(state) {
       if (state.limit > state.count) state.limit = state.count;
-      else state.limit += 15;
+      else {
+        state.limit += 15;
+        state.totalHeader += 1;
+      }
     },
   },
   extraReducers: (builder) => {
     builder.addCase(GetListComments.fulfilled, (state, action) => {
-      state.listMainComment = action.payload.comments;
-      state.count = action.payload.count;
-      state.totalHeader = action.payload.allCommemtFilm;
+      if (
+        action.payload.allCommemtFilm &&
+        state.totalHeader !== action.payload.allCommemtFilm
+      ) {
+        state.listMainComment = action.payload.comments;
+        state.count = action.payload.count;
+        state.totalHeader = action.payload.allCommemtFilm;
+      }
     });
   },
 });
@@ -76,14 +87,28 @@ type payload = {
 };
 export const GetListComments = createAsyncThunk(
   "comments/list",
-  async ({ idFilm, limit }: { idFilm: string; limit: number }) => {
+  async ({
+    idFilm,
+    limit,
+    totalComment,
+  }: {
+    idFilm: string;
+    limit: number;
+    totalComment: number;
+  }) => {
     try {
       const res = await axios.post(PathLink.domain + "comments/list", {
         method: "POST",
         idFilm,
         limit,
+        totalComment,
       });
-      // console.log(res.data);
+      if (!res.data.total_commemt) {
+        return {
+          allCommemtFilm: res.data.allCommemtFilm,
+          status: 200,
+        };
+      }
       return {
         comments: res.data.data,
         count: res.data.total_commemt,

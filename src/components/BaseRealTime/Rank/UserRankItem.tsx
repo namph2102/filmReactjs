@@ -1,5 +1,5 @@
 import React from "react";
-import { Tooltip } from "@mui/material";
+import { Avatar, Tooltip } from "@mui/material";
 import { componentsProps, componentsPropsCommemt } from "../../../untils";
 import { Irankuser } from ".";
 import SublistIcon from "../Comment/ImageContainer";
@@ -13,28 +13,18 @@ type Tprops = {
 const UserRankItem: React.FC<Tprops> = ({ user, top }) => {
   return (
     <div className="list_rank flex items-center mb-4">
-      <Tooltip
-        componentsProps={componentsProps}
-        placement="top"
-        followCursor
-        arrow
-        title={`Top ${top} Sever`}
-        className="cursor-pointer"
-      >
-        <Link title="Xem hồ sơ" to={PankLink.seeProfile + "#" + user._id}>
-          <img
-            src={`${
-              top < 6 ? `/images/ranktop${top}.png` : "/images/ranktop6.png"
-            }`}
-            className="w-20 "
-            alt=""
-          />
-          <p className="text-center text-base font-bold text-primary">
-            Top {top}
-          </p>
-        </Link>
-      </Tooltip>
-
+      <Link title="Xem hồ sơ" to={PankLink.seeProfile + "#" + user._id}>
+        <img
+          src={`${
+            top < 6 ? `/images/ranktop${top}.png` : "/images/ranktop6.png"
+          }`}
+          className="w-20 "
+          alt=""
+        />
+        <p className="text-center text-base font-bold text-primary">
+          Top {top}
+        </p>
+      </Link>
       <div className="relative mr-4 ml-1">
         <Tooltip
           title="Xem hồ sơ"
@@ -44,7 +34,6 @@ const UserRankItem: React.FC<Tprops> = ({ user, top }) => {
           placement="top"
         >
           <Link to={PankLink.seeProfile + "#" + user._id}>
-            {" "}
             <img
               className="w-20 h-20 object-cover border-[3px] border-gray-500 border-solid"
               src={user.avata}

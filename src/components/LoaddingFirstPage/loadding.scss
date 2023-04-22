@@ -1,0 +1,27 @@
+.wapper_Loadding {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  z-index: 99999;
+  height: 100vh;
+  //   .wapper_Loadding-animate {
+  //     object-fit: cover;
+  //     animation: logo_animation 2s linear forwards;
+  //   }
+  animation: hideLoading 3s linear forwards;
+}
+@keyframes logo_animation {
+  from {
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  }
+}
+
+@keyframes hideLoading {
+  to {
+    width: 0;
+    height: 0;
+  }
+}

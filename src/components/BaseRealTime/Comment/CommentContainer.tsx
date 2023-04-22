@@ -9,7 +9,7 @@ import { AppDispatch, RootState } from "../../../Redux/Store";
 import ToastMessage from "../../../untils/ToastMessage";
 const CommenItem = React.lazy(() => import("./CommenItem"));
 const CommentContainer = () => {
-  const CommemtSlice: any = useSelector((state: RootState) => state.commemt);
+  const CommemtSlice = useSelector((state: RootState) => state.commemt);
   const commemts = CommemtSlice.listMainComment;
   const totalComment = CommemtSlice.count;
   const idFilm = CommemtSlice.idFilm;
@@ -18,12 +18,18 @@ const CommentContainer = () => {
   const CommemtContainer = useRef<HTMLElement | any>(null);
   useEffect(() => {
     const idInterval = setInterval(() => {
-      dispatch(GetListComments({ idFilm, limit: limitCommemt }));
+      dispatch(
+        GetListComments({
+          idFilm,
+          limit: limitCommemt,
+          totalComment: CommemtSlice.totalHeader | 0,
+        })
+      );
     }, 2000);
     return () => {
       clearInterval(idInterval);
     };
-  }, [limitCommemt, idFilm]);
+  }, [limitCommemt, idFilm, CommemtSlice.totalHeader]);
   const loadingMoreCommemt = () => {
     dispatch(updateLimit());
     ToastMessage("Tải thêm bình luận thành công!").success();
@@ -36,7 +42,7 @@ const CommentContainer = () => {
       clearTimeout(idTiemout);
     }, 2000);
   };
-
+  console.log("re-render");
   return (
     <>
       <ul

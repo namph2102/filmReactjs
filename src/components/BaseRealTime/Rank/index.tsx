@@ -33,6 +33,7 @@ const RankContainer = () => {
         setInfomation(res.data.account);
       });
   }, [account._id]);
+
   return (
     <section className="relative">
       <div
