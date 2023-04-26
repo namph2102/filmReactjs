@@ -22,6 +22,7 @@ const RankContainer = () => {
   const account = useSelector((state: RootState) => state.account.user);
   const [listAccount, setListAccount] = useState<Irankuser[]>([]);
   const [infomation, setInfomation] = useState<Irankuser>();
+
   useEffect(() => {
     axios
       .post(PathLink.domain + "user/getListUserRank", {

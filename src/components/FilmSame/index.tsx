@@ -6,7 +6,7 @@ import PathLink, { defaultIconSize } from "../../contants";
 import "./filmsame.scss";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 const FilmSameContainer: React.FC<{
-  category: string[];
+  category: { slug: string; category: string }[];
   limit: number;
   id: string;
 }> = ({ category, limit, id }) => {
@@ -58,7 +58,7 @@ const FilmSameContainer: React.FC<{
       {listFilm.length > 0 ? (
         <section className="main-contents">
           <h5 className="title_special">Phim liên quan</h5>
-          <div className="flex flex-wrap my-4 film_sameSlider">
+          <div className="flex flex-wrap my-4 film_sameSlider ">
             {listFilm.map((film, index: number) => {
               const translateX = `${(index - currentIndex) * 100}%`;
               return (

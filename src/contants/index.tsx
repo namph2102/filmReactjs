@@ -31,8 +31,8 @@ export interface TpropComment {
   id_film: number;
   total_like: number;
   comment: string;
-  updated_at: number;
-  created_at: number;
+  updatedAt: number;
+  createdAt: number;
   subcomment: number[];
   user_comment: IUserComment;
   is_edit: Boolean;

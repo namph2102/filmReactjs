@@ -12,7 +12,7 @@ const Film: React.FC<props> = ({ film, translateX }) => {
   return (
     <article
       style={translateX ? { transform: `translateX(${translateX})` } : {}}
-      className="film-item basis-1/3 sm:basis-1/3 md:basis-1/4  min-h-[200px]"
+      className="film-item basis-1/3 flex-shrink-0 flex-grow-1  sm:basis-1/3 md:basis-1/4  min-h-[200px] "
     >
       <div className="films-item p-1">
         <Link

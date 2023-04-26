@@ -26,9 +26,11 @@ const Profile = () => {
   const [account, setAccount] = useState<
     TUserProfile & { nameLevel: { name: string } }
   >();
+
   const dispatch: AppDispatch = useDispatch();
   const { hash } = useLocation();
   const user = useSelector((state: RootState) => state.account.user);
+
   const isBlockChange: boolean = user._id == account?._id ? false : true;
   const formik: any = useFormik({
     initialValues: {
@@ -306,7 +308,7 @@ const Profile = () => {
                 type="text"
                 id="datetime"
                 className="font-medium py-2 px-2 w-full focus-within:bg-menu focus:border-none focus:outline-0 text-base bg-input rounded-md focus-within:text-text"
-                defaultValue={moment(user.updated_at).format(
+                defaultValue={moment(user.createdAt).format(
                   "HH:mm:ss - DD/MM/YYYY"
                 )}
               />

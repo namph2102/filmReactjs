@@ -35,6 +35,9 @@ const CommentSlice = createSlice({
         state.idFilm = action.payload.idFilm;
       }
     },
+    renRendercomment(state) {
+      state.totalHeader -= 1;
+    },
     updateStatusShowComment(state, action) {
       state.isComment = action.payload.isShow;
     },
@@ -59,8 +62,12 @@ const CommentSlice = createSlice({
     });
   },
 });
-export const { updateLimit, updateStatusShowComment, updateIdFim } =
-  CommentSlice.actions;
+export const {
+  updateLimit,
+  updateStatusShowComment,
+  updateIdFim,
+  renRendercomment,
+} = CommentSlice.actions;
 export default CommentSlice.reducer;
 export interface IApiSendDataComment {
   subcomment: string | number;

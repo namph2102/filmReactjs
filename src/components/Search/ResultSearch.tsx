@@ -22,6 +22,7 @@ export const ResultSearch: React.FC<IProps> = ({ listFilm }) => {
                   src={film.thumb_url}
                   width="50"
                   height="80"
+                  className="object-cover"
                   alt={film.name}
                 />
                 <div className="mx-3">

@@ -2,6 +2,11 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import axios from "axios";
 import PathLink from "../contants";
+export interface ICategory {
+  slug: string;
+  category: string;
+  _id: string;
+}
 export interface Ifilm {
   _id: string | any;
   id: number;
@@ -12,7 +17,7 @@ export interface Ifilm {
   thumb_url: string;
   poster_url: string;
   kind: string;
-  category: string[];
+  category: ICategory[];
   status: string;
   view: number;
   like: number;
@@ -23,8 +28,8 @@ export interface Ifilm {
   episode_current: number;
   eposode_total: number;
   lang: string;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }
 export interface IStateFilm {
   fimls: Ifilm[];

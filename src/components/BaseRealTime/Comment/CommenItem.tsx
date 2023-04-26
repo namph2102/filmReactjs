@@ -23,7 +23,10 @@ import { RiReplyLine } from "react-icons/ri";
 import ToastMessage from "../../../untils/ToastMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../Redux/Store";
-import { GetSubcommentComment } from "../../../Redux/CommentSlice";
+import {
+  GetSubcommentComment,
+  renRendercomment,
+} from "../../../Redux/CommentSlice";
 import PathLink from "../../../contants";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -63,6 +66,7 @@ const CommenItem: React.FC<{
       setListSubCommemt(data);
     });
   }, [comment.subcomment.length]);
+
   const handleUserDelete = async () => {
     if (!account.accessToken) return;
 
@@ -81,6 +85,7 @@ const CommenItem: React.FC<{
 
     if (res.data.status === 200) {
       ToastMessage(res.data.message).success();
+      dispatch(renRendercomment());
       BoxchatElement.current && BoxchatElement.current.classList.add("hide");
     } else ToastMessage(res.data.message).warning();
   };
@@ -140,11 +145,11 @@ const CommenItem: React.FC<{
         }
       );
       if (response.data.status === 200) {
+        dispatch(renRendercomment());
         ToastMessage(response.data.message).success();
       } else ToastMessage(response.data.message).warning();
     }
   };
-
   return (
     <li ref={BoxchatElement} className="pb-2 commemt_parent w-full block">
       <div className="flex gap-4  relative">
@@ -166,7 +171,7 @@ const CommenItem: React.FC<{
                   <BiCheck size={defaultIconSize} />
                 </span>
               )}{" "}
-              {HandleTimeDiff(comment.updated_at)}
+              {HandleTimeDiff(comment.updatedAt)}
             </span>
             {comment.user_comment.icons.length > 0 && (
               <SublistIcon listIcons={comment.user_comment.icons} />
