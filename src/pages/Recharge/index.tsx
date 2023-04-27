@@ -51,7 +51,7 @@ const Recharge = () => {
   const [payCurrent, setPayCurrent] = useState<number>(1);
   return (
     <div className="w-full payment_wrapper">
-      <h2 className="text-center text-base text-text my-4">
+      <h2 className="text-center text-lg font-medium text-text my-4">
         Mọi sự đóng góp, ủng hộ của bạn tạo động lực lớn cho team{" "}
         <span className="text-primary">VideoTV !</span>
       </h2>

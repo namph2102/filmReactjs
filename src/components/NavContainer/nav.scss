@@ -65,13 +65,20 @@
     }
   }
 }
+
 @media screen and (max-width: 1024px) {
   .main-menu li a {
     font-size: 1rem;
   }
   .drop-menu {
     max-height: 280px;
+    min-width: 0px !important;
+    width: 100% !important;
+    max-width: 100% !important;
     overflow-y: auto;
+    overflow-x: hidden !important;
+    overscroll-behavior: none;
+
     ul {
       width: 100%;
     }

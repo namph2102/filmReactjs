@@ -119,7 +119,7 @@ const UploadAvata: React.FC<{ userID: string; username: string }> = ({
               </li>
               <li>
                 Ảnh sẽ được <span className="text-primary">kiểm duyệt </span>{" "}
-                sau ít phút
+                sau ít phút ( <span className="text-primary">.png </span> nhen)
               </li>
               <li>
                 Không up ảnh <span className="text-primary">khiêu dâm</span>{" "}
