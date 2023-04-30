@@ -32,7 +32,7 @@ const FilmLeft: React.FC<{ film: Ifilm }> = ({ film }) => {
         >
           <img
             src={film.thumb_url}
-            className="rounded shadow-sm object-cover shadow-blue-800 w-full h-full opacity-90"
+            className="rounded shadow-sm object-cover shadow-blue-800 w-full min-h-[300px] h-full opacity-90"
             alt={film.name}
           />
         </Link>

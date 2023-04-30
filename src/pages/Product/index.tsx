@@ -15,7 +15,7 @@ const kindfilm: any = {
   "phim-dang-chieu": "Danh sách Phim Đang Chiếu",
   "phim-sap-chieu": "Danh sách Phim Trailer",
   "quoc-gia": "Phim theo quốc gia  ",
-  "the-loai": "phim theo thể loại ",
+  "the-loai": "Phim theo thể loại ",
   "xem-tat-ca": "Tất cả phim",
 };
 const Product = () => {

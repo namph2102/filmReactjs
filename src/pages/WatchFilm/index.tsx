@@ -101,9 +101,15 @@ const WatchFilm = () => {
     } else if (film?.kind != "series") {
       console.log(currentLink);
       if (severWatch == "embedded" && listEmbed.length > 0) {
-        setCurrentLink(listEmbed[0].link);
+        setCurrentLink(
+          listEmbed[0]?.link ||
+            "https://kd.hd-bophim.com/share/8925f4bfc315c47adfcca80a74581f4b"
+        );
       } else if (listM3u8.length > 0) {
-        setCurrentLink(listM3u8[0].link);
+        setCurrentLink(
+          listM3u8[0]?.link ||
+            "https://kd.hd-bophim.com/20230227/33040_71227d85/index.m3u8"
+        );
       }
     }
   }, [currentEsopide, severWatch]);

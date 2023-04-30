@@ -16,6 +16,7 @@ const EsopideList: React.FC<{
   setSeverWatch,
   nameSever,
 }) => {
+  console.log(film);
   return (
     <ul className="flex flex-wrap gap-1 text-yellow-50">
       {new Array(film.episode_current).fill(0).map((_, index) => (
