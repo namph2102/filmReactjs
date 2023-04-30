@@ -39,7 +39,7 @@ const FilmDescription: React.FC<{ film: Ifilm }> = ({ film }) => {
                 Phim được cập nhập vào lúc
                 <span className="italic text-primary font-bold">
                   {" "}
-                  {moment(film.updated_at).format("HH:mm:ss - DD/MM/YYYY ")}
+                  {moment(film.updatedAt).format("HH:mm:ss - DD/MM/YYYY ")}
                 </span>
               </li>
             </ul>
@@ -51,27 +51,11 @@ const FilmDescription: React.FC<{ film: Ifilm }> = ({ film }) => {
         <h5 className="title_special inline-block">Nội Dung Phim</h5>
       </div>
       <div className="film-detail_des">
-        <h2 className="capitalize text-xl font-extrabold">{film.name}</h2>
+        <h2 className="capitalize text-xl font-extrabold font-sans">
+          {film.name}
+        </h2>
         <p className={`film-detail_des-info ${openDes && "open"}`}>
-          {film.description} Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Minus laborum aspernatur error voluptatem sapiente! Harum
-          commodi sed repellat unde optio rerum, magnam, nulla eos fugit sequi
-          ipsum ea in sint. Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Minus laborum aspernatur error voluptatem sapiente! Harum
-          commodi sed repellat unde optio rerum, magnam, nulla eos fugit sequi
-          ipsum ea in sint. Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Minus laborum aspernatur error voluptatem sapiente! Harum
-          commodi sed repellat unde optio rerum, magnam, nulla eos fugit sequi
-          ipsum ea in sint. Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Minus laborum aspernatur error voluptatem sapiente! Harum
-          commodi sed repellat unde optio rerum, magnam, nulla eos fugit sequi
-          ipsum ea in sint. Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Minus laborum aspernatur error voluptatem sapiente! Harum
-          commodi sed repellat unde optio rerum, magnam, nulla eos fugit sequi
-          ipsum ea in sint. Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Minus laborum aspernatur error voluptatem sapiente! Harum
-          commodi sed repellat unde optio rerum, magnam, nulla eos fugit sequi
-          ipsum ea in sint.
+          {film.description}
           <span className="item-content-gradient absolute bottom-0 left-0 right-0"></span>
         </p>
         <button

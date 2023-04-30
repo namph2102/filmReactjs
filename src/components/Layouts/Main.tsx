@@ -29,7 +29,7 @@ const Main = () => {
       <Header />
 
       <section className="container mx-auto">
-        <main className="flex flex-wrap bg-content py-4 px-2 min-h-[80vh]">
+        <main className="flex lg:flex-nowrap flex-wrap bg-content py-4 px-2 min-h-[80vh]">
           <Routes>
             <Route path="*" element={<HaveAside />} />
             <Route path={PathLink.seeProfile} element={<Profile />} />

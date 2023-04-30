@@ -21,6 +21,7 @@ import firebase from "firebase/compat/app";
 import { getAuth } from "firebase/auth";
 import { getListBookmarks } from "../../Redux/BookmarkSlice";
 import { Link } from "react-router-dom";
+import { BiUserPin } from "react-icons/bi";
 // firebase
 const app = firebase.initializeApp(configFireBase);
 const auth = getAuth(app);
@@ -159,6 +160,14 @@ const Profile: React.FC<{ children: any }> = ({ children }) => {
             <RiLogoutBoxRLine className="mr-2.5" size="1.3rem" />
             Đăng xuất
           </MenuItem>
+          {user.permission == "admin" && (
+            <MenuItem onClick={handleLogout}>
+              <a target="_blank" className="flex" href={PathLink.domain}>
+                <BiUserPin className="mr-2.5" size="1.3rem" />
+                Admin
+              </a>
+            </MenuItem>
+          )}
         </Menu>
       )}
     </section>

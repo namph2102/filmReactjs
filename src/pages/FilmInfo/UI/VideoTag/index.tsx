@@ -159,7 +159,7 @@ const VideoTag: React.FC<{
       <video
         className="cursor-pointer"
         onClick={handlePlayvideo}
-        poster="https://movibes.online/avata/636939627ccac-thon-phe-tinh-khong-poster.jpg"
+        poster={film.poster_url}
         id="ifame_video"
         ref={videoRef}
         onTimeUpdate={hamdleTimeUpdate}

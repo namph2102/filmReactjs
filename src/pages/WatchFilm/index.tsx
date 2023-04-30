@@ -39,10 +39,11 @@ const WatchFilm = () => {
   const [severWatch, setSeverWatch] = useState<string>("m3u8");
   const [listEmbed, setListEmbeded] = useState<Iesopide[]>([]);
   const [listM3u8, setListM3U8] = useState<Iesopide[]>([]);
+
   const [isOpenLight, setIsOpenLight] = useState<Boolean>(true);
   const [like, setLike] = useState<number>(0);
   const currentPage = "https://movibes.online/";
-  const nextElment = useRef<HTMLButtonElement | any>(null);
+
   let { slug } = useParams();
   let newslug: string | any = "",
     esopide: string = "";
@@ -52,6 +53,7 @@ const WatchFilm = () => {
   } else {
     newslug = slug?.slice(0, slug.lastIndexOf("-"));
   }
+  console.log(esopide);
   useLayoutEffect(() => {
     if (newslug) {
       axios
@@ -65,10 +67,12 @@ const WatchFilm = () => {
               findFilm,
               filmdetail: { idFilm, listEsopideEmbeded, listEsopideStream },
             } = response.data;
-            setListEmbeded(listEsopideEmbeded);
-            setListM3U8(listEsopideStream);
+
+            setListEmbeded(listEsopideEmbeded.reverse());
+            setListM3U8(listEsopideStream.reverse());
             setFilm(findFilm);
             setCurrentEsopide(Number(esopide));
+
             idFilm && updateView(idFilm);
           } catch {
             ToastMessage("Sorry! , Lỗi hệ thống chưa cập nhập").info();
@@ -81,6 +85,7 @@ const WatchFilm = () => {
       behavior: "smooth",
       top: 100,
     });
+
     if (currentEsopide > 0 && film?.kind == "series") {
       let filmDetail: { link: string; esopide: string } | any;
       if (severWatch == "embedded" && listEmbed.length > 0) {
@@ -95,8 +100,8 @@ const WatchFilm = () => {
         );
       }
 
-      if (filmDetail.link) {
-        setCurrentLink(filmDetail.link);
+      if (filmDetail?.link) {
+        setCurrentLink(filmDetail?.link);
       }
     } else if (film?.kind != "series") {
       console.log(currentLink);
@@ -142,7 +147,7 @@ const WatchFilm = () => {
       setLike(like + 1);
     }
   };
-
+  console.log(currentLink);
   return (
     <section className="relative">
       {!isOpenLight && <div className="ovelay-switch_light"></div>}
