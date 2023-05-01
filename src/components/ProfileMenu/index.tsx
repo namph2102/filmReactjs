@@ -161,7 +161,7 @@ const Profile: React.FC<{ children: any }> = ({ children }) => {
             Đăng xuất
           </MenuItem>
           {user.permission == "admin" && (
-            <MenuItem onClick={handleLogout}>
+            <MenuItem>
               <a target="_blank" className="flex" href={PathLink.domain}>
                 <BiUserPin className="mr-2.5" size="1.3rem" />
                 Admin

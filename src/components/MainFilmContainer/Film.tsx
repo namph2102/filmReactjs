@@ -25,6 +25,7 @@ const Film: React.FC<props> = ({ film, translateX }) => {
               alt={film.name}
               className="w-full film-avata"
               loading="lazy"
+              onLoad={(e) => (e.target.src = film.thumb_url)}
             />
           </figure>
           <span className="episode">
