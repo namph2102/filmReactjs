@@ -15,7 +15,7 @@ const CommemtRealtime = () => {
   const [pageCurrent, setPagecurrent] = useState<string>(TPageCurrent.comment);
   return (
     <>
-      <article>
+      <article className="pb-2">
         {isCommemt && (
           <Suspense fallback={<RotateLoadding />}>
             <section>
@@ -34,7 +34,7 @@ const CommemtRealtime = () => {
             </section>
             <UIBaseReadTime setPagecurrent={setPagecurrent} />
 
-            <article className="min-h-[300px]">
+            <article className="min-h-[100px] pb-2">
               {pageCurrent == TPageCurrent.comment ? (
                 <Comment />
               ) : pageCurrent == TPageCurrent.intrust ? (
