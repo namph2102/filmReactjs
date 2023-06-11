@@ -17,8 +17,8 @@ export interface IUser {
   expVip: number;
   blocked: boolean;
   icons: any[];
-  created_at: Number;
-  updated_at: number;
+  created_at?: Number;
+  updated_at?: number;
   permission: string;
   accessToken: string;
   chatLength: number;
@@ -47,6 +47,8 @@ const UserSlice = createSlice({
       createdAt: 0,
       updatedAt: 0,
       accessToken: "",
+      created_at: 0,
+      updated_at: 0,
       permission: "",
       chatLength: 40,
     },

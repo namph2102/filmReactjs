@@ -27,7 +27,7 @@ const Banner = () => {
     setCurrentIndex(currentIndex - 1);
   };
   useEffect(() => {
-    const idTimout = setTimeout(InCreaseIndex, 2000);
+    const idTimout = setTimeout(InCreaseIndex, 5000);
     return () => {
       clearTimeout(idTimout);
     };

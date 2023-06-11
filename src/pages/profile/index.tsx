@@ -26,7 +26,7 @@ const Profile = () => {
   const [account, setAccount] = useState<
     TUserProfile & { nameLevel: { name: string } }
   >();
-
+  console.log(account);
   const dispatch: AppDispatch = useDispatch();
   const { hash } = useLocation();
   const user = useSelector((state: RootState) => state.account.user);

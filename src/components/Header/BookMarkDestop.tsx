@@ -10,7 +10,6 @@ import AccountAvata from "./AccountAvata";
 
 const RenderProfile = (): JSX.Element => {
   const user = useSelector((state: RootState) => state.account.user);
-
   return (
     <>
       <Profile>

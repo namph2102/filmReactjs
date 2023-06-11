@@ -23,13 +23,11 @@ const FilmInfo = () => {
   useEffect(() => {
     if (slug) {
       (async () => {
-        console.log("change", slug);
         try {
           const responsive = await axios.post(PathLink.domain + "api/film", {
             method: "post",
             slug,
           });
-          console.log(responsive.data);
           setFilm(responsive.data.film);
         } catch (err: any) {
           ToastMessage("Lỗi gì đó").info();

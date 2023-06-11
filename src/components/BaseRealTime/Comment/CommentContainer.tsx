@@ -18,13 +18,13 @@ const CommentContainer = () => {
   const CommemtContainer = useRef<HTMLElement | any>(null);
   useEffect(() => {
     const idInterval = setInterval(() => {
-      dispatch(
-        GetListComments({
-          idFilm,
-          limit: limitCommemt,
-          totalComment: CommemtSlice.totalHeader | 0,
-        })
-      );
+      // dispatch(
+      //   GetListComments({
+      //     idFilm,
+      //     limit: limitCommemt,
+      //     totalComment: CommemtSlice.totalHeader | 0,
+      //   })
+      // );
     }, 2000);
     return () => {
       clearInterval(idInterval);
@@ -42,7 +42,6 @@ const CommentContainer = () => {
       clearTimeout(idTiemout);
     }, 1000);
   };
-  console.log("re-render");
   return (
     <>
       <ul
