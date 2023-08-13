@@ -15,6 +15,8 @@ import AccountAvata from "../../Header/AccountAvata";
 import PathLink from "../../../contants";
 
 import { Link } from "react-router-dom";
+import { socket } from "./CommentContainer";
+
 const UserComment: React.FC<{
   subcomment?: string;
   getNewCommemt?: any;
@@ -67,8 +69,8 @@ const UserComment: React.FC<{
       formik.resetForm();
     },
   });
-  const disPatch: any = useDispatch();
 
+  const disPatch: any = useDispatch();
   const handleBlur = () => {
     if (!formik.values.comment.trim()) return;
     const blocked = myAccount.blocked;
@@ -83,7 +85,7 @@ const UserComment: React.FC<{
       });
     }
   };
-  function addComment(comment: string) {
+  async function addComment(comment: string) {
     const apiComment: IApiSendDataComment = {
       subcomment: subcomment,
       id_user: myAccount._id,
@@ -91,13 +93,19 @@ const UserComment: React.FC<{
       id_film: id_film,
     };
 
-    disPatch(PostAddComemt(apiComment))
+    let message = {};
+    await disPatch(PostAddComemt(apiComment))
       .then((res: any) => {
         ToastMessage("Bình luận thành công! ").success();
         sessionStorage.setItem("timeCommemt", moment() + "");
-        getNewCommemt(res.payload.data);
+        message = res.payload.data;
+        if (message) {
+          getNewCommemt(message);
+        }
       })
       .catch(() => {});
+    // người dùng bình luận trong nhóm phim
+    socket.emit("nguoi-dung-binh-luan", JSON.stringify(message));
   }
   useEffect(() => {
     const handleAddCommentEnter = (e: any) => {
@@ -110,6 +118,7 @@ const UserComment: React.FC<{
       document.removeEventListener("keydown", handleAddCommentEnter);
     };
   }, []);
+
   return (
     <form onSubmit={formik.handleSubmit} method="post">
       {!myAccount.username && (

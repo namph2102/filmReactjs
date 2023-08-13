@@ -15,61 +15,84 @@ const UploadAvata: React.FC<{ userID: string; username: string }> = ({
   const dispatch: AppDispatch = useDispatch();
   const [isopenmodal, setIsopenModal] = useState<boolean>(false);
   const [Avata, setAvata] = useState<string>();
-  const [fileUpload, setFileUpload] = useState<any>();
-  const handleSubmitAvata = (
+  const [fileUpload, setFileUpload] = useState<{ path: string; url: string }>({
+    path: "",
+    url: "",
+  });
+  const [isHandleChangeAvata, setIsHandleChangeAvata] = useState(false);
+  const handleChangeAvatar = (
     e: React.FocusEvent<HTMLInputElement | any, Element>
   ) => {
     const file = e.target.files[0];
-    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setAvata(url);
+    if (!file && file.mimetype.includes("image")) {
+      ToastMessage("Đây không phải là ảnh").success();
+      return;
+    }
 
-    if (file.size >= 1024 * 60) {
+    if (file.size >= 1024 * 200) {
       ToastMessage(
-        `Ảnh có dung lượng là ${Math.floor(file.size / 1024)} KB > 60 KB`
+        `Ảnh có dung lượng là ${Math.floor(file.size / 1024)} KB > 200 KB`
       ).warning({ autoClose: 3000 });
       return;
-    } else if (!file.name.endsWith(".png")) {
-      ToastMessage("Ảnh phải có đuôi .png và dung lượng nhỏ hơn 60kb !").info();
-      return;
     }
-    setFileUpload(file);
-    const src = URL.createObjectURL(file);
-    setAvata(src);
+    const formData = new FormData();
+    formData.append("file", file);
+    fetch(PathLink.domain + "uploadfile", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.status == 200) {
+          setFileUpload(() => res.image);
+          setAvata(res.image.url);
+          setIsHandleChangeAvata(true);
+        }
+      })
+      .finally(() => {
+        url && URL.revokeObjectURL(url);
+      });
+
     e.target.value = null;
-    if (Avata && src !== Avata) {
-      URL.revokeObjectURL(Avata);
-    }
   };
 
-  const handleChangeAvata = () => {
-    if (!fileUpload) return;
-    const reader = new FileReader();
-    reader.onloadend = async function () {
-      try {
-        const res: any = await axios.post(
-          PathLink.domain + "user/updateAvatar",
-          {
-            method: "post",
-            data: {
-              _id: userID,
-              avata: reader.result,
-              username,
-            },
-          }
-        );
-        const src = URL.createObjectURL(fileUpload);
-        if (res.status == 200) {
-          dispatch(updateAvata({ avata: src }));
-          ToastMessage("Thay đổi thành công ảnh đại diện !").success();
-          setAvata("");
-          setIsopenModal(!isopenmodal);
-        }
-      } catch (err) {
-        ToastMessage("Ảnh không đúng yêu cầu !").info();
+  const handleSubmit = async () => {
+    if (!fileUpload.path) ToastMessage("Vui lòng tải ảnh lên !").success();
+    try {
+      const res: any = await axios.post(PathLink.domain + "user/updateAvatar", {
+        method: "post",
+        data: {
+          _id: userID,
+          avata: fileUpload.url,
+          path: fileUpload.path,
+          username,
+        },
+      });
+
+      if (res.status == 200) {
+        dispatch(updateAvata({ avata: fileUpload.url }));
+        ToastMessage(res.data.message).success();
+
+        setAvata("");
+        setFileUpload(() => ({ path: "", url: "" }));
+        setIsopenModal(!isopenmodal);
+        setIsHandleChangeAvata(false);
+      }
+    } catch (err) {
+      ToastMessage("Ảnh không đúng yêu cầu !").info();
+    }
+  };
+  useEffect(() => {
+    return () => {
+      if (isHandleChangeAvata && fileUpload.path) {
+        axios.post(PathLink.domain + "deleteimage", {
+          path: fileUpload.path,
+        });
       }
     };
-    reader.readAsDataURL(fileUpload);
-  };
-  console.log(isopenmodal);
+  }, [isHandleChangeAvata, fileUpload.path]);
   return (
     <div>
       <ModalContent isopenmodal={isopenmodal} setIsopenModal={setIsopenModal}>
@@ -90,7 +113,7 @@ const UploadAvata: React.FC<{ userID: string; username: string }> = ({
               <img
                 src={Avata}
                 className="absolute inset-0 w-full h-full object-cover"
-                alt=""
+                alt="err"
               />
             )}
           </label>
@@ -102,13 +125,15 @@ const UploadAvata: React.FC<{ userID: string; username: string }> = ({
             >
               Trở về
             </button>
-            <button
-              type="button"
-              className="py-2 px-3 rounded-lg bg-green-600 hover:bg-green-700"
-              onClick={handleChangeAvata}
-            >
-              Thay Đổi
-            </button>
+            {fileUpload.url && (
+              <button
+                type="button"
+                className="py-2 px-3 rounded-lg bg-green-600 hover:bg-green-700"
+                onClick={handleSubmit}
+              >
+                Thay Đổi
+              </button>
+            )}
           </div>
           <p className="text-red-600 font-bold text-lg">Lưu ý</p>
           {!Avata && (
@@ -138,7 +163,7 @@ const UploadAvata: React.FC<{ userID: string; username: string }> = ({
               </li>
             </ul>
           )}
-          <input onChange={handleSubmitAvata} type="file" hidden id="file" />
+          <input onChange={handleChangeAvatar} type="file" hidden id="file" />
         </div>
       </ModalContent>
       <button

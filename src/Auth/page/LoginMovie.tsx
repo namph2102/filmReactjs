@@ -154,7 +154,7 @@ const LoginMovie = ({
                 Đăng Nhập
               </button>
             </form>
-            <FireBaseMovie onHandleClose={onHandleClose} />
+            <FireBaseMovie type={"login"} onHandleClose={onHandleClose} />
           </div>
         </div>
       </div>

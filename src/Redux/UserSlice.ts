@@ -172,15 +172,15 @@ export const loginWithFireBase = (account: any) => {
         notice: "Firebase handle",
         account,
       });
-      if (res.data.account) {
-        localStorage.clear();
-        dispatch(
-          UserSlice.actions.updateUser({ status: 200, data: res.data.account })
-        );
+
+      if (res.data.status != 200) {
+        throw new Error(res.data.message);
       }
+      localStorage.clear();
+      dispatch(UserSlice.actions.updateUser(res.data));
       return res.data;
-    } catch (err) {
-      return { message: "Sorry? Lỗi hệ thống !", status: 404 };
+    } catch (err: any) {
+      return { message: err?.message || "Lỗi hệ thống", status: 404 };
     }
   };
 };

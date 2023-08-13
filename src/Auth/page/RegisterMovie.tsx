@@ -229,7 +229,7 @@ const RegisterMovie = ({
                 Đăng ký ngay
               </button>
             </form>
-            <FireBaseMovie onHandleClose={onHandleClose} />
+            <FireBaseMovie type={"regis"} onHandleClose={onHandleClose} />
           </div>
         </div>
       </div>

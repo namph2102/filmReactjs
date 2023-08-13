@@ -30,6 +30,7 @@ import {
 import PathLink from "../../../contants";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { socket } from "./CommentContainer";
 
 const UserComment = React.lazy(() => import("./UserComment"));
 const CommenItem: React.FC<{
@@ -85,8 +86,9 @@ const CommenItem: React.FC<{
 
     if (res.data.status === 200) {
       ToastMessage(res.data.message).success();
-      dispatch(renRendercomment());
-      BoxchatElement.current && BoxchatElement.current.classList.add("hide");
+      socket.emit("xoa-noi-dung-binh-luan", comment._id);
+      BoxchatElement.current &&
+        BoxchatElement.current.classList.add("deleteChildrent");
     } else ToastMessage(res.data.message).warning();
   };
   const handleBlockUser = async (isBlock = true) => {
@@ -145,7 +147,7 @@ const CommenItem: React.FC<{
         }
       );
       if (response.data.status === 200) {
-        dispatch(renRendercomment());
+        dispatch(renRendercomment(comment._id));
         ToastMessage(response.data.message).success();
       } else ToastMessage(response.data.message).warning();
     }
@@ -301,7 +303,7 @@ const CommenItem: React.FC<{
           {listSubCommemt.length > 0 &&
             listSubCommemt.map((subcomment: TpropComment, index) => (
               <CommenItem
-                key={subcomment._id}
+                key={`${subcomment._id}-${index}`}
                 comment={subcomment}
                 idFilm={idFilm}
                 reply={comment.user_comment.fullname}

@@ -35,11 +35,22 @@ const CommentSlice = createSlice({
         state.idFilm = action.payload.idFilm;
       }
     },
-    renRendercomment(state) {
+    renRendercomment(state, action) {
       state.totalHeader -= 1;
+      if (action.payload.type == "delete") {
+        state.listMainComment = state.listMainComment.filter(
+          (c) => c._id != action.payload._id
+        );
+      }
     },
     updateStatusShowComment(state, action) {
       state.isComment = action.payload.isShow;
+    },
+    updateNewComment(state, action) {
+      if (!state.listMainComment.find((p) => p._id == action.payload._id)) {
+        state.listMainComment = [action.payload, ...state.listMainComment];
+        state.totalHeader += 1;
+      }
     },
     updateLimit(state) {
       if (state.limit > state.count) state.limit = state.count;
@@ -67,6 +78,7 @@ export const {
   updateStatusShowComment,
   updateIdFim,
   renRendercomment,
+  updateNewComment,
 } = CommentSlice.actions;
 export default CommentSlice.reducer;
 export interface IApiSendDataComment {
@@ -79,7 +91,7 @@ export interface IApiSendDataComment {
 export const PostAddComemt = createAsyncThunk(
   "comment/comments/add",
 
-  async (apiComment: IApiSendDataComment, getSate) => {
+  async (apiComment: IApiSendDataComment) => {
     const res = await axios.post(PathLink.domain + "comments/addcommemt", {
       method: "POST",
       data: apiComment,

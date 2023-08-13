@@ -23,6 +23,7 @@ const AccountAvata: React.FC<{
               width: width,
               height: width,
               cursor: "pointer",
+              border: "1px solid #ffff",
             }}
           />
         </Tooltip>

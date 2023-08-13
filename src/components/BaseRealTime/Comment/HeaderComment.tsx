@@ -25,7 +25,6 @@ const HeaderComment = () => {
         <div className="border_items">
           <Tooltip title="Max 200">
             <span>
-              {" "}
               <RiFireFill color="red" fontSize="1.5rem" cursor="pointer" />
             </span>
           </Tooltip>

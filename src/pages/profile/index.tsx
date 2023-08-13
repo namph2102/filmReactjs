@@ -1,7 +1,7 @@
 import moment from "moment-timezone";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../Redux/Store";
 import IconCoin from "../../assets/coin.png";
 import IconLevel from "../../assets/iconlevel.png";
@@ -26,7 +26,7 @@ const Profile = () => {
   const [account, setAccount] = useState<
     TUserProfile & { nameLevel: { name: string } }
   >();
-  console.log(account);
+
   const dispatch: AppDispatch = useDispatch();
   const { hash } = useLocation();
   const user = useSelector((state: RootState) => state.account.user);

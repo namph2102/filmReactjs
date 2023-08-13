@@ -48,7 +48,7 @@ class PathLink {
   recharge = "nap-tien";
   changePassword = "doi-mat-khau";
   pagenotfound = "not-found";
-  domain = "http://localhost:3000/";
+  domain = import.meta.env.DOMAIN_SERVER || "https://videotv-ss.onrender.com/";
   nameToken = "_myToken";
   localusername = "username";
   seeCategories = "/the-loai-phim/";
@@ -61,9 +61,13 @@ export const configPaypal = {
 };
 // Configure Firebase.
 export const configFireBase = {
-  apiKey: "AIzaSyDyJGXl7H7Z8X-c1kkQIyrWC9gGi9uw_rk",
-  authDomain: "movies-41f04.firebaseapp.com",
-  // ...
+  apiKey: "AIzaSyCUuogh8hEj9O4OraQsYE3eanaMUxs3TDA",
+  authDomain: "test-c887e.firebaseapp.com",
+  projectId: "test-c887e",
+  storageBucket: "test-c887e.appspot.com",
+  messagingSenderId: "128310947725",
+  appId: "1:128310947725:web:0c61fde9baf1011b65d7c4",
+  measurementId: "G-G05WT46T62",
 };
 
 export default new PathLink();
