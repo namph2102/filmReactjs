@@ -1,0 +1,90 @@
+.payment_wrapper .btn_rechare {
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#0c1729), to(#0c1729));
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.87);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 8px 12px;
+  border: 1px solid #b6abab;
+}
+.payment_wrapper .btn_rechare:hover {
+  background-image: none;
+  background-color: #2a99eb;
+}
+.payment_wrapper .btn_rechare.active {
+  background-image: none;
+  background-color: #2a99eb;
+}
+.payment_wrapper .menu__topup__container {
+  background-image: url("/images/bgtopup.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+  border: 2px solid #0e0824;
+  border-radius: 8px;
+  padding: 12px 0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  min-height: 415px;
+  padding: 12px;
+}
+.payment_wrapper .loadding_topup {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.payment_wrapper .input__style--topup {
+  font-weight: 500;
+  width: 100%;
+  background-image: linear-gradient(to bottom, #100323, #0c0710);
+  -webkit-clip-path: polygon(8% 0, 92% 0, 100% 30%, 100% 70%, 92% 100%, 8% 100%, 0% 70%, 0% 30%);
+          clip-path: polygon(8% 0, 92% 0, 100% 30%, 100% 70%, 92% 100%, 8% 100%, 0% 70%, 0% 30%);
+  min-width: 240px;
+  max-width: 350px;
+}
+.payment_wrapper .input__style--topup:focus-within {
+  outline: 2px solid #2e3ae4;
+}
+.payment_wrapper .history_wrapper {
+  background-image: url("/images/bg_history.png");
+  background-size: 100% 100%;
+  height: 500px;
+  background-repeat: no-repeat;
+}
+.payment_wrapper .history_wrapper .history__warraper-topup {
+  max-height: 320px;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.payment_wrapper .history_wrapper .history__warraper-topup::-webkit-scrollbar {
+  width: 5px;
+}
+.payment_wrapper .history_wrapper .history__warraper-topup::-webkit-scrollbar-thumb {
+  background-color: #0c5de0;
+  border-radius: 8px;
+}
+.payment_wrapper .history_wrapper .history__warraper-topup::-webkit-scrollbar-track {
+  background-color: #89928a;
+}
+
+.card-topup_container .card-topup_container-header {
+  background-image: linear-gradient(360deg, #080b20, #141830);
+}
+.card-topup_container .card-topup_container-body {
+  max-height: 160px;
+  min-height: 100px;
+  overflow: auto;
+  overscroll-behavior: none;
+}
+.card-topup_container .card-topup_container-body::-webkit-scrollbar {
+  width: 0px;
+}
+.card-topup_container .card-topup_container-item {
+  box-shadow: 2px 0px 5px #2196f3;
+}
+.card-topup_container .overlay {
+  background-color: rgba(31, 17, 17, 0.5);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#434242), to(rgba(56, 69, 93, 0.031372549)));
+  height: 40px;
+  opacity: 0.6;
+}/*# sourceMappingURL=recharge.css.map */

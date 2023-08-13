@@ -1,0 +1,26 @@
+.film_sameSlider {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+}
+.film_sameSlider .film-item {
+  position: absolute !important;
+  transition: all 0.5s ease-in-out !important;
+  width: 25%;
+}
+
+@media screen and (max-width: 1024px) {
+  .film_sameSlider .film-item {
+    width: 25%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .film_sameSlider .film-item {
+    width: 32.33%;
+  }
+}
+@media screen and (max-width: 560px) {
+  .film_sameSlider .film-item {
+    width: 50%;
+  }
+}/*# sourceMappingURL=filmsame.css.map */

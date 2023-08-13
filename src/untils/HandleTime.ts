@@ -15,7 +15,11 @@ const timeSetTing: any = {
 };
 function HandleTimeDiff(timestamp: any) {
   let result: any = moment(timestamp).fromNow();
-  if (result.includes("a few seconds ago")) return "vài giây trước";
+  if (
+    result.includes("a few seconds ago") ||
+    result.includes("in a few seconds")
+  )
+    return "vài giây trước";
   if (result[1] === "n") {
     result = result.replace("an", "1");
   } else if (result[0] === "a") {

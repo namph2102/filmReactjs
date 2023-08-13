@@ -5,7 +5,9 @@ import calendar from "../../../assets/calendar.png";
 import danger from "../../../assets/danger.png";
 import "./filmdes.scss";
 const FilmDescription: React.FC<{ film: Ifilm }> = ({ film }) => {
-  const [openDes, setOpenDes] = useState<boolean>(false);
+  const [openDes, setOpenDes] = useState<boolean>(
+    film.description?.length <= 150
+  );
   return (
     <div className="bg-hover p-4">
       <div className="halim--notice">
@@ -51,19 +53,19 @@ const FilmDescription: React.FC<{ film: Ifilm }> = ({ film }) => {
         <h5 className="title_special inline-block">Nội Dung Phim</h5>
       </div>
       <div className="film-detail_des">
-        <h2 className="capitalize text-xl font-extrabold font-sans">
-          {film.name}
-        </h2>
-        <p className={`film-detail_des-info ${openDes && "open"}`}>
+        <h2 className="capitalize text-xl font-semibold ">{film.name}</h2>
+        <p className={`film-detail_des-info ${openDes && "open"} `}>
           {film.description}
           <span className="item-content-gradient absolute bottom-0 left-0 right-0"></span>
         </p>
-        <button
-          onClick={() => setOpenDes(!openDes)}
-          className="hover:text-primary  py-2 "
-        >
-          {!openDes ? "Mở rộng ..." : "Thu gọn"}
-        </button>
+        {film.description?.length > 150 && (
+          <button
+            onClick={() => setOpenDes(!openDes)}
+            className="hover:text-primary  py-2 "
+          >
+            {!openDes ? "Mở rộng ..." : "Thu gọn"}
+          </button>
+        )}
       </div>
     </div>
   );

@@ -57,7 +57,7 @@ const FilmInfo = () => {
           <title>Xem phim {film.name} Tại VideoTV</title>
           <meta name="description" content={film.description} />
           <meta name="keywords" content={film.name} />
-          <meta property="og:url" content="" />
+
           <meta property="og:type" content="website" />
           <meta property="og:title" content={film.name} />
           <meta property="og:description" content={film.description} />

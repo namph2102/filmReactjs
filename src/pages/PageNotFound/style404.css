@@ -1,0 +1,81 @@
+.pagenotfound .st0 {
+  font-family: "FootlightMTLight";
+}
+.pagenotfound .st1 {
+  font-size: 83.0285px;
+}
+.pagenotfound .st2 {
+  fill: gray;
+}
+.pagenotfound svg {
+  width: 500px;
+  height: 400px;
+  text-align: center;
+  fill: #16a085;
+}
+.pagenotfound path#XMLID_5_ {
+  fill: #16a085;
+  filter: url(#blurFilter4);
+}
+.pagenotfound path#XMLID_11_,
+.pagenotfound path#XMLID_2_ {
+  fill: #16a085;
+}
+.pagenotfound .circle {
+  animation: out 2s infinite ease-out;
+  fill: #16a085;
+}
+.pagenotfound #container {
+  text-align: center;
+}
+.pagenotfound .message {
+  color: #16a085;
+}
+.pagenotfound .message:after {
+  content: "]";
+}
+.pagenotfound .message:before {
+  content: "[";
+}
+.pagenotfound .message:after,
+.pagenotfound .message:before {
+  color: #16a085;
+  font-size: 20px;
+  -webkit-animation-name: opacity;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+  animation-name: opacity;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  margin: 0 50px;
+}
+@keyframes opacity {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes out {
+  0% {
+    r: 1;
+    opacity: 0.9;
+  }
+  25% {
+    r: 5;
+    opacity: 0.3;
+  }
+  50% {
+    r: 10;
+    opacity: 0.2;
+  }
+  75% {
+    r: 15;
+    opacity: 0.1;
+  }
+  100% {
+    r: 20;
+    opacity: 0;
+  }
+}/*# sourceMappingURL=style404.css.map */

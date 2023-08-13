@@ -1,0 +1,21 @@
+.MuiList-padding {
+  min-width: 200px;
+  box-shadow: 1px 1px 3px #7f7f7e;
+  background-color: #17242e !important;
+  color: rgb(194, 186, 186) !important;
+}
+.MuiList-padding li {
+  font-size: 15px !important;
+}
+.MuiList-padding li:hover {
+  color: #ff971b;
+  background-color: #212c37;
+}
+
+.displayname {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-transform: capitalize;
+}/*# sourceMappingURL=profile.css.map */

@@ -1,0 +1,18 @@
+.rank_container {
+  overflow-y: auto;
+  max-height: 600px;
+}
+.rank_container::-webkit-scrollbar {
+  width: 5px;
+}
+.rank_container::-webkit-scrollbar-thumb {
+  background-color: #003366;
+  border-radius: 8px;
+}
+.rank_container::-webkit-scrollbar-track {
+  background-color: #101b25;
+}
+
+.rank_item--user {
+  box-shadow: 20px 20px 60px #1a1616, -20px -20px 60px #0e0a0a;
+}/*# sourceMappingURL=rank.css.map */
