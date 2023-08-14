@@ -18,20 +18,25 @@ const kindfilm: any = {
   "the-loai": "Phim theo thể loại ",
   "xem-tat-ca": "Tất cả phim",
 };
+
+let listFilmsDefault: Ifilm[] = [];
 const Product = () => {
   const router = useLocation();
   const [kindSPath, setKindPath] = useState<string>("");
-  const [listfilm, setListFilm] = useState<Ifilm[]>();
+
   const [totalPage, setTotalPage] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [loadding, setLoading] = useState<boolean>(false);
   const [namePathTwo, setNamePathTwo] = useState<string>("");
   const pathname = router.pathname.split("/");
+
+  const [listfilm, setListFilm] = useState<Ifilm[]>(listFilmsDefault);
   useEffect(() => {
     window.scrollTo({ behavior: "smooth", top: 0 });
-    setLoading(true);
+    listfilm.length <= 0 && setLoading(true);
     setTotalPage(0);
     setNamePathTwo("");
+
     if (pathname[1]) {
       axios
         .post(PathLink.domain + "api/pagefilm", {
@@ -49,9 +54,10 @@ const Product = () => {
             setTotalPage(response.data.totalPage);
             response.data.subName && setNamePathTwo(response.data.subName);
             setCurrentPage(1);
-            setLoading(false);
+            listFilmsDefault = response.data.data;
           }
-        });
+        })
+        .finally(() => setLoading(false));
     }
   }, [pathname[1], pathname[2]]);
   const navigate = useNavigate();
@@ -132,8 +138,8 @@ const Product = () => {
         </div>
       )}
       {listfilm && listfilm.length <= 0 && (
-        <p className="text-primary font-bold text-sm">
-          - Hiện tại chưa có phim nào
+        <p className="text-primary  font-bold text-sm mb-10">
+          Hiện tại chưa có phim nào
         </p>
       )}
     </section>

@@ -37,10 +37,12 @@ const FilmRight: React.FC<{ film: Ifilm }> = ({ film }) => {
           >
             <button className="bg-blue-700 hover:bg-blue-600 py-2 rounded-xl px-4">
               {film.kind == "series"
-                ? ` Tập ${
+                ? `  ${
                     film.episode_current === film.eposode_total
-                      ? `${film.episode_current} END`
+                      ? `Tập ${film.episode_current} END`
                       : film.episode_current
+                      ? `Tập ${film.episode_current}`
+                      : "Chưa cập nhập"
                   }`
                 : ` Full ${film.lang}`}
             </button>

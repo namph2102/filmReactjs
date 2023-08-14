@@ -6,8 +6,6 @@ interface IProps {
 }
 import PathLink from "../../contants";
 export const ResultSearch: React.FC<IProps> = ({ listFilm }) => {
-  console.log("re-render search results");
-
   return (
     <>
       <ul className="search_result-list">

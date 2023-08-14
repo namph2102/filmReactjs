@@ -15,6 +15,7 @@ const FilmDescription = React.lazy(() => import("./UI/FilmDescription"));
 const EpisodeContainer: any = React.lazy(() => import("./UI/EpisodeContainer"));
 import { updateIdFim, updateStatusShowComment } from "../../Redux/CommentSlice";
 import FilmSameContainer from "../../components/FilmSame";
+import { Skeleton } from "@mui/material";
 const FilmInfo = () => {
   const isShow = useSelector((state: RootState) => state.commemt.isComment);
   const dispatch: AppDispatch = useDispatch();

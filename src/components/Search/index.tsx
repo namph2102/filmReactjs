@@ -9,12 +9,12 @@ import { BiSearch, BiAnalyse } from "react-icons/bi";
 import { Tooltip } from "@mui/material";
 import "./search.scss";
 import { defaultIconSize } from "../../contants";
-import { useSelector } from "react-redux";
-import { RootState } from "../../Redux/Store";
+
 import { Ifilm } from "../../Redux/FilmSlice";
 import { ResultSearch } from "./ResultSearch";
 import axios from "axios";
 import Pathlink from "../../contants";
+import { Debounced } from "../../untils";
 const SearchContainer = (): JSX.Element => {
   const [search, setSearch] = useState<string>("");
   const [listFindFilms, setListFindFilms] = useState<Ifilm[]>([]);
@@ -25,57 +25,19 @@ const SearchContainer = (): JSX.Element => {
     searchInput.current.focus();
   };
 
-  useEffect(() => {
-    const featchDataSearch = async () => {
-      try {
-        const res = await axios.get(Pathlink.domain + "api/v2");
-        setListFimls(res.data.data);
-      } catch {
-        console.log("Can not find Api search");
-      }
-    };
-    const idTimeout = setTimeout(() => {
-      featchDataSearch();
-      clearTimeout(idTimeout);
-    }, 4000);
-    return () => {
-      clearTimeout(idTimeout);
-    };
-  }, []);
-  // Tạo hiệu ứng loading
-  useLayoutEffect(() => {
-    if (!search) return setListFindFilms(() => []);
-    if (isLoading) return;
-    setLoading(true);
-    const searcPromsie = new Promise((resolve) => {
-      const idTimeout = setTimeout(() => {
-        const findFilm: Ifilm[] = ListFilms.filter(
-          (film: Ifilm) =>
-            film.name.toLowerCase().includes(search.toLowerCase()) ||
-            film.origin_name.toLowerCase().includes(search.toLowerCase())
-        );
-        clearTimeout(idTimeout);
-        resolve(findFilm);
-      }, 1000);
-    });
-    searcPromsie
-      .then((data: any) => {
-        setListFindFilms(() => [...data]);
+  const handheChangeValueSearch = () => {
+    if (!searchInput.current.value) return setListFindFilms(() => []);
+    axios
+      .post(Pathlink.domain + "api/search", {
+        data: searchInput.current.value,
       })
-      .catch(() => setListFindFilms([]))
-      .finally(() => setLoading(false));
-    return () => {};
-  }, [search]);
-
-  useEffect(() => {
-    const handleClick = () => {
-      setSearch("");
-    };
-    document.addEventListener("click", handleClick);
-    return () => {
-      document.removeEventListener("click", handleClick);
-    };
-  }, []);
+      .then((res) => res.data?.listfilmSearch)
+      .then((data) => {
+        if (data) {
+          setListFindFilms(() => data);
+        }
+      });
+  };
 
   return (
     <section className="w-full search_content ">
@@ -90,25 +52,17 @@ const SearchContainer = (): JSX.Element => {
           onClick={handleForcus}
           className="mx-2"
         />
-        <Tooltip
-          title={
-            ListFilms.length <= 0
-              ? "😥😥 Đang loadding dữ liệu"
-              : "Nhập tên phim ..."
-          }
-          arrow
-        >
+        <Tooltip title={"Nhập tên phim ..."} arrow>
           <input
-            style={{
-              cursor: ` ${ListFilms.length <= 0 ? "progress" : "auto"}`,
-            }}
             ref={searchInput}
             height="30px"
+            onBlur={(e) => {
+              setListFindFilms(() => []);
+              e.target.value = "";
+            }}
             type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value.trim())}
+            onChange={Debounced(handheChangeValueSearch, 500)}
             placeholder="Tìm kiếm tên phim..."
-            disabled={ListFilms.length <= 0}
           />
         </Tooltip>
         {isLoading && (
@@ -125,9 +79,7 @@ const SearchContainer = (): JSX.Element => {
             Kết quả tìm kiếm: <span className="text-yellow-400">{search}</span>
           </h5>
         )}
-        {!isLoading && listFindFilms.length > 0 && (
-          <ResultSearch listFilm={listFindFilms} />
-        )}
+        {listFindFilms.length > 0 && <ResultSearch listFilm={listFindFilms} />}
       </div>
     </section>
   );

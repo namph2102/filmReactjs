@@ -61,7 +61,22 @@ const randomCharacters = (length: number) =>
   Math.random()
     .toString(36)
     .slice(2, 2 + length);
+//Tạo Debounced đơn giản
 
+export function Debounced(callback: any, delay = 200) {
+  delay = delay || 0;
+  let timeId: any = undefined;
+  return (...args: any) => {
+    if (timeId) {
+      clearTimeout(timeId);
+      timeId = undefined;
+    }
+    timeId = setTimeout(() => {
+      callback(args);
+      clearTimeout(timeId);
+    }, delay);
+  };
+}
 export {
   Handle,
   componentsProps,
