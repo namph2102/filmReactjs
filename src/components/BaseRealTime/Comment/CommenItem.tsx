@@ -152,6 +152,8 @@ const CommenItem: React.FC<{
       } else ToastMessage(response.data.message).warning();
     }
   };
+
+  console.log(listSubCommemt);
   return (
     <li ref={BoxchatElement} className="pb-2 commemt_parent w-full block">
       <div className="flex gap-4  relative">

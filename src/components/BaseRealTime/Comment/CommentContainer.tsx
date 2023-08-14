@@ -25,7 +25,6 @@ const CommentContainer = () => {
   const limitCommemt: number = CommemtSlice.limit;
   const dispatch: AppDispatch = useDispatch();
   const CommemtContainer = useRef<HTMLElement | any>(null);
-  const featchList = React.useCallback(() => {}, []);
   useEffect(() => {
     dispatch(
       GetListComments({
@@ -93,13 +92,9 @@ const CommentContainer = () => {
         className={`text-text w-full 0 mb-2 px-2 relative`}
       >
         {commemts.length > 0 ? (
-          commemts.map((comment: TpropComment, index) => (
+          commemts.map((comment: TpropComment) => (
             <Suspense key={comment._id} fallback={<RotateLoadding />}>
-              <CommenItem
-                key={`${comment._id}-${index}`}
-                idFilm={idFilm}
-                comment={comment}
-              />
+              <CommenItem idFilm={idFilm} comment={comment} />
             </Suspense>
           ))
         ) : (
