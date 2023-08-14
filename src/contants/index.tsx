@@ -49,7 +49,7 @@ class PathLink {
   changePassword = "doi-mat-khau";
   pagenotfound = "not-found";
   domain =
-    "http://localhost:3000/" ||
+    "backendfilmreact-production.up.railway.app/" ||
     import.meta.env.DOMAIN_SERVER ||
     "https://videotv-ss.onrender.com/";
   nameToken = "_myToken";
