@@ -48,10 +48,7 @@ class PathLink {
   recharge = "nap-tien";
   changePassword = "doi-mat-khau";
   pagenotfound = "not-found";
-  domain =
-    "http://localhost:3000/" ||
-    import.meta.env.DOMAIN_SERVER ||
-    "https://videotv-ss.onrender.com/";
+  domain = import.meta.env.DOMAIN_SERVER || "https://videotv-ss.onrender.com/";
   nameToken = "_myToken";
   localusername = "username";
   seeCategories = "/the-loai-phim/";
