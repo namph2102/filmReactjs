@@ -27,7 +27,6 @@ const FilmDescription: React.FC<{ film: Ifilm }> = ({ film }) => {
               dưới để đánh giá phim
             </li>
             <li>
-              {" "}
               <span className="italic text-primary font-bold">Đăng nhập </span>
               để bình chọn sao nhé !
             </li>
@@ -40,7 +39,6 @@ const FilmDescription: React.FC<{ film: Ifilm }> = ({ film }) => {
               <li>
                 Phim được cập nhập vào lúc
                 <span className="italic text-primary font-bold">
-                  {" "}
                   {moment(film.updatedAt).format("HH:mm:ss - DD/MM/YYYY ")}
                 </span>
               </li>
@@ -54,12 +52,14 @@ const FilmDescription: React.FC<{ film: Ifilm }> = ({ film }) => {
       </div>
       <div className="film-detail_des">
         <h2 className="capitalize text-xl font-semibold ">{film.name}</h2>
-        <div>
-          <p
+        <div className="relative">
+          <div
             className={`film-detail_des-info ${openDes && "open"} `}
             dangerouslySetInnerHTML={{ __html: film.description }}
-          />
-          <span className="item-content-gradient absolute bottom-0 left-0 right-0"></span>
+          ></div>
+          {!openDes && (
+            <span className="item-content-gradient absolute bottom-0 left-0 right-0"></span>
+          )}
         </div>
         {film.description?.length > 150 && (
           <button
