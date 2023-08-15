@@ -11,14 +11,14 @@ import { RenderDesktopProfile, RenderProfile } from "./BookMarkDestop";
 import { useDispatch, useSelector } from "react-redux";
 import { getListBookmarks, updateLisBookmark } from "../../Redux/BookmarkSlice";
 import { AppDispatch, RootState } from "../../Redux/Store";
-import { bookmarkLocal } from "../../untils/localStorage";
+
 const Header = () => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const [isOppenBookmark, setOppenBookmark] = useState<boolean>(true);
   const listBookmarks = useSelector(
     (state: RootState) => state.bookmark.listfilm
   );
-  const account = useSelector((state: RootState) => state.account.user);
+
   const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
     dispatch(getListBookmarks());
@@ -28,7 +28,6 @@ const Header = () => {
     setIsOpenMenu(!isOpenMenu);
   };
   const handleBookMark = () => {
-    console.log(isOpenMenu);
     isOpenMenu && setIsOpenMenu(false);
     setOppenBookmark(!isOppenBookmark);
   };
