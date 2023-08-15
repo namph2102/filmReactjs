@@ -153,7 +153,6 @@ const CommenItem: React.FC<{
     }
   };
 
-  console.log(listSubCommemt);
   return (
     <li ref={BoxchatElement} className="pb-2 commemt_parent w-full block">
       <div className="flex gap-4  relative">

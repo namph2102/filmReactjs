@@ -54,10 +54,13 @@ const FilmDescription: React.FC<{ film: Ifilm }> = ({ film }) => {
       </div>
       <div className="film-detail_des">
         <h2 className="capitalize text-xl font-semibold ">{film.name}</h2>
-        <p className={`film-detail_des-info ${openDes && "open"} `}>
-          {film.description}
+        <div>
+          <p
+            className={`film-detail_des-info ${openDes && "open"} `}
+            dangerouslySetInnerHTML={{ __html: film.description }}
+          />
           <span className="item-content-gradient absolute bottom-0 left-0 right-0"></span>
-        </p>
+        </div>
         {film.description?.length > 150 && (
           <button
             onClick={() => setOpenDes(!openDes)}
