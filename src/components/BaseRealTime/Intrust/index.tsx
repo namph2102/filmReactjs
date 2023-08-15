@@ -9,14 +9,19 @@ const Intrust = () => {
     axios.get(PathLink.domain + "exp").then((responsive) => {
       if (responsive.data.status == 200) {
         const { listExpLevel, listExpVip } = responsive.data.data;
-        setListExpLevel(listExpLevel);
-        setListExpVip(listExpVip);
+        console.log(responsive.data.data);
+        if (listExpLevel && listExpVip) {
+          setListExpLevel(
+            listExpLevel.sort((a: any, b: any) => a.musty - b.musty)
+          );
+          setListExpVip(listExpVip.sort((a: any, b: any) => a.musty - b.musty));
+        }
       }
     });
   }, []);
 
   return (
-    <section className="container  mx-auto bg-content">
+    <section className="container  mx-auto bg-content pb-8 px-4">
       <ul>
         <li>
           <span className="text-lg font-bold block mb-2">1. Lưu ý</span>
