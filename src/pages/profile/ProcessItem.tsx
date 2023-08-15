@@ -20,14 +20,15 @@ const ProcessItem: React.FC<{
         ></div>
         <div className="absolute process_exp-sub_exp">{nameSub}</div>
         <span
-          className="text-text pr-1 absolute"
+          className="text-text pr-1 absolute mt-1"
           style={{
             textShadow: "0px 0px 1px #ffff",
             left: `calc(50%)`,
             transform: "translateX(-50%)",
           }}
         >
-          {valueStart}/{valueEnd}
+          {valueStart.toLocaleString("en-vi")} /{" "}
+          {valueEnd.toLocaleString("en-vi")}
         </span>
       </div>
     </div>

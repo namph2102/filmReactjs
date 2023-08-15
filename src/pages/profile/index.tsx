@@ -1,7 +1,7 @@
 import moment from "moment-timezone";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../Redux/Store";
 import IconCoin from "../../assets/coin.png";
 import IconLevel from "../../assets/iconlevel.png";
@@ -35,7 +35,7 @@ const Profile = () => {
   const formik: any = useFormik({
     initialValues: {
       fullname: user.fullname,
-      phone: (user.phone && `0${user.phone}`) || "",
+      phone: `${user.phone && "0" + user.phone}` || "",
       description: user.description,
     },
     validationSchema: Yup.object().shape({
@@ -143,7 +143,9 @@ const Profile = () => {
                 icon={IconVip}
                 nameSub={`${
                   account.vip
-                    ? `Hội viên Vip ${account.vip}`
+                    ? `Hội viên Vip ${
+                        account.expLv >= 60000 ? 10 : account.vip
+                      }`
                     : account.coin > 0
                     ? "Đã nạp lần đầu"
                     : "Chưa nạp "

@@ -132,6 +132,7 @@ const CardCode: React.FC<IPropsRecharge> = ({ username, idUser }) => {
           onChange={(e) => setMoney(e.target.value)}
           className="input__style--topup py-4 px-3 text-lg w-28 cursor-pointer text-text bg-black "
         >
+          <option value={listMoney[0]}>Chọn mệnh giá</option>
           {listMoney.length > 0 &&
             listMoney.map((item) => (
               <option value={item}>

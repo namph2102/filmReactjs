@@ -65,7 +65,7 @@ const CodePayContainer: React.FC<IPropsRecharge> = ({ username, idUser }) => {
           </select>
         </div>
 
-        <RenderCopyField name="Số tài khoản" value="0651021022002" />
+        <RenderCopyField name="Số tài khoản" value="6150021022002" />
         <RenderCopyField name="Tên tài khoản" value="Phạm Hoài Nam" />
         <RenderCopyField name="Số điện thoại" value="0325024277" />
       </section>
