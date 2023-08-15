@@ -11,7 +11,7 @@ const Banner = React.lazy(() => import("./Banner"));
 
 const Home = () => {
   const dispatch: AppDispatch = useDispatch();
-  const [filmSlice, CommentSlice] = useSelector((state: RootState | any) => [
+  const [filmSlice] = useSelector((state: RootState | any) => [
     state.film,
     state.commemt,
   ]);

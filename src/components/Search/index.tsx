@@ -18,18 +18,23 @@ import { Debounced } from "../../untils";
 const SearchContainer = (): JSX.Element => {
   const [search, setSearch] = useState<string>("");
   const [listFindFilms, setListFindFilms] = useState<Ifilm[]>([]);
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const [ListFilms, setListFimls] = useState<Ifilm[]>([]);
+  const [isLoading] = useState<boolean>(false);
+  const searchKeyword = useRef<HTMLSpanElement>(null);
   const searchInput = useRef<any>(null);
   const handleForcus = () => {
     searchInput.current.focus();
   };
 
   const handheChangeValueSearch = () => {
-    if (!searchInput.current.value) return setListFindFilms(() => []);
+    const valueSearch = searchInput.current.value;
+    if (!valueSearch) return setListFindFilms(() => []);
+    if (searchKeyword.current) {
+      searchKeyword.current.innerText = valueSearch || "";
+    }
+
     axios
       .post(Pathlink.domain + "api/search", {
-        data: searchInput.current.value,
+        data: valueSearch,
       })
       .then((res) => res.data?.listfilmSearch)
       .then((data) => {
@@ -57,8 +62,11 @@ const SearchContainer = (): JSX.Element => {
             ref={searchInput}
             height="30px"
             onBlur={(e) => {
-              setListFindFilms(() => []);
-              e.target.value = "";
+              const id = setTimeout(() => {
+                clearTimeout(id);
+                setListFindFilms(() => []);
+                e.target.value = "";
+              }, 100);
             }}
             type="text"
             onChange={Debounced(handheChangeValueSearch, 500)}
@@ -76,9 +84,11 @@ const SearchContainer = (): JSX.Element => {
       <div className="search_result">
         {search && (
           <h5 className="bg-gray-700 py-2 px-5 text-base">
-            Kết quả tìm kiếm: <span className="text-yellow-400">{search}</span>
+            Kết quả tìm kiếm:{" "}
+            <span ref={searchKeyword} className="text-yellow-400"></span>
           </h5>
         )}
+
         {listFindFilms.length > 0 && <ResultSearch listFilm={listFindFilms} />}
       </div>
     </section>
