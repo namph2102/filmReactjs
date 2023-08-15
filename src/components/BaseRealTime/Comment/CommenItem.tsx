@@ -31,6 +31,7 @@ import PathLink from "../../../contants";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { socket } from "./CommentContainer";
+import { componentsProps } from "../../../untils";
 
 const UserComment = React.lazy(() => import("./UserComment"));
 const CommenItem: React.FC<{
@@ -165,9 +166,11 @@ const CommenItem: React.FC<{
             <span className="capitalize">
               {comment.user_comment.fullname || comment.user_comment.username}
             </span>
-
-            <BiTime className="ml-2 mr-1 font-semibold animate-spin" />
-            <span className="text-small flex ">
+            <BiTime
+              title={HandleTimeDiff(comment.updatedAt)}
+              className="ml-2 mr-1 font-semibold animate-spin md:text-base text-xl cursor-pointer"
+            />
+            <span className="text-small hidden md:flex">
               {comment.is_edit && (
                 <span className="mx-1 flex items-center">
                   Đã chỉnh sửa
@@ -176,6 +179,7 @@ const CommenItem: React.FC<{
               )}{" "}
               {HandleTimeDiff(comment.updatedAt)}
             </span>
+
             {comment.user_comment.icons.length > 0 && (
               <SublistIcon listIcons={comment.user_comment.icons} />
             )}
@@ -202,11 +206,13 @@ const CommenItem: React.FC<{
               total_like={comment.total_like}
               id_comment={comment._id}
             />
+
             <RiReplyLine
               className="rotate-180 ml-1"
               size="1.25rem"
               cursor="pointer"
             />
+
             <span
               className="cursor-pointer"
               onClick={() => {
@@ -217,8 +223,9 @@ const CommenItem: React.FC<{
             >
               Phản hồi
             </span>
-            <span className="ml-10 hover:text-blue-400">
-              {lengthSub > 0 && (
+
+            {lengthSub > 0 && (
+              <span className="ml-10 hover:text-blue-400">
                 <button
                   className="flex items-center"
                   onClick={() =>
@@ -232,8 +239,8 @@ const CommenItem: React.FC<{
                   </span>
                   {!seeResponseSubComment ? <BiCaretDown /> : <BiCaretUp />}
                 </button>
-              )}
-            </span>
+              </span>
+            )}
           </p>
         </div>
         <div className="absolute top-0 right-1 bottom-0 flex">

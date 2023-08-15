@@ -42,7 +42,7 @@ const WatchFilm = () => {
 
   const [isOpenLight, setIsOpenLight] = useState<Boolean>(true);
   const [like, setLike] = useState<number>(0);
-  const currentPage = "https://movibes.online/";
+  const [currentPage] = useState(window.location.href);
 
   let { slug } = useParams();
   let newslug: string | any = "",
@@ -53,7 +53,7 @@ const WatchFilm = () => {
   } else {
     newslug = slug?.slice(0, slug.lastIndexOf("-"));
   }
-  console.log(esopide);
+
   useLayoutEffect(() => {
     if (newslug) {
       axios
@@ -147,7 +147,7 @@ const WatchFilm = () => {
       setLike(like + 1);
     }
   };
-  console.log(currentLink);
+
   return (
     <section className="relative">
       {!isOpenLight && <div className="ovelay-switch_light"></div>}
@@ -197,7 +197,7 @@ const WatchFilm = () => {
           <meta property="og:title" content={`Xem Phim ${film?.name}`} />
           <meta property="og:description" content={film?.description} />
           <meta property="og:image" content={film?.poster_url} />
-          <meta property="og:image:width" content="400" />
+          <meta property="og:image:width" content="680" />
           <meta property="og:image:height" content="400" />
         </Helmet>
 
