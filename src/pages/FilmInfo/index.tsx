@@ -46,6 +46,22 @@ const FilmInfo = () => {
   useEffect(() => {
     dispatch(updateIdFim({ idFilm: film?._id }));
 
+    if (film?.name) {
+      document.title = `Xem phim ${film.name} Tại VideoTV`;
+    }
+    const descriptionSeo = document.querySelector('meta[name="description"]');
+    const imageSeo = document.querySelector('meta[property="og:image"]');
+    if (descriptionSeo) {
+      descriptionSeo.innerHTML = film?.description || "";
+      descriptionSeo.setAttribute("content", film?.description || "");
+    }
+    if (imageSeo) {
+      imageSeo.setAttribute(
+        "content",
+        film?.poster_url || "https://www.videotv.website/images/poster.png"
+      );
+    }
+
     return () => {
       dispatch(updateStatusShowComment({ isShow: false }));
     };
