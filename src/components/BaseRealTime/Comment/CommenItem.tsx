@@ -197,10 +197,9 @@ const CommenItem: React.FC<{
             suppressContentEditableWarning={true}
             onBlur={handleEditFisrt}
             ref={commentElement}
+            dangerouslySetInnerHTML={{ __html: comment.comment }}
             className={`info_comment bottom-none focus-within:outline-blue-700  focus-within:outline-[1px] permission_${comment.user_comment.permission}`}
-          >
-            {comment.comment}
-          </p>
+          ></p>
           <p className="flex gap-2 mb-1 mt-2">
             <HandleLiekCommemt
               total_like={comment.total_like}
